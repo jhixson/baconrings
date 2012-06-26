@@ -1,0 +1,527 @@
+body{
+	margin: 0;
+	background-color:#000000;	
+}
+
+body, p, br, td{
+	font-family:arial;
+	color:#000000;
+}
+
+#container{
+	width:970px;
+	margin: 0 auto;
+	border:0px solid #000000;
+}
+
+#logo{
+	width:318px;
+	height:115px;
+	float:left;
+	border:0px solid #000000;
+	background-color:#ffffff;
+}
+
+#header{
+	width:652px;
+	height:115px;
+	float:left;
+	border:0px solid #000000;
+}
+
+#sitetools{
+	width:652px;
+	height:54px;
+	background-color:#e1e1e1;
+}
+
+#sitetools ul{
+	list-style-type:square;
+	margin:0;
+	padding:0;
+	font-size:10pt;
+	font-weight:bold;
+}
+
+#sitetools ul a{
+	color:#000000;
+	text-decoration:none;
+}
+
+#sitetools ul a:hover{
+	color:#000000;
+	text-decoration:underline;
+}
+
+#navigation{
+	height:61px;
+	width:652px;
+}
+
+#navigation ul{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+#navigation li{
+	display:inline;
+	padding:0;
+	margin:0;
+} 
+
+#main{
+	background-color:#ffffff;
+	width:946px;
+	float:left;
+	padding:20px 12px 25px 12px;
+}
+
+#footerline{
+	width:970px;
+	height:4px;
+	float:left;
+	background-color:#000000;
+}
+
+#footer{
+	width:946px;
+	height:97px;
+	padding-left:12px;
+	padding-right:12px;
+	padding-top:8px;
+	float:left;
+	background-color:#9cc24d;
+}
+
+#footertext{
+	width:149px;
+	float:left;
+	color:#000000;
+	font-size:9pt;
+	font-family:arial;
+}
+
+#footertext ul{
+	margin:5px 0 0 0;
+	padding:0;
+	list-style-type: none;
+}
+
+#footertext li{
+	margin:0 0 0 7px;
+	padding:0;
+}
+
+#footertext a{
+	color:#000000;
+	text-decoration:none;
+}
+
+#footertext a:hover{
+	color:#000000;
+	text-decoration:underline;
+}
+
+#footertextright{
+	width:250px;
+	float:right;
+	color:#000000;
+	font-size:9pt;
+	font-family:arial;
+	text-align:right;
+}
+
+h1{
+	font-family:arial;
+	font-size:21pt;
+	font-weight:normal;
+	display:inline;
+	text-transform:uppercase;
+}
+
+#homefind{
+	background-image:url('/images/home_find_bg.gif');
+	text-align:center;
+	width:545px;
+	height:151px;
+}
+
+
+#homefind select{
+	border: 1px solid #ccc;
+	color:#424242;
+	width:300px;
+	height:30px;
+	font-size:14pt;
+	font-family:arial;
+}
+
+.bluebutton{
+	color:#ffffff;
+	height:30px;
+	font-size:14pt;
+	font-weight:bold;
+	font-family:arial;
+	background-color:#00acda;
+	border:1px solid #00acda;
+	padding:0 15px 0 15px;
+}
+
+#campusinfo{
+	width:935px;
+	height:41px;
+	background-color:#e1e1e1;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	padding:12px 7px 12px 7px;
+	font-weight:bold;
+	font-size:13pt;
+}
+
+#campusinfooverall{
+	float:left;
+	margin:0 15px 0 15px;
+}
+
+#campusinforatings{
+	float:left;
+}
+
+#campusinfoline{
+	float:left;
+	text-align:center;
+	margin:0 100px 0 100px;
+}
+
+#campusinfobest{
+	float:left;
+	margin:0 15px 0 15px;
+}
+
+#campusinfobest2{
+	float:left;
+}
+
+#ratingsbox{
+	float:left;
+	width:298px;
+	height:78px;
+	/*height:151px;*/
+	margin-right:10px;
+}
+
+/*#ratingsboxlist ul{
+	list-style-type:none;
+}
+
+#ratingsboxlist li{
+	padding-bottom:4px;
+}
+
+#ratingsboxlist a{
+	color:#000000;
+	text-decoration:none;
+}
+
+#ratingsboxlist{
+	float:left;
+	width:200px;
+	margin-top:0px;
+}*/
+
+#ratingsboxrating{
+	/*width:83px;
+	height:83px;*/
+	width:78px;
+	height:78px;
+	text-align:center;
+	float:right;
+	margin:10px 5px 0 0;
+}
+
+#ratingsboxrating .avg{
+	color:#ffffff;
+	font-size:10pt;
+}
+
+#ratingsboxrating .rating{
+	color:#ffffff;
+	font-size:25pt;
+	font-weight:bold;
+}
+
+/*#seeall a{
+	float:right;
+	margin:18px 15px 0 0;
+	font-weight:bold;
+	font-size:10pt;
+	padding:5px;
+	color:#ffffff;
+	text-decoration:none;
+}*/
+
+
+/* used on category (i.e. dorm) page */
+
+#icon{
+	float:left;
+	width:77px;
+	height:88px;
+}
+
+#listingcontainer{
+	margin:25px 0 0 77px;
+	float:left;
+	border: 0px solid #999;
+
+}
+
+.theader{
+	color:#808080;
+	font-size:12px;
+}
+
+.breadcrumbs{
+	color:#000000;
+	font-size:9pt;
+	font-weight:bold;
+	text-transform:uppercase;
+}
+
+#breadcrumbs{
+	line-height:30px;
+}
+
+#breadcrumbs a{
+	color:#000000;
+	text-decoration:none;
+}
+
+#breadcrumbs a:hover{
+	color:#000000;
+	text-decoration:underline;
+}
+
+
+/* used on individual item ratings pages */
+
+#itemcontainer{
+	width:852px;
+	margin-left:77px;
+	padding:10px;
+	border: 0px solid #999;
+	background-color:#b2e6f4;
+}
+
+#itemratingscontainer{
+	float:left;
+	width:389px;
+	border: 0px solid #999;
+}
+
+#iteminfocontainer{
+	float:left;
+	margin-left:20px;
+	width:441px;
+	font-size:10pt;
+}
+
+#overallrating{
+	float:left;
+	margin-top:10px;
+	width:84px;
+	height:84px;
+	padding:9px;
+	background-color:#ffffff;
+	color:#000000;
+	font-size:7pt;
+	text-align:center;
+}
+
+#overallrating .overallrating{
+	font-size:42pt;
+	font-weight:bold;
+}
+
+#otherrating{
+	float:left;
+	margin-top:37px;
+	margin-left:15px;
+	width:57px;
+	height:57px;
+	padding:9px;
+	background-color:#ffffff;
+	color:#000000;
+	font-size:7pt;
+	text-align:center;
+}
+
+#otherrating .otherrating{
+	font-size:30pt;
+	font-weight:bold;
+}
+
+#ratingscontainer{
+	width:872px;
+	margin-left:77px;
+	border: 0px solid #999;
+}
+
+.ratingslabel{
+	font-size:8pt;
+	font-weight:bold;
+}
+
+
+/* form stuff */
+
+#signup{
+	width:400px;
+	padding:14px;
+	background-color:#b2e6f4;
+}
+
+#signup label{
+	display:block;
+	font-weight:bold;
+	text-align:right;
+	width:140px;
+	float:left;
+	margin:0 10px 0 0;
+}
+
+#signup select{
+	float:left;
+	font-size:12px;
+	padding:4px 2px;
+	border:solid 1px #aacfe4;
+	width:200px;
+	height:25px;
+	margin:2px 0 20px 0;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#signup .textareainput{
+	font-size:12px;
+	padding:4px 2px;
+	border:solid 1px #aacfe4;
+	width:400px;
+	height:100px;
+	margin:2px 0 20px 0px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.textinput{
+	float:left;
+	font-size:12px;
+	padding:4px 2px;
+	border:solid 1px #aacfe4;
+	width:200px;
+	margin:2px 0 20px 0px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.small{
+	color:#666666;
+	display:block;
+	font-size:11px;
+	font-weight:normal;
+	text-align:right;
+	width:140px;
+}
+
+.labelpadding{
+	padding-top:5px;
+}
+
+
+/* rating form */
+
+#iteminfocontainer2{
+	float:left;
+	margin-left:77px;
+	width:852px;
+	font-size:10pt;
+}
+
+#rateform{
+	width:750px;
+	padding:14px;
+	background-color:#b2e6f4;
+}
+
+#rateform label{
+	display:block;
+	font-weight:bold;
+	text-align:right;
+	width:140px;
+	float:left;
+	margin:-2px 10px 0 0;
+}
+
+#rateform .radiorating{
+	display:inline;
+	margin-left:20px;
+}
+
+#rateform .textareainput{
+	font-size:12px;
+	padding:4px 2px;
+	border:solid 1px #aacfe4;
+	width:400px;
+	height:100px;
+	margin:2px 0 20px 0px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#rateform .spacing{
+	margin-left:150px;
+}
+
+#rateform a{
+	color:#000000;
+}
+
+#rateform .awful{
+	font-weight:bold;
+	color:#19b05b;
+}
+
+#rateform .amazing{
+	font-weight:bold;
+	color:#d04546;
+}
+
+/* contact form */
+
+#contact{
+	width:475px;
+	padding:14px;
+	background-color:#b2e6f4;
+}
+
+#contact label{
+	display:block;
+	font-weight:bold;
+	text-align:right;
+	width:140px;
+	float:left;
+	margin:0 10px 0 0;
+}
+
+#contact .textareainput{
+	font-size:12px;
+	padding:4px 2px;
+	border:solid 1px #aacfe4;
+	width:300px;
+	height:100px;
+	margin:2px 0 20px 0px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
