@@ -8,7 +8,7 @@
 
 				<br /><br /><br /><br />
 			
-				<form action="/campus/post_find" method="post">
+				<form action="/campus/view" method="post">
 
 			<select name="school">
 				<option value="">Choose a School</option>

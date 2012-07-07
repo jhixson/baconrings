@@ -22,16 +22,11 @@ class Campus extends CI_Controller {
   	$this->load->view('templates/footer', $this->data);
 	}
 	
-	public function post_find()
-	{
-	  $slug = $this->input->post('school');
-	  redirect(base_url().$slug, 'location');
-	}
-	
 	public function view($slug='')
 	{
 	  if($this->input->post('school'))
-  	  $slug = ($this->input->post('school'));
+  	  redirect(base_url().$this->input->post('school'), 'location');
+  	  
   	$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
   	
   	if($this->data['campus'])

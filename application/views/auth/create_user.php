@@ -1,43 +1,60 @@
-<div class='mainInfo'>
+<h1>Sign Up</h1>
 
-	<h1>Create User</h1>
-	<p>Please enter the users information below.</p>
-	
-	<div id="infoMessage"><?php echo $message;?></div>
-	
+    <div id="infoMessage"><?php echo $message;?></div>
+		<p>Don't worry, we never show your email address for any rating you submit.</p>
+
+		<div id="signup" class="signup">
+			
     <?php echo form_open(base_url()."auth/create_user");?>
-      <p>First Name:<br />
-      <?php echo form_input($first_name);?>
-      </p>
-      
-      <p>Last Name:<br />
-      <?php echo form_input($last_name);?>
-      </p>
-      
-      <p>Company Name:<br />
-      <?php echo form_input($company);?>
-      </p>
-      
-      <p>Email:<br />
-      <?php echo form_input($email);?>
-      </p>
-      
-      <p>Phone:<br />
-      <?php echo form_input($phone1);?>-<?php echo form_input($phone2);?>-<?php echo form_input($phone3);?>
-      </p>
-      
-      <p>Password:<br />
-      <?php echo form_input($password);?>
-      </p>
-      
-      <p>Confirm Password:<br />
-      <?php echo form_input($password_confirm);?>
-      </p>
-      
-      
-      <p><?php echo form_submit('submit', 'Create User');?></p>
 
+				<label style="height:50px;">I am a:
+				<span class="small">Who are you?</span>
+				</label>
+				<input type="radio" name="who" value="1" /> Student<br />
+				<input type="radio" name="who" value="2" /> Parent<br />
+				<input type="radio" name="who" value="3" /> Professor<br /><br />
+				
+				<label>School:
+				<span class="small">Primary school to rate</span>
+				</label>
+				<select name="school" id="school">
+  				<option value="">Choose a School</option>
+  				<?php foreach($campuses as $campus): ?>
+    				<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
+    			<?php endforeach ?>
+  			</select>
+	
+	    <label>Email:
+			<span class="small">Valid email please</span>
+			</label>
+			<?php $email = array('name' => 'email', 'id' => 'email', 'class' => 'textinput'); ?>
+			<?php echo form_input($email);?>
+
+			<label>Email Again:
+			<span class="small">Confirm email</span>
+			</label>			
+			<?php $email2 = array('name' => 'email2', 'id' => 'email2', 'class' => 'textinput'); ?>
+			<?php echo form_input($email2);?>
+
+      <label>Password:
+			<span class="small">Min. size 6 chars</span>
+			</label>			
+			<?php $password = array('name' => 'password', 'id' => 'password', 'class' => 'textinput'); ?>
+      <?php echo form_password($password);?>
+      
+      <label>Password Again:
+			<span class="small">Confirm password</span>
+			</label>      
+      <?php $password_confirm = array('name' => 'password_confirm', 'id' => 'password_confirm', 'class' => 'textinput'); ?>
+      <?php echo form_password($password_confirm);?>
+      
+      <?php $submit = array('name' => 'submit', 'type' => 'submit', 'class' => 'bluebutton', 'content' => 'Sign Up', 'style' => 'margin-left: 153px'); ?>
+      <?php echo form_button($submit); ?>
       
     <?php echo form_close();?>
 
 </div>
+
+  <br /><br />
+
+	<p></p>

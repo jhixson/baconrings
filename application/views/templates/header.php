@@ -17,8 +17,8 @@
   		<div id="sitetools">
 
   			<div style="float:right;margin:10px 12px 0 0;"><ul>
-  				<li><a href="signup.php">create account</a></li>
-  				<li><a href="login.php">login</a></li>
+  				<li><a href="<?php echo base_url()."auth/create_user" ?>">create account</a></li>
+  				<li><a href="<?php echo base_url()."auth/login" ?>">login</a></li>
   			</ul></div>
 
   		</div>

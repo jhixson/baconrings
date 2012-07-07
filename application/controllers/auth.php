@@ -350,7 +350,8 @@ class Auth extends CI_Controller {
 	//create a new user
 	function create_user()
 	{
-		$this->data['title'] = "Create User";
+	  $this->load->model('campus_model');
+		$this->data['title'] = "Sign Up";
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
@@ -358,13 +359,7 @@ class Auth extends CI_Controller {
 		}
 
 		//validate form input
-		$this->form_validation->set_rules('first_name', 'First Name', 'required|xss_clean');
-		$this->form_validation->set_rules('last_name', 'Last Name', 'required|xss_clean');
 		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
-		$this->form_validation->set_rules('phone1', 'First Part of Phone', 'required|xss_clean|min_length[3]|max_length[3]');
-		$this->form_validation->set_rules('phone2', 'Second Part of Phone', 'required|xss_clean|min_length[3]|max_length[3]');
-		$this->form_validation->set_rules('phone3', 'Third Part of Phone', 'required|xss_clean|min_length[4]|max_length[4]');
-		$this->form_validation->set_rules('company', 'Company Name', 'required|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required');
 
@@ -436,7 +431,11 @@ class Auth extends CI_Controller {
 				'type' => 'password',
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
+			
+			$this->data['campuses'] = $this->campus_model->get_list('university', array());
+			$this->load->view('templates/header', $this->data);
 			$this->load->view('auth/create_user', $this->data);
+			$this->load->view('templates/footer', $this->data);
 		}
 	}
 
