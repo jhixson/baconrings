@@ -58,6 +58,7 @@ class Campus extends CI_Controller {
   	$this->load->view('templates/footer', $this->data);
 	}
 	
+	// trying to figure out facebook login
 	public function fb()
 	{
 	  $this->data['title'] = 'Login with Facebook';
