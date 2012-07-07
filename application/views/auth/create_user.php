@@ -12,8 +12,12 @@
 				</label>
 				<input type="radio" name="who" value="1" /> Student<br />
 				<input type="radio" name="who" value="2" /> Parent<br />
-				<input type="radio" name="who" value="3" /> Professor<br /><br />
+				<input type="radio" name="who" value="3" /> Professor<br />
+				<input type="radio" name="who" value="4" /> Alumni<br />
+				<input type="radio" name="who" value="5" /> Other<br />
+				<br />
 				
+
 				<label>School:
 				<span class="small">Primary school to rate</span>
 				</label>
