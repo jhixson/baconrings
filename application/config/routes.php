@@ -42,6 +42,7 @@ $route['404_override'] = '';
 $route['pages/(:any)'] = 'pages/view/$1';
 $route['(:any)/(:any)'] = 'campus/category/$1/$2';
 $route['campus/view'] = 'campus/view';
+$route['best-of'] = 'campus/bestof';
 $route['auth(\/index)?'] = 'auth/index';
 $route['login'] = 'auth/login';
 $route['auth/login'] = 'auth/login';
