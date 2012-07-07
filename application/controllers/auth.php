@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends MY_Controller {
 
 	function __construct()
 	{
@@ -101,7 +101,7 @@ class Auth extends CI_Controller {
 		$logout = $this->ion_auth->logout();
 
 		//redirect them back to the page they came from
-		redirect(base_url().'auth', 'refresh');
+		redirect(base_url(), 'refresh');
 	}
 
 	//change password
@@ -353,10 +353,12 @@ class Auth extends CI_Controller {
 	  $this->load->model('campus_model');
 		$this->data['title'] = "Sign Up";
 
+    /*
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
 			redirect(base_url().'auth', 'refresh');
 		}
+	  */
 
 		//validate form input
 		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');

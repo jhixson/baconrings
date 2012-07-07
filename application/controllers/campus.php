@@ -1,6 +1,6 @@
 <?php
 
-class Campus extends CI_Controller {
+class Campus extends MY_Controller {
   
   function __construct()
 	{
@@ -15,7 +15,7 @@ class Campus extends CI_Controller {
   	$user = $this->facebook->getUser();
   	$this->data['user_profile'] = $user;
   	
-  	$this->data['campuses'] = $this->campus_model->get_list('university', array());
+  	//$this->data['campuses'] = $this->campus_model->get_list('university', array());
 
   	$this->load->view('templates/header', $this->data);
   	$this->load->view('campus/find', $this->data);

@@ -17,8 +17,8 @@
   		<div id="sitetools">
 
   			<div style="float:right;margin:10px 12px 0 0;"><ul>
-  				<li><a href="<?php echo base_url()."auth/create_user" ?>">create account</a></li>
-  				<li><a href="<?php echo base_url()."auth/login" ?>">login</a></li>
+  				<li><a href="<?php echo base_url()."signup" ?>">create account</a></li>
+  				<li><a href="<?php echo base_url()."login" ?>">login</a></li>
   			</ul></div>
 
   		</div>
@@ -32,13 +32,14 @@
 
   		<div id="searchbox" name="searchbox" style="visibility:hidden;" onmouseover="document.getElementById('searchbox').style.visibility='visible';document.getElementById('nav3').src='<?php echo base_url(); ?>images/nav3b.gif';" onmouseout="document.getElementById('searchbox').style.visibility='hidden';document.getElementById('nav3').src='<?php echo base_url(); ?>images/nav3.gif';">
 
-  			<form action="" method="post">
+        <form action="/campus/view" method="post">
 
-  					<select name="">
-  						<option value="">Choose a School</option>
-  						<option value="">Ohio State</option>
-  						<option value="">Syracuse University</option>
-  					</select>
+  					<select name="school">
+      				<option value="">Choose a School</option>
+      				<?php foreach($campuses as $campus): ?>
+        				<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
+        			<?php endforeach ?>
+      			</select>
 
   					<input type="submit" value="GO" class="bluebutton" />
 

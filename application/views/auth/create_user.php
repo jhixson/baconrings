@@ -7,7 +7,7 @@
 			
     <?php echo form_open(base_url()."auth/create_user");?>
 
-				<label style="height:50px;">I am a:
+				<label style="height:100px;">I am a:
 				<span class="small">Who are you?</span>
 				</label>
 				<input type="radio" name="who" value="1" /> Student<br />
