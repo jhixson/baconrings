@@ -200,7 +200,7 @@ h1{
 #campusinfo{
 	width:935px;
 	height:41px;
-	background-color:#e1e1e1;
+	background-color:#b2e6f4;
 	border-top: 1px solid #000;
 	border-bottom: 1px solid #000;
 	padding:12px 7px 12px 7px;
@@ -232,64 +232,73 @@ h1{
 	float:left;
 }
 
+/* boxes on campus page */
+
+#ratingsboxcontainer{
+	width:497px;
+	float:left;
+}
+
 #ratingsbox{
-	float:left;
-	width:298px;
-	height:78px;
-	/*height:151px;*/
-	margin-right:10px;
+	width:497px;
+	background-image:url('/images/ratingsbox_bg.gif');
+	background-repeat:repeat-y;
 }
 
-/*#ratingsboxlist ul{
-	list-style-type:none;
+#ratingsbox td{
+	color:#2d2d2d;
+	font-size:12pt;
+	font-weight:bold;
+	text-transform:uppercase;
 }
 
-#ratingsboxlist li{
-	padding-bottom:4px;
+#ratingsbox a{
+	color:#2d2d2d;
+	font-size:12pt;
+	font-weight:bold;
+	text-transform:uppercase;
+	text-decoration:underline;
 }
 
-#ratingsboxlist a{
-	color:#000000;
+#ratingsbox a:hover{
 	text-decoration:none;
 }
 
-#ratingsboxlist{
+/* boxes for activity feed */
+
+#activitycontainer{
+	margin-left:35px;
+	width:413px;
 	float:left;
-	width:200px;
-	margin-top:0px;
-}*/
-
-#ratingsboxrating{
-	/*width:83px;
-	height:83px;*/
-	width:78px;
-	height:78px;
-	text-align:center;
-	float:right;
-	margin:10px 5px 0 0;
 }
 
-#ratingsboxrating .avg{
-	color:#ffffff;
-	font-size:10pt;
+#activity{
+	width:413px;
+	background-image:url('/images/activity_bg.gif');
+	background-repeat:repeat-y;
 }
 
-#ratingsboxrating .rating{
-	color:#ffffff;
-	font-size:25pt;
+#activity td{
+	color:#2d2d2d;
+	font-size:11pt;
+	line-height:28px;
+}
+
+#activity td .mainlink{
+	font-size:12pt;
+}
+
+#activity a{
+	color:#2d2d2d;
+	font-size:11pt;
 	font-weight:bold;
+	text-decoration:underline;
 }
 
-/*#seeall a{
-	float:right;
-	margin:18px 15px 0 0;
-	font-weight:bold;
-	font-size:10pt;
-	padding:5px;
-	color:#ffffff;
+#activity a:hover{
+	color:#2d2d2d;
 	text-decoration:none;
-}*/
-
+}
 
 /* used on category (i.e. dorm) page */
 
@@ -402,6 +411,15 @@ h1{
 	font-weight:bold;
 }
 
+.ratingscopy{
+	font-size:11pt;
+}
+
+.ratingsauthor{
+	color:#2d2d2d;
+	font-style:italic;
+	font-size:10pt;
+}
 
 /* form stuff */
 

@@ -7,8 +7,10 @@ class Campus_model extends CI_Model {
 	}
 
 	// Get all campuses
-	public function get_list($table, $where = array(), $limit = 100000, $offset = 0) {
+	public function get_list($table, $where = array(), $limit = 100000, $offset = 0, $order_by = '') {
 	
+  	if(!empty($order_by))
+  	  $this->db->order_by($order_by, "asc");
 		return $this->db->get_where($table, $where, $limit, $offset)->result();
 	
 	}

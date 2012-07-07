@@ -6,7 +6,7 @@ class MY_Controller extends CI_Controller {
 	{
 	  parent::__construct();
 		$this->load->model('campus_model');
-		$this->data['campuses'] = $this->campus_model->get_list('university', array());
+		$this->data['campuses'] = $this->campus_model->get_list('university', array(), null, null, 'university_name');
 	}
 	
 }

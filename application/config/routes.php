@@ -39,6 +39,7 @@
 */
 
 $route['404_override'] = '';
+$route['pages/(:any)'] = 'pages/view/$1';
 $route['(:any)/(:any)'] = 'campus/category/$1/$2';
 $route['campus/view'] = 'campus/view';
 $route['auth(\/index)?'] = 'auth/index';
@@ -48,7 +49,6 @@ $route['logout'] = 'auth/logout';
 $route['auth/logout'] = 'auth/logout';
 $route['signup'] = 'auth/create_user';
 $route['auth/create_user'] = 'auth/create_user';
-
 
 $route['(:any)'] = 'campus/view/$1';
 $route['default_controller'] = 'campus/find';
