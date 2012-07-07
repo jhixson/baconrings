@@ -2,7 +2,7 @@
 	<p></p>
 	<div id="infoMessage"><?php echo $message;?></div>
   <div id="signup" class="signup" style="float:left;">
-    <?php echo form_open("auth/login");?>
+    <?php echo form_open(base_url()."auth/login");?>
     	
       <label for="identity" class="labelpadding">Email:</label>
       <?php $identity = array('name' => 'identity', 'id' => 'identity', 'class' => 'textinput', 'tabindex' => '1'); ?>

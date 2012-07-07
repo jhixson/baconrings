@@ -8,7 +8,7 @@
 			<strong>Navigate</strong>
 			<ul>
 				<li><a href="index.php">Home</a></li>
-				<li><a href="myschools.php">My Schools</a></li>
+				<li><a href="favorites.php">My Schools</a></li>
 				<li><a href="find.php">Find Schools</a></li>
 				<li><a href="bestof.php">Best of</a></li>
 			</ul>
@@ -37,7 +37,7 @@
 			<a href=""><img src="<?php echo base_url(); ?>images/footer_twitter.gif" hspace="10" height="31" width="31" border="0" alt="twitter" /></a>
 			<a href=""><img src="<?php echo base_url(); ?>images/footer_rss.gif" height="31" width="31" border="0" alt="rss" /></a>
 
-			<p />&copy;<?php echo date("Y"); ?> RateMyCampus, All Rights Reserved.
+			<p />&copy;<?php echo date("Y") ?> RateMyCampus, All Rights Reserved.
 
 		</div>
 

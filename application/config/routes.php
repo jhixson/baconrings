@@ -40,7 +40,10 @@
 
 $route['404_override'] = '';
 $route['(:any)/(:any)'] = 'campus/category/$1/$2';
-$route['(:any)/dining-halls'] = 'campus/dining_halls/$1';
+$route['campus/post_find'] = 'campus/post_find';
+$route['auth(\/index)?'] = 'auth/index';
+$route['auth/login'] = 'auth/login';
+$route['auth/create_user'] = 'auth/create_user';
 
 
 $route['(:any)'] = 'campus/view/$1';
