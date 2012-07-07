@@ -51,6 +51,9 @@ $route['auth/logout'] = 'auth/logout';
 $route['signup'] = 'auth/create_user';
 $route['auth/create_user'] = 'auth/create_user';
 
+$route['forms/submit-correction'] = 'forms/submitcorrection';
+$route['forms/submit-correction-thanks'] = 'forms/submitcorrectionthanks';
+
 $route['(:any)'] = 'campus/view/$1';
 $route['default_controller'] = 'campus/find';
 

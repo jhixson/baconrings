@@ -5,6 +5,8 @@ class Campus extends MY_Controller {
   function __construct()
 	{
 		parent::__construct();
+    $this->load->library('session');
+    $this->load->library('form_validation');
 		$this->load->model('campus_model');
 	}
 
@@ -67,7 +69,6 @@ class Campus extends MY_Controller {
     $this->load->view('campus/bestof', $this->data);
     $this->load->view('templates/footer', $this->data);
   }
-
 
 
 	// trying to figure out facebook login
