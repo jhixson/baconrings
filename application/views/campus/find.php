@@ -1,5 +1,7 @@
 <h1>Campus Ratings</h1>
 
+<?php if($user_profile) var_dump($user_profile); ?>
+
 <p>Rate dorms, dining halls, libraries, bookstores, greek life, and everything else on your college campus:
 
 <p></p>

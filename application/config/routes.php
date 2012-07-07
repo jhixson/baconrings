@@ -38,11 +38,13 @@
 |
 */
 
-$route['default_controller'] = "welcome";
 $route['404_override'] = '';
+$route['(:any)/(:any)'] = 'campus/category/$1/$2';
+$route['(:any)/dining-halls'] = 'campus/dining_halls/$1';
 
+
+$route['(:any)'] = 'campus/view/$1';
 $route['default_controller'] = 'campus/find';
-$route['(:any)'] = 'pages/view/$1';
 
 
 /* End of file routes.php */

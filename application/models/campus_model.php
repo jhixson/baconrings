@@ -6,10 +6,18 @@ class Campus_model extends CI_Model {
 		parent::__construct();
 	}
 
-	// Retrieve a list without markup
-	public function get_campuses($table, $where = array()) {
+	// Get all campuses
+	public function get_list($table, $where = array(), $limit = 100000, $offset = 0) {
 	
-		return $this->db->get_where($table, $where)->result();
+		return $this->db->get_where($table, $where, $limit, $offset)->result();
 	
 	}
+	
+	// Get a single campus
+	public function get_single($table, $where = array(), $limit = 1, $offset = 0) {
+	
+		return $this->db->get_where($table, $where, $limit, $offset)->row();
+	
+	}
+	
 }
