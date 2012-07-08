@@ -24,8 +24,8 @@
 		$bgcolor="#e1e1e1";
 		foreach($item_ratings as $k => $v): ?>
 			<tr bgcolor="<?php echo $bgcolor ?>">
-				<td align="center"><a href=""><img src="<?php echo base_url(); ?>images/rate_it_small.png" border="0" width="76" height="21" alt="rate it" /></a></td>
-				<td><a href="" style="color:#<?php echo $category->category_color1 ?>;text-decoration:none;font-weight:bold;"><?php echo $k ?></a></td>
+				<td align="center"><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug."/rate" ?>"><img src="<?php echo base_url(); ?>images/rate_it_small.png" border="0" width="76" height="21" alt="rate it" /></a></td>
+				<td><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug ?>" style="color:#<?php echo $category->category_color1 ?>;text-decoration:none;font-weight:bold;"><?php echo $k ?></a></td>
 				<td align="center"><?php echo $v->total ?></td>
 				<td align="center"><?php echo number_format($v->score, 2, '.', ',') ?></td>
 				<td align="right">

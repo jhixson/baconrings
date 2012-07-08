@@ -674,3 +674,12 @@ h1{
 	margin-left:30px;
 }
 
+.rating_bar {
+    background-color: #c4c4c4;
+    overflow: hidden;
+}
+.rating_bar span { 
+    display: block;
+    background-color: #01B6DB;
+    padding-left: 6px;
+}​

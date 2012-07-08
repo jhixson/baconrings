@@ -48,7 +48,7 @@
 		<?php foreach($category_ratings as $k => $v): ?>
 			<tr>
 				<td align="right" width="45" style="color:#<?php echo $v->color ?>;font-size:26pt;line-height:25px;">&#8226;</td>
-				<td width="210"><a href="<?php echo $campus->university_slug."/".$v->slug ?>"><?php echo $k ?></a></td>
+				<td width="210"><a href="/<?php echo $campus->university_slug."/".$v->slug ?>"><?php echo $k ?></a></td>
 				<td width="50"><?php echo number_format($v->score, 2, '.', ',') ?></td>
 				<td width="120" align="right"><?php echo $v->total ?></td>
 			</tr>

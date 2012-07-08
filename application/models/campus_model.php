@@ -10,6 +10,7 @@ class Campus_model extends CI_Model {
 	public function get_list($table, $where = array(), $limit = 100000, $offset = 0, $order_by = '') {
   	if(!empty($order_by))
   	  $this->db->order_by($order_by, "asc");
+  
 		return $this->db->get_where($table, $where, $limit, $offset)->result();
 	}
 	
@@ -30,14 +31,6 @@ class Campus_model extends CI_Model {
 	}
 	
 	public function get_rating_for_category($university_id, $category_id) {
-	  /*
-	  $this->db->select('item.item_id, rating.rating_id, attributerating.attributerating_rating, avg(attributerating.attributerating_rating) as score, count(rating.rating_id) as total');
-    $this->db->from('item');
-    $this->db->join('rating', 'item.item_id = rating.item_id', 'inner');
-    $this->db->join('attributerating', 'rating.rating_id = attributerating.rating_id', 'inner');
-    $this->db->where('item.category_id', $category_id); 
-    $this->db->where('item.university_id', $university_id); 
-    */
     $sql = "select avg(ar) as score, count(*) as total from (SELECT item.item_id, rating.rating_id, attributerating.attributerating_rating as ar
     FROM  `item` 
     INNER JOIN rating ON ( item.item_id = rating.item_id ) 
@@ -50,24 +43,56 @@ class Campus_model extends CI_Model {
 	}
 	
 	public function get_rating_for_item($item_id) {
-	  /*
-	  $this->db->select('item.item_id, rating.rating_id, attributerating.attributerating_rating, avg(attributerating.attributerating_rating) as score, count(rating.rating_id) as total');
-    $this->db->from('item');
-    $this->db->join('rating', 'item.item_id = rating.item_id', 'inner');
-    $this->db->join('attributerating', 'rating.rating_id = attributerating.rating_id', 'inner');
-    $this->db->where('item.item_id', $item_id); 
-    */
-    $sql = "select avg(ar) as score, count(*) as total from (SELECT item.item_id, rating.rating_id, attributerating.attributerating_rating as ar
+    $sql = "select item.item_id, rating.rating_id, AVG( attributerating.attributerating_rating ) AS score, attribute.attribute_name
+    FROM  `item` 
+    INNER JOIN rating ON ( item.item_id = rating.item_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id
+    AND item.item_id = rating.item_id ) 
+    INNER JOIN attribute ON ( attribute.category_id = item.category_id
+    AND attribute.attribute_id = attributerating.attribute_id ) 
+    WHERE item.item_id = ?
+    GROUP BY item.item_id";
+
+    return $this->db->query($sql, array($item_id))->row();
+	}
+  
+  public function ger_attribute_ratings($item_id) {
+    $sql = "select item.item_id, rating.rating_id, AVG( attributerating.attributerating_rating ) AS score, attribute.attribute_name
+    FROM  `item` 
+    INNER JOIN rating ON ( item.item_id = rating.item_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id
+    AND item.item_id = rating.item_id ) 
+    INNER JOIN attribute ON ( attribute.category_id = item.category_id
+    AND attribute.attribute_id = attributerating.attribute_id ) 
+    WHERE item.item_id = ?
+    GROUP BY attribute.attribute_name";
+    
+    //$this->db->query($sql, array($item_id));
+    //$query = $this->db->get();
+    //die($this->db->last_query());
+
+    return $this->db->query($sql, array($item_id))->result();
+	}
+	
+	public function get_num_ratings_for_item($item_id) {
+	  $sql = "select count(*) as total from (SELECT item.item_id, rating.rating_id, attributerating.attributerating_rating as ar
     FROM  `item` 
     INNER JOIN rating ON ( item.item_id = rating.item_id ) 
     INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
     WHERE item.item_id = ?
     GROUP BY rating.rating_id) as x";
     
-    //$query = $this->db->get();
-    //die($this->db->last_query());
-
-    return $this->db->query($sql, array($item_id))->row();
+    return $this->db->query($sql, array($item_id))->row()->total;
+	}
+	
+	public function get_user_ratings($item_id, $rating_id) {
+	  $sql = "select rating.rating_date, attributerating.attributerating_rating, attribute.attribute_name
+    FROM `rating`
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
+    INNER JOIN attribute ON ( attributerating.attribute_id = attribute.attribute_id ) 
+    WHERE rating.item_id = ? AND rating.rating_id = ?";
+    
+    return $this->db->query($sql, array($item_id, $rating_id))->result();
 	}
 	
 	public function get_rating_for_all($category_id) {

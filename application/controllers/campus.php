@@ -67,8 +67,8 @@ class Campus extends MY_Controller {
   	$items = array();
   	foreach($this->data['items'] as $item) {
   	  $items[$item->item_name] = $this->campus_model->get_rating_for_item($item->item_id);
-  	  //$categories[$category->category_name]->color = $category->category_color2;
-  	  //$categories[$category->category_name]->slug = $category->category_slug;
+  	  $items[$item->item_name]->slug = $item->item_slug;
+  	  $items[$item->item_name]->total = $this->campus_model->get_num_ratings_for_item($item->item_id);
   	}
   	
   	//print_r($items);
@@ -83,6 +83,38 @@ class Campus extends MY_Controller {
   	
 	  $this->load->view('templates/header', $this->data);
   	$this->load->view('campus/category', $this->data);
+  	$this->load->view('templates/footer', $this->data);
+	}
+	
+	public function item($campus_slug, $category_slug, $item_slug) {
+	  $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
+  	$this->data['category'] = $this->campus_model->get_single('category', array('category_slug' => $category_slug));
+  	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $item_slug, 'category_id' => $this->data['category']->category_id, 'university_id' => $this->data['campus']->university_id));
+  	
+  	if($this->data['item'])
+  	  $this->data['title'] = "Ratings for " . $this->data['item']->item_name . " at " . $this->data['campus']->university_name;
+  	else
+    	show_404(); // instead of this we need a "no items found message"
+    	
+  	$this->data['overall_rating'] = $this->campus_model->get_rating_for_item($this->data['item']->item_id);
+  	$this->data['num_ratings'] = $this->campus_model->get_num_ratings_for_item($this->data['item']->item_id);
+  	$this->data['item_ratings'] = $this->campus_model->ger_attribute_ratings($this->data['item']->item_id);
+  	
+  	$comments_list = $this->campus_model->get_list('rating', array('item_id' => $this->data['item']->item_id));
+  	$comments = array();
+  	foreach($comments_list as $c) {
+  	  $comments[$c->rating_id]->ratings = $this->campus_model->get_user_ratings($c->item_id, $c->rating_id);
+  	  $comments[$c->rating_id]->comment_text = $c->rating_comments;
+  	  $comments[$c->rating_id]->rating_date = $c->rating_date;
+	  }
+	  
+	  //print_r($comments);
+  	//die();
+  	
+  	$this->data['comments'] = $comments;
+  		  
+	  $this->load->view('templates/header', $this->data);
+  	$this->load->view('campus/item', $this->data);
   	$this->load->view('templates/footer', $this->data);
 	}
 	

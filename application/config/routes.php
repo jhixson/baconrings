@@ -40,6 +40,7 @@
 
 $route['404_override'] = '';
 $route['pages/(:any)'] = 'pages/view/$1';
+$route['(:any)/(:any)/(:any)'] = 'campus/item/$1/$2/$3';
 $route['(:any)/(:any)'] = 'campus/category/$1/$2';
 $route['campus/view'] = 'campus/view';
 $route['best-of'] = 'campus/bestof';
