@@ -27,9 +27,16 @@
 
 	<div id="homeright">
 
-	<a href="" class="homerightname">Dellplain Hall</a>
-	<br />at <a href="" class="homerightlink">Syracuse University</a>
-	<div style="margin-top:5px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tincidunt, purus non sodales lorem...</div>
+	<br /><a href="" class="homerightname">Syracuse University</a>
+	
+	<br /><a href="" class="homerightname">Ithaca College</a>
+
+	<br /><a href="" class="homerightname">University of Connecticut</a>
+
+	<br /><a href="" class="homerightname">Syracuse University</a>
+
+	<br /><a href="" class="homerightname">Syracuse University</a>
+
 
 </div>
 

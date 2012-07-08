@@ -84,6 +84,28 @@ class Campus extends MY_Controller {
   }
   
 
+  // favorites for schools
+  public function favorites()
+  {
+    $this->data['title'] = 'My Favorites';
+
+    $this->data['faves'] = $this->campus_model->get_fave_schools('2');
+    $this->data['favorites'] = $this->campus_model->get_faves('1');
+
+    $favorites = array();
+    foreach($this->data['faves'] as $fave) {
+      $favorites[$fave->university_name] = $this->campus_model->get_faves($fave->university_id);
+    }
+
+    //die(print_r($favorites, true));
+
+
+    $this->load->view('templates/header', $this->data);
+    $this->load->view('campus/favorites', $this->data);
+    $this->load->view('templates/footer', $this->data);
+  }
+
+
 	// trying to figure out facebook login
 	public function fb()
 	{

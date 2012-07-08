@@ -56,4 +56,34 @@ class Campus_model extends CI_Model {
 	  });
     return key($arr);
 	}
+
+
+	//for favorites page - schools
+	public function get_fave_schools($id) {
+	  $this->db->select('university.university_id, university.university_name, university.university_slug');
+    $this->db->from('favorites');
+    $this->db->join('item', 'favorites.item_id = item.item_id', 'inner');
+    $this->db->join('university', 'item.university_id = university.university_id', 'inner');
+    $this->db->where('favorites.id', $id);
+
+    return $this->db->get()->result();
+	}
+
+
+	//for favorites page - favorites
+	public function get_faves($university_id) {
+	  $this->db->select('item.item_name, item.item_slug, category.category_name, category.category_slug');
+    $this->db->from('item');
+    $this->db->join('category', 'item.category_id = category.category_id', 'inner');
+    $this->db->where('item.university_id', $university_id);
+
+    //$query = $this->db->get();
+    //die($this->db->last_query());
+    
+    return $this->db->get()->result();
+	}
+
+
+
+
 }

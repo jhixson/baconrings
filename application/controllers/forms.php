@@ -459,4 +459,78 @@ class Forms extends MY_Controller {
 
   }
 
+
+// rate form
+  public function rate()
+  {
+    $this->data['title'] = 'Rate It';
+    
+    //set the flash data error message if there is one
+    $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+    $this->load->view('templates/header', $this->data);
+    $this->load->view('forms/rate', $this->data);
+    $this->load->view('templates/footer', $this->data);
+  }
+
+
+  public function ratethanks()
+  {
+    $this->data['title'] = 'Rating Submitted';
+
+    //validate form input
+    $this->form_validation->set_rules('att1', 'first attribute', 'required');
+    $this->form_validation->set_rules('att2', 'second attribute', 'required');
+    $this->form_validation->set_rules('att3', 'third attribute', 'required');
+    $this->form_validation->set_rules('comments', 'comments', 'required');
+
+    $this->form_validation->set_error_delimiters('<li>','</li>');
+
+    if ($this->form_validation->run() == true)
+    {
+
+         $name = $this->input->post('name');
+         $att1 = $this->input->post('att1');
+         $att2 = $this->input->post('att2');
+         $att3 = $this->input->post('att3');
+         $comments = $this->input->post('comments');
+
+        $this->load->view('templates/header', $this->data);
+        $this->load->view('forms/ratethanks', $this->data);
+        $this->load->view('templates/footer', $this->data);
+    }
+    else
+    {
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+
+      $this->data['att1'] = array('name' => 'att1',
+        'id' => 'att1',
+        'type' => 'radio',
+        'value' => $this->form_validation->set_value('att1'),
+      );
+      $this->data['att2'] = array('name' => 'att2',
+        'id' => 'att2',
+        'type' => 'radio',
+        'value' => $this->form_validation->set_value('att2'),
+      );
+      $this->data['att3'] = array('name' => 'att3',
+        'id' => 'att3',
+        'type' => 'radio',
+        'value' => $this->form_validation->set_value('att3'),
+      );
+      $this->data['comments'] = array('name' => 'comments',
+        'id' => 'comments',
+        'type' => 'text',
+        'value' => $this->form_validation->set_value('comments'),
+      );
+
+       $this->load->view('templates/header', $this->data);
+       $this->load->view('forms/rate', $this->data);
+       $this->load->view('templates/footer', $this->data);
+
+    }  
+
+  }
+
 }
