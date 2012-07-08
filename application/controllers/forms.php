@@ -8,6 +8,7 @@ class Forms extends MY_Controller {
     $this->load->library('session');
     $this->load->library('form_validation');
 		$this->load->model('campus_model');
+    $this->load->model('forms_model');
 	}
 
   
@@ -43,6 +44,17 @@ class Forms extends MY_Controller {
          $school = $this->input->post('school');
          $comments = $this->input->post('comments');
       
+         //insert stuff
+         $data = array(
+          'correction_name' => $name ,
+          'correction_email' => $email ,
+          'correction_school' => $school ,
+          'correction_comments' => $comments ,
+          'correction_date' => date("Y-m-d")
+        );
+
+         $this->forms_model->input_stuff('correction',$data);
+
          // email functionality here
         $to = "peruta@peruta.com";
         $subject = "RateMyCampus correction form";
@@ -255,6 +267,133 @@ class Forms extends MY_Controller {
     }  
 
   }
+
+
+// add item form
+  public function additem()
+  {
+    $this->data['title'] = 'Suggest an Item to Add';
+    
+    //set the flash data error message if there is one
+    $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+    //pass in list of schools
+    $this->data['schools']= $this->campus_model->get_list('university', array(), null, null, 'university_name');
+
+    //pass in list of categories
+    $this->data['categories']= $this->campus_model->get_list('category', array(), null, null, 'category_name');    
+
+    $this->load->view('templates/header', $this->data);
+    $this->load->view('forms/additem', $this->data);
+    $this->load->view('templates/footer', $this->data);
+  }
+
+
+  public function additemthanks()
+  {
+    $this->data['title'] = 'Thank You for Your Suggestion';
+
+    //pass in list of schools
+    $this->data['schools']= $this->campus_model->get_list('university', array(), null, null, 'university_name');
+
+    //pass in list of categories
+    $this->data['categories']= $this->campus_model->get_list('category', array(), null, null, 'category_name');   
+
+    //validate form input
+    $this->form_validation->set_rules('email', 'email address', 'required|valid_email');
+    $this->form_validation->set_rules('school', 'school', 'required');
+    $this->form_validation->set_rules('item', 'item', 'required');
+    $this->form_validation->set_rules('category', 'category', 'required');
+
+    $this->form_validation->set_error_delimiters('<li>','</li>');
+
+    if ($this->form_validation->run() == true)
+    {
+
+         $name = $this->input->post('name');
+         $email = $this->input->post('email');
+         $school = $this->input->post('school');
+         $item = $this->input->post('item');
+         $category = $this->input->post('category');
+         $address = $this->input->post('address');
+         $phone = $this->input->post('phone');
+         $description = $this->input->post('description');
+
+      
+         // email functionality here
+        $to = "peruta@peruta.com";
+        $subject = "RateMyCampus add item form";
+        $emailmessage = "Name: " . $name . "\n";
+        $emailmessage .= "Email: "  . $email . "\n";
+        $emailmessage .= "School: " . $school . "\n";
+        $emailmessage .= "Item: " . $item . "\n";
+        $emailmessage .= "Category: " . $category . "\n";
+        $emailmessage .= "Address: " . $address . "\n";
+        $emailmessage .= "Phone: " . $phone . "\n";
+        $emailmessage .= "Description: " . $description . "\n";
+
+        $from = $email;
+        $headers = "From:" . $email;
+        mail($to,$subject,$emailmessage,$headers);
+
+        $this->load->view('templates/header', $this->data);
+        $this->load->view('forms/additemthanks', $this->data);
+        $this->load->view('templates/footer', $this->data);
+    }
+    else
+    {
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+
+      $this->data['name'] = array('name' => 'name',
+        'id' => 'name',
+        'type' => 'text',
+        'value' => $this->input->post('name')
+      );
+      $this->data['email'] = array('name' => 'email',
+        'id' => 'email',
+        'type' => 'text',
+        'value' => $this->form_validation->set_value('email'),
+      );
+      $this->data['school'] = array('name' => 'school',
+        'id' => 'school',
+        'type' => 'text',
+        'value' => $this->input->post('school')
+      );
+      $this->data['item'] = array('name' => 'item',
+        'id' => 'item',
+        'type' => 'text',
+        'value' => $this->form_validation->set_value('item'),
+      );
+      $this->data['category'] = array('name' => 'category',
+        'id' => 'category',
+        'type' => 'text',
+        'value' => $this->form_validation->set_value('category'),
+      );
+      $this->data['address'] = array('name' => 'address',
+        'id' => 'address',
+        'type' => 'text',
+        'value' => $this->input->post('address')
+      );
+      $this->data['phone'] = array('name' => 'phone',
+        'id' => 'phone',
+        'type' => 'text',
+        'value' => $this->input->post('phone')
+      );
+      $this->data['description'] = array('name' => 'description',
+        'id' => 'description',
+        'type' => 'text',
+        'value' => $this->input->post('description')
+      );
+
+       $this->load->view('templates/header', $this->data);
+       $this->load->view('forms/additem', $this->data);
+       $this->load->view('templates/footer', $this->data);
+
+    }  
+
+  }
+
 
 
 

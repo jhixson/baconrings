@@ -60,6 +60,8 @@ $route['forms/forgot-password'] = 'forms/forgotpassword';
 $route['forms/forgot-password-thanks'] = 'forms/forgotpasswordthanks';
 $route['forms/add-category'] = 'forms/addcategory';
 $route['forms/add-category-thanks'] = 'forms/addcategorythanks';
+$route['forms/add-item'] = 'forms/additem';
+$route['forms/add-item-thanks'] = 'forms/additemthanks';
 
 $route['(:any)'] = 'campus/view/$1';
 $route['default_controller'] = 'campus/find';
