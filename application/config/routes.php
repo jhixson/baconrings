@@ -50,9 +50,16 @@ $route['logout'] = 'auth/logout';
 $route['auth/logout'] = 'auth/logout';
 $route['signup'] = 'auth/create_user';
 $route['auth/create_user'] = 'auth/create_user';
+$route['auth/forgot_password'] = 'auth/forgot_password';
 
 $route['forms/submit-correction'] = 'forms/submitcorrection';
 $route['forms/submit-correction-thanks'] = 'forms/submitcorrectionthanks';
+$route['forms/contact'] = 'forms/contact';
+$route['forms/contact-thanks'] = 'forms/contactthanks';
+$route['forms/forgot-password'] = 'forms/forgotpassword';
+$route['forms/forgot-password-thanks'] = 'forms/forgotpasswordthanks';
+$route['forms/add-category'] = 'forms/addcategory';
+$route['forms/add-category-thanks'] = 'forms/addcategorythanks';
 
 $route['(:any)'] = 'campus/view/$1';
 $route['default_controller'] = 'campus/find';

@@ -21,4 +21,6 @@ class Pages extends MY_Controller {
   	$this->load->view('pages/'.$page, $data);
   	$this->load->view('templates/footer', $data);
 	}
+
+
 }

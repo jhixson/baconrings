@@ -69,7 +69,7 @@ class Campus extends MY_Controller {
     $this->load->view('campus/bestof', $this->data);
     $this->load->view('templates/footer', $this->data);
   }
-
+  
 
 	// trying to figure out facebook login
 	public function fb()

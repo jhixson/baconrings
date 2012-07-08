@@ -1,62 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<title>404 Page Not Found</title>
-<style type="text/css">
+	<title>404 Page Not Found - RateMyCampus</title>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/general.css" />
 
-::selection{ background-color: #E13300; color: white; }
-::moz-selection{ background-color: #E13300; color: white; }
-::webkit-selection{ background-color: #E13300; color: white; }
+  	</head>
 
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
+  <body>
 
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
+  <div id="container">
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
+  	<div id="logo"><a href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>images/logo.gif" border="0" height="98" width="318" /></a></div>
 
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
+  	<div id="header">
 
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	-webkit-box-shadow: 0 0 8px #D0D0D0;
-}
+  		<div id="sitetools">
 
-p {
-	margin: 12px 15px 12px 15px;
-}
-</style>
-</head>
-<body>
-	<div id="container">
+  			<div style="float:right;margin:10px 12px 0 0;"><ul>
+  				<li><a href="<?php echo base_url()."signup" ?>">create account</a></li>
+  				<li><a href="<?php echo base_url()."login" ?>">login</a></li>
+  			</ul></div>
+
+  		</div>
+
+  		<div id="navigation">
+  			<a href="<?php echo base_url(); ?>" onmouseover="document.nav1.src='<?php echo base_url(); ?>images/nav1b.gif'" onmouseout="document.nav1.src='<?php echo base_url(); ?>images/nav1.gif'"><img src="<?php echo base_url(); ?>images/nav1.gif" id="nav1" name="nav1" border="0" height="61" width="138" alt="home" /></a><a
+  			href="favorites.php" onmouseover="document.nav2.src='<?php echo base_url(); ?>images/nav2b.gif'" onmouseout="document.nav2.src='<?php echo base_url(); ?>images/nav2.gif'"><img src="<?php echo base_url(); ?>images/nav2.gif" id="nav2" name="nav2" border="0" height="61" width="178" alt="my schools" /></a><a
+  			href="find.php" onmouseover="document.nav3.src='<?php echo base_url(); ?>images/nav3b.gif';document.getElementById('searchbox').style.visibility='visible';" onmouseout="document.nav3.src='<?php echo base_url(); ?>images/nav3.gif';document.getElementById('searchbox').style.visibility='hidden';"><img src="<?php echo base_url(); ?>images/nav3.gif" id="nav3" name="nav3" border="0" height="61" width="185" alt="find schools" /></a><a
+  			href="bestof.php" onmouseover="document.nav4.src='<?php echo base_url(); ?>images/nav4b.gif'" onmouseout="document.nav4.src='<?php echo base_url(); ?>images/nav4.gif'"><img src="<?php echo base_url(); ?>images/nav4.gif" id="nav4" name="nav4" border="0" height="61" width="151" alt="best of" /></a>
+  		</div>
+
+  		<div id="searchbox" name="searchbox" style="visibility:hidden;" onmouseover="document.getElementById('searchbox').style.visibility='visible';document.getElementById('nav3').src='<?php echo base_url(); ?>images/nav3b.gif';" onmouseout="document.getElementById('searchbox').style.visibility='hidden';document.getElementById('nav3').src='<?php echo base_url(); ?>images/nav3.gif';">
+
+        <form action="/campus/view" method="post">
+
+  					<select name="school">
+      				<option value="">Choose a School</option>
+      				<?php foreach($campuses as $campus): ?>
+        				<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
+        			<?php endforeach ?>
+      			</select>
+
+  					<input type="submit" value="GO" class="bluebutton" />
+
+  			</form>
+
+  		</div>
+
+  	</div>
+
+
+  	<div id="clear" style="clear:both;"></div>
+
+
+  	<div id="main">
+
+  		<img src="/images/404.gif" border="0" alt="i heart college" align="right" height="216" width="286" />
+
 		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
+		
+		<p><?php echo $message; ?> What should you do now??</strong></p>
+
+		<ul>
+			<p><li>If you entered in the URL by hand, be sure to double check that it's right.</li></p>
+			<p><li>You can <a href="javascript:history.back();">go back</a> and try to do whatever you did again.</li></p>
+			<p><li>Or, head <a href="/">home</a> and start your journey from scratch.</li></p>
+		</ul>
+	
+	</div>	
+
+	<div id="footerline"></div>
+
+	<div id="footer">
+
+		<div id="footertext">
+			<strong>Navigate</strong>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="favorites.php">My Schools</a></li>
+				<li><a href="find.php">Find Schools</a></li>
+				<li><a href="bestof.php">Best of</a></li>
+			</ul>
+		</div>
+
+		<div id="footertext">
+			<strong>Need Help?</strong>
+			<ul>
+				<li><a href="/pages/faqs">FAQ</a></li>
+				<li><a href="contact.php">Contact Us</a></li>
+				<li><a href="/pages/rss">RSS</a></li>
+			</ul>
+		</div>
+
+		<div id="footertext">
+			<strong>Site Policies</strong>
+			<ul>
+				<li><a href="/pages/terms-of-use">Terms of Use</a></li>
+				<li><a href="/pages/privacy-policy">Privacy Policy</a></li>
+				<li><a href="/pages/site-guidelines">Site Guidelines</a></li>
+			</ul>
+		</div>
+
+		<div id="footertextright">
+			<a href=""><img src="<?php echo base_url(); ?>images/footer_facebook.gif" height="31" width="31" border="0" alt="facebook" /></a>
+			<a href=""><img src="<?php echo base_url(); ?>images/footer_twitter.gif" hspace="10" height="31" width="31" border="0" alt="twitter" /></a>
+			<a href=""><img src="<?php echo base_url(); ?>images/footer_rss.gif" height="31" width="31" border="0" alt="rss" /></a>
+
+			<p />&copy;<?php echo date("Y") ?> RateMyCampus, All Rights Reserved.
+
+		</div>
+
 	</div>
+
+</div>
+
 </body>
+
 </html>
