@@ -36,6 +36,19 @@ class Campus extends MY_Controller {
   	else
     	show_404();
   	
+  	$this->data['categories'] = $this->campus_model->get_categories($this->data['campus']->university_id);
+  	
+  	$categories = array();
+  	foreach($this->data['categories'] as $category) {
+  	  $categories[$category->category_name] = $this->campus_model->get_rating($this->data['campus']->university_id, $category->category_id);
+  	  $categories[$category->category_name]->color = $category->category_color2;
+  	}
+  	
+  	$this->data['best_thing'] = $this->campus_model->best_thing($categories);
+  	$this->data['worst_thing'] = $this->campus_model->worst_thing($categories);
+  	
+  	$this->data['category_ratings'] = $categories;
+  	
 	  $this->load->view('templates/header', $this->data);
   	$this->load->view('campus/view', $this->data);
   	$this->load->view('templates/footer', $this->data);

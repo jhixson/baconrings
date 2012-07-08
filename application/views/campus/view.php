@@ -28,8 +28,8 @@
 		</div>
 
 		<div id="campusinfobest2">
-		DORMS
-		<br />LIBRARIES
+		<?php echo $best_thing; ?>
+		<br /><?php echo $worst_thing; ?>
 		</div>
 	</div>
 
@@ -45,24 +45,17 @@
 	<div id="ratingsbox">
 	
 		<table cellpadding="3" cellspacing="0" border="0">
-
+		<?php foreach($category_ratings as $k => $v): ?>
 			<tr>
-				<td align="right" width="45" style="color:#e571bc;font-size:26pt;line-height:25px;">&#8226;</td>
-				<td width="210"><a href="">DINING HALLS</a></td>
-				<td width="50">3.2</td>
-				<td width="120" align="right">20</td>
+				<td align="right" width="45" style="color:#<?php echo $v->color ?>;font-size:26pt;line-height:25px;">&#8226;</td>
+				<td width="210"><a href=""><?php echo $k ?></a></td>
+				<td width="50"><?php echo number_format($v->score, 2, '.', ',') ?></td>
+				<td width="120" align="right"><?php echo $v->total ?></td>
 			</tr>
-
-			<tr>
-				<td align="right" width="45" style="color:#00abde;font-size:26pt;line-height:25px;">&#8226;</td>
-				<td width="210"><a href="">DORMS</a></td>
-				<td width="50">4.1</td>
-				<td width="120" align="right">120</td>
-			</tr>
-
+      <?php endforeach ?>
 			<tr>
 				<td></td>
-				<td colspan="3" style="font-size:11pt;text-transform:capitalize;"><br />Don't see what you are looking for? <a style="font-size:10pt;" href="">Add it here</a></td>
+				<td colspan="3" style="font-size:11pt;text-transform:capitalize;"><br />Don't see what you are looking for? <a style="font-size:10pt;" href="/forms/add-category">Add it here</a></td>
 			</tr>
 
 		</table>	
