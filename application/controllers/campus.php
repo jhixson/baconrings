@@ -40,8 +40,9 @@ class Campus extends MY_Controller {
   	
   	$categories = array();
   	foreach($this->data['categories'] as $category) {
-  	  $categories[$category->category_name] = $this->campus_model->get_rating($this->data['campus']->university_id, $category->category_id);
+  	  $categories[$category->category_name] = $this->campus_model->get_rating_for_category($this->data['campus']->university_id, $category->category_id);
   	  $categories[$category->category_name]->color = $category->category_color2;
+  	  $categories[$category->category_name]->slug = $category->category_slug;
   	}
   	
   	$this->data['best_thing'] = $this->campus_model->best_thing($categories);
@@ -63,6 +64,18 @@ class Campus extends MY_Controller {
     	$this->data['items'] = $this->campus_model->get_list('item', array('category_id' => $this->data['category']->category_id, 'university_id' => $this->data['campus']->university_id));
   	}
   	
+  	$items = array();
+  	foreach($this->data['items'] as $item) {
+  	  $items[$item->item_name] = $this->campus_model->get_rating_for_item($item->item_id);
+  	  //$categories[$category->category_name]->color = $category->category_color2;
+  	  //$categories[$category->category_name]->slug = $category->category_slug;
+  	}
+  	
+  	//print_r($items);
+  	//die();
+  	
+  	$this->data['item_ratings'] = $items;
+  	
   	if($this->data['items'])
   	  $this->data['title'] = $this->data['category']->category_name . " at " . $this->data['campus']->university_name;
   	else
@@ -77,6 +90,8 @@ class Campus extends MY_Controller {
   public function bestof()
   {
     $this->data['title'] = 'Best of on Campuses';
+    
+    $this->campus_model->get_rating_for_all('1');
     
     $this->load->view('templates/header', $this->data);
     $this->load->view('campus/bestof', $this->data);

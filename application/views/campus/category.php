@@ -22,12 +22,12 @@
 
 		<?php
 		$bgcolor="#e1e1e1";
-		foreach($items as $item): ?>
+		foreach($item_ratings as $k => $v): ?>
 			<tr bgcolor="<?php echo $bgcolor ?>">
 				<td align="center"><a href=""><img src="<?php echo base_url(); ?>images/rate_it_small.png" border="0" width="76" height="21" alt="rate it" /></a></td>
-				<td><a href="" style="color:#<?php echo $category->category_color1 ?>;text-decoration:none;font-weight:bold;"><?php echo $item->item_name; ?></a></td>
-				<td align="center">10</td>
-				<td align="center">3.5</td>
+				<td><a href="" style="color:#<?php echo $category->category_color1 ?>;text-decoration:none;font-weight:bold;"><?php echo $k ?></a></td>
+				<td align="center"><?php echo $v->total ?></td>
+				<td align="center"><?php echo number_format($v->score, 2, '.', ',') ?></td>
 				<td align="right">
 					<a href=""><img src="<?php echo base_url(); ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a><a
 					href=""><img src="<?php echo base_url(); ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a><a

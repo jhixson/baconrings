@@ -19,26 +19,66 @@ class Campus_model extends CI_Model {
 	}
 	
 	public function get_categories($university_id) {
-	  $this->db->select('item.item_id, item.item_name, category.category_id, category.category_name, category.category_color1, category.category_color2, university.university_id, university.university_name');
+	  $this->db->select('item.item_id, item.item_name, category.category_id, category.category_name, category.category_slug, category.category_color1, category.category_color2, university.university_id, university.university_name');
     $this->db->from('item');
     $this->db->join('university', 'item.university_id = university.university_id', 'inner');
     $this->db->join('category', 'item.category_id = category.category_id', 'inner');
     $this->db->where('university.university_id', $university_id);
     $this->db->group_by('category.category_name');
-    
-    //$query = $this->db->get();
-    //die($this->db->last_query());
 
     return $this->db->get()->result();
 	}
 	
-	public function get_rating($university_id, $category_id) {
-	  $this->db->select('item.item_id, rating.rating_id, attributerating.attributerating_rating, avg(attributerating.attributerating_rating) as score, count(*) as total');
+	public function get_rating_for_category($university_id, $category_id) {
+	  /*
+	  $this->db->select('item.item_id, rating.rating_id, attributerating.attributerating_rating, avg(attributerating.attributerating_rating) as score, count(rating.rating_id) as total');
     $this->db->from('item');
     $this->db->join('rating', 'item.item_id = rating.item_id', 'inner');
     $this->db->join('attributerating', 'rating.rating_id = attributerating.rating_id', 'inner');
     $this->db->where('item.category_id', $category_id); 
     $this->db->where('item.university_id', $university_id); 
+    */
+    $sql = "select avg(ar) as score, count(*) as total from (SELECT item.item_id, rating.rating_id, attributerating.attributerating_rating as ar
+    FROM  `item` 
+    INNER JOIN rating ON ( item.item_id = rating.item_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
+    WHERE item.category_id = ?
+    AND item.university_id = ?
+    GROUP BY rating.rating_id) as x";
+
+    return $this->db->query($sql, array($category_id, $university_id))->row();
+	}
+	
+	public function get_rating_for_item($item_id) {
+	  /*
+	  $this->db->select('item.item_id, rating.rating_id, attributerating.attributerating_rating, avg(attributerating.attributerating_rating) as score, count(rating.rating_id) as total');
+    $this->db->from('item');
+    $this->db->join('rating', 'item.item_id = rating.item_id', 'inner');
+    $this->db->join('attributerating', 'rating.rating_id = attributerating.rating_id', 'inner');
+    $this->db->where('item.item_id', $item_id); 
+    */
+    $sql = "select avg(ar) as score, count(*) as total from (SELECT item.item_id, rating.rating_id, attributerating.attributerating_rating as ar
+    FROM  `item` 
+    INNER JOIN rating ON ( item.item_id = rating.item_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
+    WHERE item.item_id = ?
+    GROUP BY rating.rating_id) as x";
+    
+    //$query = $this->db->get();
+    //die($this->db->last_query());
+
+    return $this->db->query($sql, array($item_id))->row();
+	}
+	
+	public function get_rating_for_all($category_id) {
+	  $this->db->select('item.item_id, rating.rating_id, attributerating.attributerating_rating, avg(attributerating.attributerating_rating) as score, count(rating.rating_id) as total');
+    $this->db->from('item');
+    $this->db->join('rating', 'item.item_id = rating.item_id', 'inner');
+    $this->db->join('attributerating', 'rating.rating_id = attributerating.rating_id', 'inner');
+    $this->db->where('item.category_id', $category_id); 
+    
+    //$query = $this->db->get();
+    //die($this->db->last_query());
 
     return $this->db->get()->row();
 	}
