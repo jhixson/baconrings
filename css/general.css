@@ -231,6 +231,7 @@ h1{
 
 #campusinfobest2{
 	float:left;
+	text-transform:uppercase;
 }
 
 /* boxes on campus page */
@@ -314,6 +315,15 @@ h1{
 	float:left;
 	border: 0px solid #999;
 
+}
+
+#listingcontainer a{
+	color:#000000;
+	text-decoration:underline;
+}
+
+#listingcontainer a:hover{
+	text-decoration:none;
 }
 
 .theader{

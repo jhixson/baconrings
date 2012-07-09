@@ -16,7 +16,7 @@
 			<td width="100"></td>
 			<td width="245" class="theader" valign="bottom">NAME</td>
 			<td width="90" class="theader" align="center">TOTAL RATINGS</td>
-			<td width="95" class="theader" align="center">OVERALL RATINGS</td>
+			<td width="95" class="theader" align="center">AVERAGE RATING</td>
 			<td width="96" class="theader" valign="bottom" align="right">SHARE</td>
 		</tr>
 
@@ -47,6 +47,6 @@
 
 	</table>	
 
-	<p><strong>Don't see the one you are looking for? <a href="">Add it here.</a></strong></p>
+	<p><strong>Don't see the one you are looking for? <a href="/forms/add-item"><span class="bluelink">ADD IT HERE</span></a></strong></p>
 
 </div>

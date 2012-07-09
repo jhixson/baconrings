@@ -7,10 +7,10 @@
 		<div id="footertext">
 			<strong>Navigate</strong>
 			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="favorites.php">My Schools</a></li>
-				<li><a href="find.php">Find Schools</a></li>
-				<li><a href="bestof.php">Best of</a></li>
+				<li><a href="<?php echo base_url(); ?>">Home</a></li>
+				<li><a href="<?php echo base_url(); ?>favorites">My Schools</a></li>
+				<li><a href="<?php echo base_url(); ?>">Find Schools</a></li>
+				<li><a href="<?php echo base_url(); ?>best-of">Best of</a></li>
 			</ul>
 		</div>
 
@@ -18,7 +18,7 @@
 			<strong>Need Help?</strong>
 			<ul>
 				<li><a href="/pages/faqs">FAQ</a></li>
-				<li><a href="contact.php">Contact Us</a></li>
+				<li><a href="/forms/contact">Contact Us</a></li>
 				<li><a href="/pages/rss">RSS</a></li>
 			</ul>
 		</div>
