@@ -17,7 +17,7 @@ class Campus extends MY_Controller {
   	$user = $this->facebook->getUser();
   	$this->data['user_profile'] = $user;
   	
-  	//$this->data['campuses'] = $this->campus_model->get_list('university', array());
+  	$this->data['recent_campuses'] = $this->campus_model->get_list('university', array(), 5, 0, 'university_id', 'desc');
 
   	$this->load->view('templates/header', $this->data);
   	$this->load->view('campus/find', $this->data);
@@ -124,7 +124,15 @@ class Campus extends MY_Controller {
     $this->data['title'] = 'Best of on Campuses';
     
     $this->campus_model->get_rating_for_all('1');
+    $this->data['categories'] = $this->campus_model->get_list('category');
     
+    foreach($this->data['categories'] as $category) {
+      $category->best_of = $this->campus_model->best_of($category->category_id);
+    }
+    
+    //print_r($this->data['categories']);
+  	//die();
+        
     $this->load->view('templates/header', $this->data);
     $this->load->view('campus/bestof', $this->data);
     $this->load->view('templates/footer', $this->data);

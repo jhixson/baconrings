@@ -7,7 +7,7 @@ class Campus_model extends CI_Model {
 	}
 
 	// Get all campuses
-	public function get_list($table, $where = array(), $limit = 100000, $offset = 0, $order_by = '') {
+	public function get_list($table, $where = array(), $limit = 100000, $offset = 0, $order_by = '', $order_direction = 'asc') {
   	if(!empty($order_by))
   	  $this->db->order_by($order_by, "asc");
   
@@ -120,6 +120,29 @@ class Campus_model extends CI_Model {
 	    return $a->score >= $b->score;
 	  });
     return key($arr);
+	}
+	
+	public function best_of($category_id, $university_id='') {
+	  $params = array($category_id);
+	  $sql = "select item.item_id, item.item_name, item.item_slug, university.university_name, university.university_slug, AVG( attributerating.attributerating_rating ) AS score
+        FROM  `item` 
+        INNER JOIN rating ON ( item.item_id = rating.item_id ) 
+        INNER JOIN university ON ( item.university_id = university.university_id ) 
+        INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id AND item.item_id = rating.item_id ) 
+        where item.category_id = ?";
+    if(!empty($university_id)) {
+      $sql .= " and item.university_id = ?";
+      array_push($params, $university_id);
+    }
+        
+    $sql .= " GROUP BY item.item_id
+    order by score desc
+    limit 0, 5";
+    
+    //$this->db->query($sql, $params);
+    //die($this->db->last_query());
+    
+    return $this->db->query($sql, $params)->result();
 	}
 
 

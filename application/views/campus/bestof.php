@@ -17,151 +17,33 @@
 
 	</div>
 
-
 		<br /><br />
 
-		<div id="bestoflist">
+    <?php $i = 0; ?>
+    <?php foreach($categories as $category): ?>
+    <?php if(!empty($category->best_of)): ?>
+		<div id="bestoflist" class="<?php echo ($i % 2 == 1) ? 'bestofright' : '' ?>">
 
 			<table cellpadding="3" cellspacing="0" border="0">
 
-				<tr bgcolor="#e671b8">
-					<td colspan="4" width="457"><span class="bestofheader">DINING HALLS</span></td>
+				<tr bgcolor="<?php echo $category->category_color2 ?>">
+					<td colspan="4" width="457"><span class="bestofheader"><?php echo $category->category_name ?></span></td>
 				</tr>
+				<?php $j = 1; ?>
+				<?php foreach($category->best_of as $best): ?>
 				<tr valign="top">
-					<td width="25" align="right">1.</td>
-					<td width="148"><a href="">Delplain Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">Syracuse University</a></td>
-					<td width="" align="right">4.9</td>
+					<td width="25" align="right"><?php echo $j ?>.</td>
+					<td width="148"><a href="/<?php echo $best->university_slug ?>/<?php echo $category->category_slug ?>/<?php echo $best->item_slug ?>"><?php echo $best->item_name ?></a></td>
+					<td width="240"><a href="/<?php echo $best->university_slug ?>" style="text-decoration:none;font-weight:normal;"><?php echo $best->university_name ?></a></td>
+					<td width="" align="right"><?php echo number_format($best->score, 1, '.', ',') ?></td>
 				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">2.</td>
-					<td width="148"><a href="">Hixson Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">University of Connecticut</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">3.</td>
-					<td width="148"><a href="">Peruta Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">University of Minnesota</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">4.</td>
-					<td width="148"><a href="">Booth Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">Ithaca College</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">5.</td>
-					<td width="148"><a href="">Whatever Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">Syracuse University</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-
-			</table>	
-
-		</div>	
-
-
-		<div id="bestoflist" class="bestofright">
-
-			<table cellpadding="3" cellspacing="0" border="0">
-
-				<tr bgcolor="#00acda">
-					<td colspan="4" width="457"><span class="bestofheader">DORMS</span></td>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">1.</td>
-					<td width="148"><a href="">Delplain Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">Syracuse University</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">2.</td>
-					<td width="148"><a href="">Hixson Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">University of Connecticut</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">3.</td>
-					<td width="148"><a href="">Peruta Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">University of Minnesota</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">4.</td>
-					<td width="148"><a href="">Booth Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">Ithaca College</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">5.</td>
-					<td width="148"><a href="">Whatever Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;font-weight:normal;">Syracuse University</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-
+        <?php $j++; endforeach ?>
 			</table>	
 
 		</div>
-
-
-		<div id="clear" style="clear:both;"></div>
-
-
-		<div id="bestoflist">
-
-			<table cellpadding="3" cellspacing="0" border="0">
-
-				<tr bgcolor="#9c9c9c">
-					<td colspan="4" width="457"><span class="bestofheader">GYMS</span></td>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">1.</td>
-					<td width="148"><a href="">Delplain Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;">Syracuse University</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">2.</td>
-					<td width="148"><a href="">Hixson Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;">University of Connecticut</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">3.</td>
-					<td width="148"><a href="">Peruta Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;">University of Minnesota</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">4.</td>
-					<td width="148"><a href="">Booth Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;">Ithaca College</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-				</tr>
-				<tr valign="top">
-					<td width="25" align="right">5.</td>
-					<td width="148"><a href="">Whatever Hall</a></td>
-					<td width="240"><a href="" style="text-decoration:none;">Syracuse University</a></td>
-					<td width="" align="right">4.9</td>
-				</tr>
-
-			</table>	
-
-		</div>
+		<?php echo ($i % 2 == 1) ? '<div id="clear" style="clear:both;"></div>' : '' ?>
+		<?php $i++; endif ?>
+    <?php endforeach ?>
 
 <br /><br />
 

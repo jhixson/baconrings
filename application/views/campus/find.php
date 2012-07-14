@@ -26,19 +26,10 @@
 		</div>
 
 	<div id="homeright">
-
-	<br /><a href="" class="homerightname">Syracuse University</a>
-	
-	<br /><a href="" class="homerightname">Ithaca College</a>
-
-	<br /><a href="" class="homerightname">University of Connecticut</a>
-
-	<br /><a href="" class="homerightname">Syracuse University</a>
-
-	<br /><a href="" class="homerightname">Syracuse University</a>
-
-
-</div>
+	  <?php foreach($recent_campuses as $campus): ?>
+  		<br /><a href="/<?php echo $campus->university_slug ?>" class="homerightname"><?php echo $campus->university_name ?></a>
+  	<?php endforeach ?>
+  </div>
 
 <div id="clear" style="clear:both;"></div>
 
