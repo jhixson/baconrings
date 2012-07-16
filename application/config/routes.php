@@ -40,6 +40,8 @@
 
 $route['404_override'] = '';
 $route['pages/(:any)'] = 'pages/view/$1';
+$route['(:any)/(:any)/(:any)/rate'] = 'forms/rate/$3';
+$route['(:any)/(:any)/(:any)/rate-thanks'] = 'forms/ratethanks/$3';
 $route['(:any)/(:any)/(:any)'] = 'campus/item/$1/$2/$3';
 $route['(:any)/(:any)'] = 'campus/category/$1/$2';
 $route['campus/view'] = 'campus/view';
@@ -64,8 +66,8 @@ $route['forms/add-category'] = 'forms/addcategory';
 $route['forms/add-category-thanks'] = 'forms/addcategorythanks';
 $route['forms/add-item'] = 'forms/additem';
 $route['forms/add-item-thanks'] = 'forms/additemthanks';
-$route['forms/rate'] = 'forms/rate';
-$route['forms/rate-thanks'] = 'forms/ratethanks';
+$route['forms/rate/(:any)'] = 'forms/rate/$1';
+$route['forms/rate-thanks/(:any)'] = 'forms/ratethanks/$3';
 
 $route['(:any)'] = 'campus/view/$1';
 $route['default_controller'] = 'campus/find';

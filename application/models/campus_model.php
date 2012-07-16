@@ -31,7 +31,7 @@ class Campus_model extends CI_Model {
 	}
 	
 	public function get_rating_for_category($university_id, $category_id) {
-    $sql = "select avg(ar) as score, count(*) as total from (SELECT item.item_id, rating.rating_id, attributerating.attributerating_rating as ar
+    $sql = "select ar as score, count(*) as total from (SELECT item.item_id, rating.rating_id, avg(attributerating.attributerating_rating) as ar
     FROM  `item` 
     INNER JOIN rating ON ( item.item_id = rating.item_id ) 
     INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 

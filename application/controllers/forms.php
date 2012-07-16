@@ -461,9 +461,17 @@ class Forms extends MY_Controller {
 
 
 // rate form
-  public function rate()
+  public function rate($slug='')
   {
-    $this->data['title'] = 'Rate It';
+  	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
+  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+  	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+  	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
+
+  	if($this->data['item'])
+  	  $this->data['title'] = 'Rate '.$this->data['item']->item_name;
+  	else
+    	show_404();
     
     //set the flash data error message if there is one
     $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -474,26 +482,23 @@ class Forms extends MY_Controller {
   }
 
 
-  public function ratethanks()
+  public function ratethanks($slug='')
   {
     $this->data['title'] = 'Rating Submitted';
+  	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
 
     //validate form input
-    $this->form_validation->set_rules('att1', 'first attribute', 'required');
-    $this->form_validation->set_rules('att2', 'second attribute', 'required');
-    $this->form_validation->set_rules('att3', 'third attribute', 'required');
+    $this->form_validation->set_rules('att', 'attributes', 'required');
     $this->form_validation->set_rules('comments', 'comments', 'required');
 
     $this->form_validation->set_error_delimiters('<li>','</li>');
 
-    if ($this->form_validation->run() == true)
+    if ($this->form_validation->run() == true && $this->data['item'])
     {
+        $att_arr = $this->input->post('att');
+        $comments = $this->input->post('comments');
 
-         $name = $this->input->post('name');
-         $att1 = $this->input->post('att1');
-         $att2 = $this->input->post('att2');
-         $att3 = $this->input->post('att3');
-         $comments = $this->input->post('comments');
+        $this->forms_model->save_rating($this->data['item'], $att_arr, $comments);
 
         $this->load->view('templates/header', $this->data);
         $this->load->view('forms/ratethanks', $this->data);
@@ -504,21 +509,6 @@ class Forms extends MY_Controller {
       //set the flash data error message if there is one
       $this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
 
-      $this->data['att1'] = array('name' => 'att1',
-        'id' => 'att1',
-        'type' => 'radio',
-        'value' => $this->form_validation->set_value('att1'),
-      );
-      $this->data['att2'] = array('name' => 'att2',
-        'id' => 'att2',
-        'type' => 'radio',
-        'value' => $this->form_validation->set_value('att2'),
-      );
-      $this->data['att3'] = array('name' => 'att3',
-        'id' => 'att3',
-        'type' => 'radio',
-        'value' => $this->form_validation->set_value('att3'),
-      );
       $this->data['comments'] = array('name' => 'comments',
         'id' => 'comments',
         'type' => 'text',

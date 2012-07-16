@@ -40,7 +40,7 @@ class Campus extends MY_Controller {
   	
   	$categories = array();
   	foreach($this->data['categories'] as $category) {
-  	  $categories[$category->category_name] = $this->campus_model->get_rating_for_category($this->data['campus']->university_id, $category->category_id);
+  	  $categories[$category->category_name] = (object)$this->campus_model->get_rating_for_category($this->data['campus']->university_id, $category->category_id);
   	  $categories[$category->category_name]->color = $category->category_color2;
   	  $categories[$category->category_name]->slug = $category->category_slug;
   	}
@@ -66,9 +66,11 @@ class Campus extends MY_Controller {
   	
   	$items = array();
   	foreach($this->data['items'] as $item) {
-  	  $items[$item->item_name] = $this->campus_model->get_rating_for_item($item->item_id);
+      $items[$item->item_name] = (object)$this->campus_model->get_rating_for_item($item->item_id);
+      $items[$item->item_name]->total = $this->campus_model->get_num_ratings_for_item($item->item_id);
+      if($items[$item->item_name]->total == 0)
+        $items[$item->item_name]->score = 0;
   	  $items[$item->item_name]->slug = $item->item_slug;
-  	  $items[$item->item_name]->total = $this->campus_model->get_num_ratings_for_item($item->item_id);
   	}
   	
   	//print_r($items);
