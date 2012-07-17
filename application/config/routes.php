@@ -40,12 +40,13 @@
 
 $route['404_override'] = '';
 $route['pages/(:any)'] = 'pages/view/$1';
+$route['best-of/(:any)'] = 'campus/bestof/$1';
+$route['best-of'] = 'campus/bestof';
 $route['(:any)/(:any)/(:any)/rate'] = 'forms/rate/$3';
 $route['(:any)/(:any)/(:any)/rate-thanks'] = 'forms/ratethanks/$3';
 $route['(:any)/(:any)/(:any)'] = 'campus/item/$1/$2/$3';
 $route['(:any)/(:any)'] = 'campus/category/$1/$2';
 $route['campus/view'] = 'campus/view';
-$route['best-of'] = 'campus/bestof';
 $route['favorites'] = 'campus/favorites';
 $route['auth(\/index)?'] = 'auth/index';
 $route['login'] = 'auth/login';

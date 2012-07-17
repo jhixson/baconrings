@@ -121,15 +121,23 @@ class Campus extends MY_Controller {
 	}
 	
   // best of
-  public function bestof()
+  public function bestof($slug='')
   {
-    $this->data['title'] = 'Best of on Campuses';
+	  if($this->input->post('school'))
+  	  redirect(base_url().'best-of/'.$this->input->post('school'), 'location');
+
+    $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
+    $university_id = $this->data['campus'] ? $this->data['campus']->university_id : '';
+    if($this->data['campus'])
+      $this->data['title'] = 'Best of '.$this->data['campus']->university_name;
+    else
+      $this->data['title'] = 'Best of all Schools';
     
-    $this->campus_model->get_rating_for_all('1');
+    //$this->campus_model->get_rating_for_all('1');
     $this->data['categories'] = $this->campus_model->get_list('category');
     
     foreach($this->data['categories'] as $category) {
-      $category->best_of = $this->campus_model->best_of($category->category_id);
+      $category->best_of = $this->campus_model->best_of($category->category_id, $university_id);
     }
     
     //print_r($this->data['categories']);

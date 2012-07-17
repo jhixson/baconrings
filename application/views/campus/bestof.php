@@ -2,12 +2,16 @@
 
 	<div id="bestofsearch">
 
-		<form action="/campus/view" method="post">
+		<form action="/best-of" method="post">
 
 			<select name="school">
 				<option value="">All Schools</option>
-				<?php foreach($campuses as $campus): ?>
-  				<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
+				<?php foreach($campuses as $aCampus): ?>
+          <?php if($campus->university_id == $aCampus->university_id): ?>
+            <option value="<?php echo $aCampus->university_slug ?>" selected="selected"><?php echo $aCampus->university_name ?></option>
+          <?php else: ?>
+            <option value="<?php echo $aCampus->university_slug ?>"><?php echo $aCampus->university_name ?></option>
+          <?php endif ?>
   			<?php endforeach ?>
 			</select>
 
