@@ -56,7 +56,7 @@ class Campus_model extends CI_Model {
     return $this->db->query($sql, array($item_id))->row();
 	}
   
-  public function ger_attribute_ratings($item_id) {
+  public function get_attribute_ratings($item_id) {
     $sql = "select item.item_id, rating.rating_id, AVG( attributerating.attributerating_rating ) AS score, attribute.attribute_name
     FROM  `item` 
     INNER JOIN rating ON ( item.item_id = rating.item_id ) 
@@ -143,8 +143,25 @@ class Campus_model extends CI_Model {
     //die($this->db->last_query());
     
     return $this->db->query($sql, $params)->result();
-	}
+  }
 
+  public function get_ranking($university_id, $category_id) {
+    $sql = "select item.item_id, rating.rating_id, university.university_id, category.category_id, AVG( attributerating.attributerating_rating ) AS score, attribute.attribute_name
+    FROM  `university`, `category`, `item` 
+    INNER JOIN rating ON ( item.item_id = rating.item_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id
+    AND item.item_id = rating.item_id ) 
+    INNER JOIN attribute ON ( attribute.category_id = item.category_id
+    AND attribute.attribute_id = attributerating.attribute_id ) 
+    where university.university_id = ? and 
+    category.category_id = ? and 
+    category.category_id = item.category_id and 
+    university.university_id = item.university_id
+    GROUP BY item.item_id
+    order by score desc";
+
+    return $this->db->query($sql, array($university_id, $category_id))->result();
+  }
 
 	//for favorites page - schools
 	public function get_fave_schools($id) {

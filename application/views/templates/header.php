@@ -16,9 +16,13 @@
 
   		<div id="sitetools">
 
-  			<div style="float:right;margin:10px 12px 0 0;"><ul>
-  				<li><a href="<?php echo base_url()."signup" ?>">create account</a></li>
-  				<li><a href="<?php echo base_url()."login" ?>">login</a></li>
+        <div style="float:right;margin:10px 12px 0 0;"><ul>
+          <?php if($logged_in): ?>
+            <li><a href="<?php echo base_url()."logout" ?>">logout</a></li>
+          <?php else: ?>
+            <li><a href="<?php echo base_url()."signup" ?>">create account</a></li>
+            <li><a href="<?php echo base_url()."login" ?>">login</a></li>
+          <?php endif ?>
   			</ul></div>
 
   		</div>

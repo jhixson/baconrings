@@ -47,6 +47,8 @@ $route['(:any)/(:any)/(:any)/rate-thanks'] = 'forms/ratethanks/$3';
 $route['(:any)/(:any)/(:any)'] = 'campus/item/$1/$2/$3';
 $route['(:any)/(:any)'] = 'campus/category/$1/$2';
 $route['campus/view'] = 'campus/view';
+$route['campus/fb'] = 'campus/fb';
+
 $route['favorites'] = 'campus/favorites';
 $route['auth(\/index)?'] = 'auth/index';
 $route['login'] = 'auth/login';
@@ -56,6 +58,8 @@ $route['auth/logout'] = 'auth/logout';
 $route['signup'] = 'auth/create_user';
 $route['auth/create_user'] = 'auth/create_user';
 $route['auth/forgot_password'] = 'auth/forgot_password';
+
+$route['main'] = 'main/index';
 
 $route['forms/submit-correction'] = 'forms/submitcorrection';
 $route['forms/submit-correction-thanks'] = 'forms/submitcorrectionthanks';

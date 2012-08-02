@@ -960,6 +960,58 @@ class Ion_auth_model extends CI_Model
 		}
 		return FALSE;
 	}
+	
+	public function fb_login($facebook_id, $remember = 0)
+	{
+		$this->trigger_events('pre_login');
+
+		$this->trigger_events('extra_where');
+
+		$query = $this->db->select('username, email, id, password, active, last_login')
+		                  ->where('facebook_id', $facebook_id)
+		                  ->limit(1)
+		                  ->get($this->tables['users']);
+
+		$user = $query->row();
+
+		if ($query->num_rows() == 1)
+		{
+
+                if ($user->active == 0)
+                {
+                    $this->trigger_events('post_login_unsuccessful');
+                    $this->set_error('login_unsuccessful_not_active');
+
+                    return FALSE;
+                }
+
+                $session_data = array(
+                    'username'             => $user->username,
+                    'email'                => $user->email,
+                    'user_id'              => $user->id, //everyone likes to overwrite id so we'll use user_id
+                    'old_last_login'       => $user->last_login
+                );
+
+                $this->update_last_login($user->id);
+
+                $this->session->set_userdata($session_data);
+
+                if ($remember && $this->config->item('remember_users', 'ion_auth'))
+                {
+                    $this->remember_user($user->id);
+                }
+
+                $this->trigger_events(array('post_login', 'post_login_successful'));
+                $this->set_message('login_successful');
+
+                return TRUE;
+		}
+
+		$this->trigger_events('post_login_unsuccessful');
+		$this->set_error('login_unsuccessful');
+
+		return FALSE;
+	}
 
 	public function limit($limit)
 	{

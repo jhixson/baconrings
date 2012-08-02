@@ -7,6 +7,8 @@ class Campus extends MY_Controller {
 		parent::__construct();
     $this->load->library('session');
     $this->load->library('form_validation');
+    $this->load->library('ion_auth');
+		
 		$this->load->model('campus_model');
 	}
 
@@ -14,8 +16,8 @@ class Campus extends MY_Controller {
 	{
   	$this->data['title'] = 'Find Your Campus';
   	
-  	$user = $this->facebook->getUser();
-  	$this->data['user_profile'] = $user;
+  	//$user = $this->facebook->getUser();
+  	//$this->data['user_profile'] = $user;
   	
   	$this->data['recent_campuses'] = $this->campus_model->get_list('university', array(), 5, 0, 'university_id', 'desc');
 
@@ -100,7 +102,16 @@ class Campus extends MY_Controller {
     	
   	$this->data['overall_rating'] = $this->campus_model->get_rating_for_item($this->data['item']->item_id);
   	$this->data['num_ratings'] = $this->campus_model->get_num_ratings_for_item($this->data['item']->item_id);
-  	$this->data['item_ratings'] = $this->campus_model->ger_attribute_ratings($this->data['item']->item_id);
+    $this->data['item_ratings'] = $this->campus_model->get_attribute_ratings($this->data['item']->item_id);
+
+    $rankings = $this->campus_model->get_ranking($this->data['item']->university_id, $this->data['item']->category_id);
+    $this->data['ranking'] = 1;
+    foreach($rankings as $k => $ranking) {
+      if($ranking->item_id == $this->data['item']->item_id)
+        $this->data['ranking'] += $k;
+    }
+    //print_r($ranking);
+    //die();
   	
   	$comments_list = $this->campus_model->get_list('rating', array('item_id' => $this->data['item']->item_id));
   	$comments = array();
@@ -174,25 +185,44 @@ class Campus extends MY_Controller {
 	// trying to figure out facebook login
 	public function fb()
 	{
-	  $this->data['title'] = 'Login with Facebook';
-	  
-	  $user = $this->facebook->getUser();
-
-    if ($user) {
-      try {
-        $this->data['user_profile'] = $this->facebook->api('/me');
-      } catch (FacebookApiException $e) {
-        $user = null;
-      }
-    }
-
-    if ($user) {
-      $this->data['logout_url'] = $this->facebook->getLogoutUrl();
-    } else {
-      $this->data['login_url'] = $this->facebook->getLoginUrl();
-    }
-    
-    //die(print_r($data, true));
+		
+	  if( ! $this->ion_auth->logged_in() ) {
+	    
+			$result = $this->facebook->connect();
+			
+			die('fuck');	
+	    
+  	  
+			$user = $result['user'];
+			$token = $result['token'];
+			if( ! $this->facebook->login($user, $token) ) {
+				redirect( 'auth', 'refresh' );
+			}
+		} else {
+			
+			$result = $this->facebook->connect();
+			
+			$user = $this->ion_auth->user()->row();
+			
+			// Before connecting this user with their Facebook account,
+			// we need to ensure the account isn't already tied to another Moodshots account
+			$query = $this->db->get_where('users', array('facebook_id' => $result['user']->id));
+			if( count($query->result()) == 0 ) {
+				$data = array(
+					'facebook_id' => $result['user']->id,
+					'facebook_token' => $result['token']
+				);
+				
+				$this->ion_auth->update($user->id, $data);
+				$this->session->set_userdata('messages', array(array('type' => 'message', 'content' => 'Successfully logged in.')));
+			} else {
+				$this->session->set_userdata('messages', array(array('type' => 'error', 'content' => 'That Facebook account is already associated with an account. Logout and log in via Facebook to access it.')));
+			}
+			//redirect( 'settings', 'refresh' );
+		
+		}
+		
+		die('you');
     
     $this->load->view('templates/header', $this->data);
   	$this->load->view('campus/fb', $this->data);

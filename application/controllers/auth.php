@@ -21,7 +21,7 @@ class Auth extends MY_Controller {
 		if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
-			redirect(base_url().'auth/login', 'refresh');
+			redirect(base_url().'login', 'refresh');
 		}
 		elseif (!$this->ion_auth->is_admin())
 		{

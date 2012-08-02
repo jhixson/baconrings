@@ -20,7 +20,7 @@
 
 		<div id="clear" style="clear:both;"></div>
 
-		<br /><strong>#2 rated dorm at Syracuse University</strong>
+    <br /><strong>#<?php echo $ranking ?> rated <?php echo substr(strtolower($category->category_name), 0, -1) ?> at Syracuse University</strong>
 
 	</div>
 
