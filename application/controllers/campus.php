@@ -52,6 +52,27 @@ class Campus extends MY_Controller {
   	
   	$this->data['category_ratings'] = $categories;
   	
+  	$recent_ratings = $this->campus_model->get_recent_ratings($this->data['campus']->university_id);
+  	$recent_items = $this->campus_model->get_recent_items($this->data['campus']->university_id);
+  	
+  	$activity = array();
+  	foreach($recent_ratings as $recent) {
+  	  $activity[] = $recent;
+  	}
+  	
+  	foreach($recent_items as $recent) {
+  	  $activity[] = $recent;
+  	}
+  	
+  	$dates = array();
+  	foreach($activity as $key => $ac) {
+  	  $dates[$key] = $ac->item_dateadded;
+  	}
+  	
+  	array_multisort($dates, SORT_DESC, $activity);
+  	
+  	$this->data['recent_activity'] = array_slice($activity, 0, 5);
+  	
 	  $this->load->view('templates/header', $this->data);
   	$this->load->view('campus/view', $this->data);
   	$this->load->view('templates/footer', $this->data);

@@ -162,6 +162,29 @@ class Campus_model extends CI_Model {
 
     return $this->db->query($sql, array($university_id, $category_id))->result();
   }
+  
+  public function get_recent_ratings($university_id) {
+    $sql = "select rating.rating_id, rating.rating_date as item_dateadded, item.item_name, item.item_slug, category.category_name, category.category_slug FROM `rating`
+    left join item on rating.item_id = item.item_id
+    left join category on item.category_id = category.category_id
+    where item.university_id = ?
+    group by item.item_id
+    order by item_dateadded desc
+    limit 5";
+    
+    return $this->db->query($sql, array($university_id))->result();
+  }
+  
+  public function get_recent_items($university_id) {
+    $sql = "select item.item_id, item.item_dateadded, item.item_name, item.item_slug, category.category_name, category.category_slug FROM `item`
+    left join category on item.category_id = category.category_id
+    where item.university_id = ?
+    group by item.item_id
+    order by item_dateadded desc
+    limit 5";
+    
+    return $this->db->query($sql, array($university_id))->result();
+  }
 
 	//for favorites page - schools
 	public function get_fave_schools($id) {

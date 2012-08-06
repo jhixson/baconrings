@@ -70,11 +70,21 @@
 
 	<div id="activity">
 
-		<table cellpadding="3" cellspacing="0" border="0" style="margin-left:55px;">
-			<tr>
-				<td width="25"><img src="<?php echo base_url(); ?>images/activity_plus.png" height="21" width="21" border="0" alt="added" /></td>
-				<td><a href="" class="mainlink">Dellplain Hall</a> added to <a href="">dorms</a>.</td>
-			</tr>
+		<table cellpadding="3" cellspacing="0" border="0" style="margin-left:55px; width:305px;">
+		  <?php foreach($recent_activity as $activity): ?>
+		    <?php if(isset($activity->rating_id)): ?>
+			    <tr>
+    				<td width="25"><img src="<?php echo base_url(); ?>images/activity_check.png" height="21" width="21" border="0" alt="rated" /></td>
+    				<td><a href="/<?php echo $campus->university_slug ?>/<?php echo $activity->category_slug ?>/<?php echo $activity->item_slug ?>" class="mainlink"><?php echo $activity->item_name ?></a> rated under <a href="/<?php echo $campus->university_slug ?>/<?php echo $activity->category_slug ?>"><?php echo strtolower($activity->category_name) ?></a>.</td>
+    			</tr>
+    		<?php elseif(isset($activity->item_id)): ?>
+			    <tr>
+    				<td width="25"><img src="<?php echo base_url(); ?>images/activity_plus.png" height="21" width="21" border="0" alt="added" /></td>
+    				<td><a href="/<?php echo $campus->university_slug ?>/<?php echo $activity->category_slug ?>/<?php echo $activity->item_slug ?>" class="mainlink"><?php echo $activity->item_name ?></a> added to <a href="/<?php echo $campus->university_slug ?>/<?php echo $activity->category_slug ?>"><?php echo strtolower($activity->category_name) ?></a>.</td>
+    			</tr>
+    		<?php endif ?>
+  		<?php endforeach ?>
+  	  <!--
 			<tr>
 				<td><img src="<?php echo base_url(); ?>images/activity_check.png" height="21" width="21" border="0" alt="rated" /></td>
 				<td><a href="" class="mainlink">Dellplain Hall</a> rated under <a href="">dorms</a>.</td>
@@ -91,7 +101,7 @@
 				<td width="25"><img src="<?php echo base_url(); ?>images/activity_plus.png" height="21" width="21" border="0" alt="added" /></td>
 				<td><a href="" class="mainlink">Grocery Stores</a> added.</td>
 			</tr>
-
+			-->
 		</table>	
 
 	</div>
