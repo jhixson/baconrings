@@ -371,17 +371,17 @@ class Auth extends MY_Controller {
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 
-			$additional_data = array('first_name' => $this->input->post('first_name'),
-				'last_name' => $this->input->post('last_name'),
-				'company' => $this->input->post('company'),
-				'phone' => $this->input->post('phone1') . '-' . $this->input->post('phone2') . '-' . $this->input->post('phone3'),
-			);
+			$additional_data = array('account_type' => $this->input->post('who'));
 		}
 		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
 		{ //check to see if we are creating the user
 			//redirect them back to the admin page
 			$this->session->set_flashdata('message', "User Created");
-			redirect(base_url()."auth", 'refresh');
+
+			if ($this->ion_auth->login($this->input->post('email'), $this->input->post('password')))
+        redirect(base_url(), 'refresh');
+      else
+        redirect(base_url()."auth", 'refresh');
 		}
 		else
 		{ //display the create user form
