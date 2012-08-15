@@ -45,7 +45,9 @@ class Campus extends MY_Controller {
   	  $categories[$category->category_name] = (object)$this->campus_model->get_rating_for_category($this->data['campus']->university_id, $category->category_id);
   	  $categories[$category->category_name]->color = $category->category_color2;
   	  $categories[$category->category_name]->slug = $category->category_slug;
-  	}
+    }
+
+    $this->data['overall_rating'] = $this->campus_model->get_rating_for_campus($this->data['campus']->university_id);
   	
   	$this->data['best_thing'] = $this->campus_model->best_thing($categories);
   	$this->data['worst_thing'] = $this->campus_model->worst_thing($categories);
@@ -186,15 +188,15 @@ class Campus extends MY_Controller {
   {
     $this->data['title'] = 'My Favorites';
 
-    $this->data['faves'] = $this->campus_model->get_fave_schools('2');
-    $this->data['favorites'] = $this->campus_model->get_faves('1');
+    $faves = $this->campus_model->get_fave_schools('2');
 
     $favorites = array();
-    foreach($this->data['faves'] as $fave) {
-      $favorites[$fave->university_name] = $this->campus_model->get_faves($fave->university_id);
+    foreach($faves as $fave) {
+      $favorites[$fave->university_name][] = $fave;
     }
 
     //die(print_r($favorites, true));
+    $this->data['favorites'] = $favorites;
 
 
     $this->load->view('templates/header', $this->data);

@@ -28,7 +28,19 @@ class Campus_model extends CI_Model {
     $this->db->group_by('category.category_name');
 
     return $this->db->get()->result();
+  }
+
+  public function get_rating_for_campus($university_id) {
+    $sql = "select ar as score, count(*) as total from (SELECT item.item_id, rating.rating_id, avg(attributerating.attributerating_rating) as ar
+    FROM  `item` 
+    INNER JOIN rating ON ( item.item_id = rating.item_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
+    WHERE item.university_id = ?
+    GROUP BY rating.rating_id) as x";
+
+    return $this->db->query($sql, array($university_id))->row();
 	}
+
 	
 	public function get_rating_for_category($university_id, $category_id) {
     $sql = "select ar as score, count(*) as total from (SELECT item.item_id, rating.rating_id, avg(attributerating.attributerating_rating) as ar
@@ -187,27 +199,35 @@ class Campus_model extends CI_Model {
   }
 
 	//for favorites page - schools
-	public function get_fave_schools($id) {
-	  $this->db->select('university.university_id, university.university_name, university.university_slug');
+	public function get_fave_schools($user_id) {
+	  $this->db->select('university.university_id, university.university_name, university.university_slug, item.item_name, item.item_slug, category.category_name, category.category_slug');
     $this->db->from('favorites');
     $this->db->join('item', 'favorites.item_id = item.item_id', 'inner');
+    $this->db->join('category', 'category.category_id = item.category_id', 'inner');
     $this->db->join('university', 'item.university_id = university.university_id', 'inner');
-    $this->db->where('favorites.id', $id);
+    $this->db->where('favorites.users_id', $user_id);
+    //$this->db->group_by('university.university_id');
+    $this->db->order_by('university.university_name');
 
     return $this->db->get()->result();
 	}
 
 
 	//for favorites page - favorites
-	public function get_faves($university_id) {
+	public function get_faves($user_id, $university_id) {
+	  //$this->db->select('item.item_name, item.item_slug, category.category_name, category.category_slug');
+    //$this->db->from('item');
+    //$this->db->join('category', 'item.category_id = category.category_id', 'inner');
 	  $this->db->select('item.item_name, item.item_slug, category.category_name, category.category_slug');
-    $this->db->from('item');
-    $this->db->join('category', 'item.category_id = category.category_id', 'inner');
+    $this->db->from('favorites');
+    $this->db->join('item', 'favorites.item_id = item.item_id', 'inner');
+    $this->db->join('university', 'item.university_id = university.university_id', 'inner');
+    $this->db->where('favorites.users_id', $user_id);
     $this->db->where('item.university_id', $university_id);
 
     //$query = $this->db->get();
     //die($this->db->last_query());
-    
+
     return $this->db->get()->result();
 	}
 

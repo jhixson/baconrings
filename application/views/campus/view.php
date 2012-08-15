@@ -12,8 +12,9 @@
 	</div>
 
 	<div id="campusinforatings">
-		4.5
-		<br />1,207
+    <?php echo number_format($overall_rating->score, 1, '.', ',') ?>
+    <br />
+    <?php echo $overall_rating->total ?>
 	</div>
 
 	<div id="campusinfoline">
