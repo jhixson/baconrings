@@ -1,8 +1,11 @@
 $(document).ready(function() {
   $('a.heart').click(function(e) {
     e.preventDefault();
-    if(confirm('Are you sure you want to remove this?')) {
-      var heart = $(this);
+    var c = true;
+    var heart = $(this);
+    if(!heart.is('.item'))
+      c = confirm('Are you sure you want to remove this?');
+    if(c) {
       $.get(heart.attr('href'), function (data) {
         //console.log(data);
         if(data.status == 'ok') {

@@ -192,7 +192,8 @@ class Campus extends MY_Controller {
     if($this->ion_auth->logged_in()) {
       $this->data['title'] = 'My Favorites';
 
-      $faves = $this->campus_model->get_fave_schools('2'); // replace with proper user_id
+      $user = $this->ion_auth->user()->row();
+      $faves = $this->campus_model->get_fave_schools($user->id); // replace with proper user_id
 
       $favorites = array();
       foreach($faves as $fave) {
