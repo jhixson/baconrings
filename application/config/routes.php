@@ -39,6 +39,7 @@
 */
 
 $route['404_override'] = '';
+$route['toggle_favorite/(:any)'] = 'ajax/toggle_favorite/$1';
 $route['pages/(:any)'] = 'pages/view/$1';
 $route['best-of/(:any)'] = 'campus/bestof/$1';
 $route['best-of'] = 'campus/bestof';

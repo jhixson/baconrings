@@ -200,30 +200,16 @@ class Campus_model extends CI_Model {
 
 	//for favorites page - schools
 	public function get_fave_schools($user_id) {
-	  $this->db->select('university.university_id, university.university_name, university.university_slug, item.item_name, item.item_slug, category.category_name, category.category_slug');
+	  $this->db->select('favorites.favorites_id, university.university_id, university.university_name, university.university_slug, item.item_id, item.item_name, item.item_slug, category.category_name, category.category_slug, AVG( attributerating.attributerating_rating ) AS score');
     $this->db->from('favorites');
     $this->db->join('item', 'favorites.item_id = item.item_id', 'inner');
     $this->db->join('category', 'category.category_id = item.category_id', 'inner');
     $this->db->join('university', 'item.university_id = university.university_id', 'inner');
+    $this->db->join('rating', 'item.item_id = rating.item_id', 'left');
+    $this->db->join('attributerating', 'rating.rating_id = attributerating.rating_id', 'left');
     $this->db->where('favorites.users_id', $user_id);
-    //$this->db->group_by('university.university_id');
+    $this->db->group_by('item.item_name');
     $this->db->order_by('university.university_name');
-
-    return $this->db->get()->result();
-	}
-
-
-	//for favorites page - favorites
-	public function get_faves($user_id, $university_id) {
-	  //$this->db->select('item.item_name, item.item_slug, category.category_name, category.category_slug');
-    //$this->db->from('item');
-    //$this->db->join('category', 'item.category_id = category.category_id', 'inner');
-	  $this->db->select('item.item_name, item.item_slug, category.category_name, category.category_slug');
-    $this->db->from('favorites');
-    $this->db->join('item', 'favorites.item_id = item.item_id', 'inner');
-    $this->db->join('university', 'item.university_id = university.university_id', 'inner');
-    $this->db->where('favorites.users_id', $user_id);
-    $this->db->where('item.university_id', $university_id);
 
     //$query = $this->db->get();
     //die($this->db->last_query());
@@ -231,7 +217,36 @@ class Campus_model extends CI_Model {
     return $this->db->get()->result();
 	}
 
+  public function toggle_favorite($user_id, $item_id) {
+    $data = array('users_id' => $user_id, 'item_id' => $item_id);
+    $this->db->select('favorites.favorites_id, count(favorites.favorites_id) as total');
+    $this->db->from('favorites');
+    $this->db->where('favorites.users_id', $user_id);
+    $this->db->where('favorites.item_id', $item_id);
+    $result = $this->db->get()->row();
+    if($result->total > 0) {
+      if($this->db->delete('favorites', array('favorites_id' => $result->favorites_id)))
+        return 'deleted';
+      else
+        return '';
+    }
+    else {
+      if($this->db->insert('favorites', $data))
+        return 'added';
+      else
+        return '';
+    }
+  }
 
-
-
+  public function is_favorite($user_id, $item_id) {
+    $this->db->select('favorites.favorites_id, count(favorites.favorites_id) as total');
+    $this->db->from('favorites');
+    $this->db->where('favorites.users_id', $user_id);
+    $this->db->where('favorites.item_id', $item_id);
+    $result = $this->db->get()->row();
+    if($result->total > 0)
+      return true;
+    else
+      return false;
+  }
 }

@@ -692,4 +692,26 @@ h1{
     display: block;
     background-color: #01B6DB;
     padding-left: 6px;
-}​
+}
+
+.heart.item {
+  display: block;
+  background: transparent url('/images/icon_favorite.png') top left no-repeat;
+  width: 28px;
+  height: 24px;
+  float: left;
+  margin-right: 10px;
+  text-indent: -9000px;
+}
+
+.heart.item.active {
+  background-position: bottom left;
+}
+
+.camera {
+  float: left;
+}
+
+tr.header td {
+  background-color: #b2e6f4;
+}

@@ -135,7 +135,10 @@ class Campus extends MY_Controller {
     }
     //print_r($ranking);
     //die();
-  	
+
+    $user = $this->ion_auth->user()->row();
+    $this->data['is_favorite'] = $this->ion_auth->logged_in() && $this->campus_model->is_favorite($user->id, $this->data['item']->item_id);
+	
   	$comments_list = $this->campus_model->get_list('rating', array('item_id' => $this->data['item']->item_id));
   	$comments = array();
   	foreach($comments_list as $c) {
@@ -186,22 +189,26 @@ class Campus extends MY_Controller {
   // favorites for schools
   public function favorites()
   {
-    $this->data['title'] = 'My Favorites';
+    if($this->ion_auth->logged_in()) {
+      $this->data['title'] = 'My Favorites';
 
-    $faves = $this->campus_model->get_fave_schools('2');
+      $faves = $this->campus_model->get_fave_schools('2'); // replace with proper user_id
 
-    $favorites = array();
-    foreach($faves as $fave) {
-      $favorites[$fave->university_name][] = $fave;
+      $favorites = array();
+      foreach($faves as $fave) {
+        $favorites[$fave->university_name][] = $fave;
+      }
+
+      //die(print_r($favorites, true));
+      $this->data['favorites'] = $favorites;
+
+
+      $this->load->view('templates/header', $this->data);
+      $this->load->view('campus/favorites', $this->data);
+      $this->load->view('templates/footer', $this->data);
     }
-
-    //die(print_r($favorites, true));
-    $this->data['favorites'] = $favorites;
-
-
-    $this->load->view('templates/header', $this->data);
-    $this->load->view('campus/favorites', $this->data);
-    $this->load->view('templates/footer', $this->data);
+    else
+      redirect('/login','location');
   }
 
 
@@ -213,9 +220,6 @@ class Campus extends MY_Controller {
 	    
 			$result = $this->facebook->connect();
 			
-			die('fuck');	
-	    
-  	  
 			$user = $result['user'];
 			$token = $result['token'];
 			if( ! $this->facebook->login($user, $token) ) {
@@ -245,8 +249,6 @@ class Campus extends MY_Controller {
 		
 		}
 		
-		die('you');
-    
     $this->load->view('templates/header', $this->data);
   	$this->load->view('campus/fb', $this->data);
   	$this->load->view('templates/footer', $this->data);
