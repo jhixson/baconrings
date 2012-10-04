@@ -24,3 +24,8 @@
     <?php echo form_close();?>
 
 </div>
+
+<div style="float:left;margin-left:50px;text-align:center">Or:<p><a href="<?php echo $fb_login_url ?>"><img src="<?php echo base_url() ?>images/login_facebook.gif" border="0" height="60" width="251" /></a></p></div>
+
+<div id="clear" style="clear:both;"></div>
+

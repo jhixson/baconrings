@@ -211,47 +211,59 @@ class Campus extends MY_Controller {
     else
       redirect('/login','location');
   }
+  
+  public function upload($slug='') {
+    if($this->ion_auth->logged_in()) {
+      $this->data['title'] = 'Upload';
+      $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
+      $this->load->view('templates/header', $this->data);
+      $this->load->view('campus/upload', $this->data);
+      $this->load->view('templates/footer', $this->data);
+    }
+    else
+      redirect('/login','location');
+  }
+  
+  public function do_upload() {
+    $this->data['title'] = 'Upload';
+    if($this->ion_auth->logged_in()) {
+      
+      $this->data['item'] = $this->campus_model->get_single('item', array('item_id' => $this->input->post('item_id')));
+    
+      $config['upload_path'] = './uploads/';
+      $config['allowed_types'] = 'gif|jpg|png';
+  		$config['max_size']	= '2048';
+  		$config['max_width']  = '1024';
+  		$config['max_height']  = '1024';
 
+  		$this->load->library('upload', $config);
+  		if ( ! $this->upload->do_upload())
+  		{
+  			$this->data['msg'] = $this->upload->display_errors();
 
-	// trying to figure out facebook login
-	public function fb()
-	{
-		
-	  if( ! $this->ion_auth->logged_in() ) {
-	    
-			$result = $this->facebook->connect();
+        $this->load->view('templates/header', $this->data);
+  			$this->load->view('campus/upload', $this->data);
+  			$this->load->view('templates/footer', $this->data);
+  		}
+  		else
+  		{
+  		  $upload_data = $this->upload->data();
+  			$this->data['upload_data'] = $upload_data;
 			
-			$user = $result['user'];
-			$token = $result['token'];
-			if( ! $this->facebook->login($user, $token) ) {
-				redirect( 'auth', 'refresh' );
-			}
-		} else {
+  			// this is where we would insert the data into the db with filename, item_id, etc
+  			// duplicate filenames are automatically handled by codeigniter
+  			$user = $this->ion_auth->user()->row();
+  			$photo_data = array('photos_filename' => $upload_data['file_name'], 'photos_caption' => $this->input->post('caption'), 'users_id' => $user->id, 'item_id' => $this->input->post('item_id'), 'photos_dateadded' => date('Y-m-d H:i:s'));
+  			$uploaded = $this->campus_model->add_photo($photo_data);
+  			if(!empty($uploaded))
+  			  $this->data['msg'] = 'Upload successful!';
 			
-			$result = $this->facebook->connect();
-			
-			$user = $this->ion_auth->user()->row();
-			
-			// Before connecting this user with their Facebook account,
-			// we need to ensure the account isn't already tied to another Moodshots account
-			$query = $this->db->get_where('users', array('facebook_id' => $result['user']->id));
-			if( count($query->result()) == 0 ) {
-				$data = array(
-					'facebook_id' => $result['user']->id,
-					'facebook_token' => $result['token']
-				);
-				
-				$this->ion_auth->update($user->id, $data);
-				$this->session->set_userdata('messages', array(array('type' => 'message', 'content' => 'Successfully logged in.')));
-			} else {
-				$this->session->set_userdata('messages', array(array('type' => 'error', 'content' => 'That Facebook account is already associated with an account. Logout and log in via Facebook to access it.')));
-			}
-			//redirect( 'settings', 'refresh' );
-		
+    		$this->load->view('templates/header', $this->data);
+  			$this->load->view('campus/upload', $this->data);
+  			$this->load->view('templates/footer', $this->data);
+  		}
 		}
-		
-    $this->load->view('templates/header', $this->data);
-  	$this->load->view('campus/fb', $this->data);
-  	$this->load->view('templates/footer', $this->data);
-	}
+    else
+      redirect('/login','location');
+  }
 }

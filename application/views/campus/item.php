@@ -41,7 +41,7 @@
 
 		<div style="float:right;">
       <a class="heart item <?php echo $is_favorite ? 'active' : '' ?>" href="<?php echo base_url(); ?>toggle_favorite/<?php echo $item->item_id ?>">toggle favorite</a>
-			<a href="#" class="camera"><img src="<?php echo base_url() ?>images/icon_camera.png" border="0" height="24" width="29" alt="photos" /></a>
+			<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/upload" ?>" class="camera"><img src="<?php echo base_url() ?>images/icon_camera.png" border="0" height="24" width="29" alt="photos" /></a>
 		</div>
 
 		<div id="clear" style="clear:both;"></div>

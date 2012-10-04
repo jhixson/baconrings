@@ -249,4 +249,11 @@ class Campus_model extends CI_Model {
     else
       return false;
   }
+  
+  public function add_photo($photo_data) {
+    if($this->db->insert('photos', $photo_data))
+      return 'added';
+    else
+      return '';
+  }
 }

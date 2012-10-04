@@ -49,6 +49,7 @@ class Auth extends MY_Controller {
 	{
 		$this->data['title'] = "Login";
 
+    $userId = $this->facebook->getUser();
 		//validate form input
 		$this->form_validation->set_rules('identity', 'Identity', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
@@ -71,6 +72,36 @@ class Auth extends MY_Controller {
 				redirect(base_url().'auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		}
+    // Facebook passes back a token in code query var
+    else if(isset($_GET['code'])) {
+      //var_dump($userId);
+      //die();
+      if($userId != 0) {
+        $query = $this->db->get_where('users', array('facebook_id' => $userId));
+        if( count($query->result()) == 0 ) {
+          $profile = $this->facebook->api('/me');
+          $user_data = array(
+            'facebook_id' => $userId,
+            'facebook_token' => $_GET['code']
+          );
+          $fb_user_id = $this->ion_auth->register($profile['username'], '', $profile['email'], $user_data);
+        }
+        else {
+          $profile['email'] = $query->row()->email;
+          $fb_user_id = $query->row()->id;
+        }
+        $session_data = array(
+            'identity' => 'email',
+            'email' => $profile['email'],
+            'id' => $fb_user_id,
+            'user_id' => $fb_user_id
+          );
+        $this->session->set_userdata($session_data); // this sets up the login data
+				redirect($this->config->item('base_url'), 'refresh');
+      }
+      else
+				redirect(base_url().'auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
+    }
 		else
 		{  //the user is not logging in so display the login page
 			//set the flash data error message if there is one
@@ -86,6 +117,8 @@ class Auth extends MY_Controller {
 				'type' => 'password',
 			);
 
+      $this->data['fb_login_url'] = $this->facebook->getLoginUrl(array('scope'=>'email')); 
+
       $this->load->view('templates/header', $this->data);
 			$this->load->view('auth/login', $this->data);
 			$this->load->view('templates/footer', $this->data);
@@ -98,7 +131,8 @@ class Auth extends MY_Controller {
 		$this->data['title'] = "Logout";
 
 		//log the user out
-		$logout = $this->ion_auth->logout();
+		$this->facebook->destroySession();
+    $logout = $this->ion_auth->logout();
 
 		//redirect them back to the page they came from
 		redirect(base_url(), 'refresh');

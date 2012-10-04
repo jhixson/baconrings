@@ -43,12 +43,17 @@ $route['toggle_favorite/(:any)'] = 'ajax/toggle_favorite/$1';
 $route['pages/(:any)'] = 'pages/view/$1';
 $route['best-of/(:any)'] = 'campus/bestof/$1';
 $route['best-of'] = 'campus/bestof';
+
 $route['(:any)/(:any)/(:any)/rate'] = 'forms/rate/$3';
 $route['(:any)/(:any)/(:any)/rate-thanks'] = 'forms/ratethanks/$3';
+$route['(:any)/(:any)/(:any)/upload'] = 'campus/upload/$3';
+$route['(:any)/(:any)/(:any)/do_upload'] = 'campus/do_upload/$3';
 $route['(:any)/(:any)/(:any)'] = 'campus/item/$1/$2/$3';
 $route['(:any)/(:any)'] = 'campus/category/$1/$2';
 $route['campus/view'] = 'campus/view';
-$route['campus/fb'] = 'campus/fb';
+
+$route['upload'] = 'campus/upload';
+$route['do_upload'] = 'campus/do_upload';
 
 $route['favorites'] = 'campus/favorites';
 $route['auth(\/index)?'] = 'auth/index';
