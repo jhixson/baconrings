@@ -10,38 +10,45 @@
 
 		<h1><?php echo $item->item_name ?></h1>
 
-		<br />
-
-		<div id="overallrating"><span class="overallrating"><?php echo number_format($overall_rating->score, 1, '.', ',') ?></span><br />OVERALL QUALITY<br />OUT OF 5</div>
+		<br /><br />
+		
+		<div id="overallratinglabel">OVERALL</div>
+		<div id="overallrating">
+		  <span style="width: <?php echo ($overall_rating->score / 5.0) * 100 ?>%"><?php echo number_format($overall_rating->score, 1, '.', ',') ?></span>
+		</div>
+		<div id="clear" style="clear:both;"></div>
 
     <?php foreach($item_ratings as $item_rating): ?>
-  		<div id="otherrating"><span class="otherrating"><?php echo number_format($item_rating->score, 1, '.', ',')  ?></span><br /><?php echo $item_rating->attribute_name ?></div>
+  		<div id="otherratinglabel"><?php echo $item_rating->attribute_name ?></div>
+			<div id="otherrating">
+			  <span style="width: <?php echo ($item_rating->score / 5.0) * 100 ?>%"><?php echo number_format($item_rating->score, 1, '.', ',') ?></span>
+			</div>
+			<div id="clear" style="clear:both;"></div>
   	<?php endforeach ?>
 
 		<div id="clear" style="clear:both;"></div>
 
-    <br /><strong>#<?php echo $ranking ?> rated <?php echo substr(strtolower($category->category_name), 0, -1) ?> at Syracuse University</strong>
-
 	</div>
+	
+	<div id="ranking" style="text-align:right;margin-bottom:10px;"><strong>#<?php echo $ranking ?> rated <?php echo substr(strtolower($category->category_name), 0, -1) ?> at Syracuse University</strong></div>
+  
 
 	<div id="iteminfocontainer">
 
-		<br /><br />
-		<?php echo $item->item_description ?>
-		<p />
-
-		<div style="width:25px;float:left;"><a href="" target="_new"><img src="<?php echo base_url() ?>images/icon_location.png" height="24" width="25" alt="map it" border="0" /></a></div>
-		
-		<div id="address" style="float:left;">
-		  <?php echo nl2br($item->item_address) ?>
-		  <?php if(!empty($item->item_address2)) echo "<br />".nl2br($item->item_address) ?>
-		  <br /><?php echo $item->item_city.", ".$item->item_state." ".$item->item_zip ?><br />
-		  <?php echo $item->item_phone ?>
+    <div id="itemcopy">
+  		<?php echo $item->item_description ?>
 		</div>
+		
+		<div id="itemphoto">
+		  <?php if($item->item_photo): ?>
+  			<img src="<?php echo base_url(); ?>images/<?php echo $item->item_photo ?>" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
+  		<?php endif ?>
 
-		<div style="float:right;">
-      <a class="heart item <?php echo $is_favorite ? 'active' : '' ?>" href="<?php echo base_url(); ?>toggle_favorite/<?php echo $item->item_id ?>">toggle favorite</a>
-			<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/upload" ?>" class="camera"><img src="<?php echo base_url() ?>images/icon_camera.png" border="0" height="24" width="29" alt="photos" /></a>
+			<div style="text-align:right;padding-top:8px;">
+				<a href="" target="_new"><img src="<?php echo base_url(); ?>images/icon_location.png" height="24" width="25" alt="map it" border="0" /></a>
+				<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/upload" ?>"><img src="<?php echo base_url(); ?>images/icon_camera.png" border="0" height="24" width="29" alt="photos" /></a>
+			</div>
+
 		</div>
 
 		<div id="clear" style="clear:both;"></div>
