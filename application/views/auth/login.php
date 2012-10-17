@@ -1,7 +1,10 @@
 <h1>Log In</h1>
 	<p></p>
-	<div id="infoMessage"><?php echo $message;?></div>
+	
+  <div id="infoMessage"><ul><?php echo $message;?></ul></div>
+  
   <div id="signup" class="signup" style="float:left;">
+
     <?php echo form_open(base_url()."auth/login");?>
     	
       <label for="identity" class="labelpadding">Email:</label>

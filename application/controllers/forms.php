@@ -468,9 +468,16 @@ class Forms extends MY_Controller {
   	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
   	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
 
+    //validate form input
+      $this->form_validation->set_rules('comments', 'Comments', 'required');
+      
+      $this->form_validation->set_error_delimiters('<li>','</li>');
+
+
   	if($this->data['item'])
   	  $this->data['title'] = 'Rate '.$this->data['item']->item_name;
-  	else
+  	
+    else
     	show_404();
     
     //set the flash data error message if there is one

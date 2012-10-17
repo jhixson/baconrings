@@ -14,7 +14,7 @@
 				<label class="labelpadding">Email:<span class="required">*</span></label>
 				<input type="text" name="email" id="email" class="textinput <?php if (!empty($email)) echo 'textinputerror' ?>" value="<?php if (!empty($email)) echo $email['value'];?>" />
 
-				<label>College:
+				<label>College/School:
 				<span class="small">If applicable</span>
 				</label>
 				<input type="text" name="school" id="school" class="textinput" value="<?php if (!empty($school)) echo $school['value'];?>" />

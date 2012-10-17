@@ -10,7 +10,7 @@
 
 		<div id="iteminfocontainer2">
 
-			<p>(Responses to all questions are required)</p>
+			<p class="required">(Responses to all questions are required)</p>
 
 			<div id="infoMessage"><ul><?php echo $message;?></ul></div>
 
