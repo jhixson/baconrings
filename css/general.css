@@ -136,8 +136,16 @@ h1{
 	font-family:arial;
 	font-size:21pt;
 	font-weight:normal;
-	display:inline;
-	text-transform:uppercase;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+h1.left {
+  float: left;
+}
+
+.extra {
+  float: right;
 }
 
 #homeleft{
@@ -148,9 +156,10 @@ h1{
 #homeright{
 	margin-left:40px;
 	width:243px;
-	height:155px;
+	height:200px;
 	float:left;
 	background-image:url('/images/recent_rating_bg.gif');
+	background-repeat:no-repeat;
 	color:#484848;
 	font-size:10pt;
 	padding:45px 55px 0px 55px;
@@ -213,15 +222,83 @@ h1{
 	padding:0 15px 0 15px;
 }
 
-#campusinfo{
-	width:935px;
-	height:41px;
-	background-color:#b2e6f4;
+/* boxes on campus page */
+
+#campusleft{
+	width:584px;
+	margin-right:16px;
+	float:left;
+}
+
+#campusright{
+	width:346px;
+	float:left;
+}
+
+#campusphoto{
+	width:584px;
+	height:120px;
 	border-top: 1px solid #000;
 	border-bottom: 1px solid #000;
-	padding:12px 7px 12px 7px;
+}
+
+#campusinfo{
+	width:562px;
+	background-color:#b2e6f4;
+	padding:11px;
+}
+
+#campusinfo td{
 	font-weight:bold;
-	font-size:13pt;
+	padding-bottom:5px;
+}
+
+#campusinfo .overalllabel{
+	font-weight:bold;
+	font-size:16pt;
+}
+
+#overallbig{
+	height:37px;
+	width:235px;
+	background-color:#97c4d0;
+	background-repeat:no-repeat;
+	font-weight:bold;
+	font-size:24pt;
+	overflow: hidden;
+}
+
+#overallbig span {
+  display: block;
+  background-color: #00acda;
+  padding-left: 4px;
+}
+
+#campuscomment{
+	width:584px;
+}
+
+#campuscommentcopy{
+	width:434px;
+	padding:11px;
+	float:left;
+	font-size:11pt;
+}
+
+#campuscommentview{
+	width:102px;
+	padding:8px;
+	text-align:center;
+	float:left;
+}
+
+#paging, #paging a{
+	color:#81a33b;
+	font-weight:bold;
+}
+
+#paging{
+	padding:11px;
 }
 
 #campusinfooverall{
@@ -246,18 +323,14 @@ h1{
 
 #campusinfobest2{
 	float:left;
-	text-transform:uppercase;
 }
 
-/* boxes on campus page */
-
 #ratingsboxcontainer{
-	width:497px;
-	float:left;
+	width:346px;
 }
 
 #ratingsbox{
-	width:497px;
+	width:346px;
 	background-image:url('/images/ratingsbox_bg.gif');
 	background-repeat:repeat-y;
 }
@@ -284,14 +357,13 @@ h1{
 /* boxes for activity feed */
 
 #activitycontainer{
-	margin-left:35px;
-	width:413px;
-	float:left;
+	width:346px;
+	margin-top:20px;
 }
 
 #activity{
-	width:413px;
-	background-image:url('/images/activity_bg.gif');
+	width:346px;
+	background-image:url('/images/ratingsbox_bg.gif');
 	background-repeat:repeat-y;
 }
 
@@ -314,6 +386,16 @@ h1{
 
 #activity a:hover{
 	color:#2d2d2d;
+	text-decoration:none;
+}
+
+#seeall a{
+	float:right;
+	margin:18px 15px 0 0;
+	font-weight:bold;
+	font-size:10pt;
+	padding:5px;
+	color:#ffffff;
 	text-decoration:none;
 }
 
@@ -380,27 +462,53 @@ h1{
 
 #itemratingscontainer{
 	float:left;
-	width:389px;
+	width:260px;
 	border: 0px solid #999;
 }
 
 #iteminfocontainer{
 	float:left;
-	margin-left:20px;
-	width:441px;
+	margin-left:39px;
+	width:533px;
 	font-size:10pt;
+	background-color:#d1f0f8;
+	padding:10px;
+}
+
+#itemcopy{
+	width:359px;
+	margin-right:11px;
+	float:left;
+}
+
+#itemphoto{
+	width:160px;
+	float:left;
 }
 
 #overallrating{
 	float:left;
-	margin-top:10px;
-	width:84px;
-	height:84px;
-	padding:9px;
-	background-color:#ffffff;
-	color:#000000;
-	font-size:7pt;
-	text-align:center;
+	width:145px;
+	background-color:#97c4d0;
+	background-repeat:no-repeat;
+	font-weight:bold;
+	font-size:18pt;
+	margin-bottom:18px;
+}
+
+#overallrating span {
+  display: block;
+  background-color: #00acda;
+  padding-left: 4px;
+}
+
+#overallratinglabel{
+	width:110px;
+	height:26px;
+	float:left;
+	font-weight:bold;
+	font-size:15pt;
+	padding-top:5px;
 }
 
 #overallrating .overallrating{
@@ -409,16 +517,28 @@ h1{
 }
 
 #otherrating{
+	width:145px;
+	background-color:#97c4d0;
+	background-image:url('/images/bluebar.gif');
+	background-repeat:no-repeat;
+	font-weight:bold;
 	float:left;
-	margin-top:37px;
-	margin-left:15px;
-	width:57px;
-	height:57px;
-	padding:9px;
-	background-color:#ffffff;
-	color:#000000;
-	font-size:7pt;
-	text-align:center;
+	margin-bottom:10px;
+}
+
+#otherrating span {
+  display: block;
+  background-color: #00acda;
+  padding-left: 4px;
+  padding-top: 2px;
+}
+
+#otherratinglabel{
+	width:110px;
+	height:19px;
+	float:left;
+	padding-top:1px;
+	text-transform: uppercase;
 }
 
 #otherrating .otherrating{
@@ -445,6 +565,22 @@ h1{
 	color:#2d2d2d;
 	font-style:italic;
 	font-size:10pt;
+}
+
+/* used on campus rating page */
+
+#ratingcontainer{
+	width:707px;
+}
+
+#ratingcontainer td{
+	font-weight:bold;
+	border-bottom:5px solid #ffffff;
+	background-repeat:no-repeat;
+}
+
+#ratingcontainer .tdpad{
+	padding:2px;
 }
 
 /* form stuff */
@@ -617,11 +753,6 @@ h1{
 .required{
 	color:#cc0000;
 }
-
-#infoMessage ul{
-	list-style-image:url('/images/error_x.png');
-}
-
 
 #infoMessage li{
 	color:#cc0000;

@@ -10,19 +10,19 @@
 			
 				<form action="/campus/view" method="post">
 
-				<select name="school">
-					<option value="">Choose a School</option>
-					<?php foreach($campuses as $campus): ?>
-  					<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
-  				<?php endforeach ?>
-				</select>
+			<select name="school">
+				<option value="">Choose a School</option>
+				<?php foreach($campuses as $campus): ?>
+  				<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
+  			<?php endforeach ?>
+			</select>
 
-				<input type="submit" value="GO" class="bluebutton" />
+			<input type="submit" value="GO" class="bluebutton" />
 
-      			</form>
+      </form>
 
 			</div>
-
+			
 			<div id="directory">
 			
 				<strong>School Directory</strong>
@@ -33,9 +33,18 @@
 		</div>
 
 	<div id="homeright">
-	  <?php foreach($recent_campuses as $campus): ?>
-  		<br /><a href="/<?php echo $campus->university_slug ?>" class="homerightname"><?php echo $campus->university_name ?></a>
-  	<?php endforeach ?>
+
+		<br /><table cellpadding="0" cellspacing="0" border="0">
+
+	  	<?php foreach($recent_campuses as $campus): ?>
+  		<tr valign="top"><td width="25"><img src="images/activity_plus.png" width="21" height="21" hspace="5" border="0" alt="new" /></td>
+  			<td><a href="/<?php echo $campus->university_slug ?>" class="homerightname">
+  			<?php echo $campus->university_name ?></a></td>
+  		</tr>
+  			
+  		<?php endforeach ?>
+  		</table>
+
   </div>
 
 <div id="clear" style="clear:both;"></div>
