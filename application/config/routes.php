@@ -38,6 +38,9 @@
 |
 */
 
+$route['(:any)/submit-correction'] = 'forms/submitcorrection';
+$route['(:any)/submit-correction-thanks'] = 'forms/submitcorrectionthanks';
+
 $route['404_override'] = '';
 $route['toggle_favorite/(:any)'] = 'ajax/toggle_favorite/$1';
 $route['pages/(:any)'] = 'pages/view/$1';
@@ -51,6 +54,7 @@ $route['campus/view'] = 'campus/view';
 $route['campus/fb'] = 'campus/fb';
 
 $route['favorites'] = 'campus/favorites';
+$route['directory'] = 'campus/directory';
 $route['auth(\/index)?'] = 'auth/index';
 $route['login'] = 'auth/login';
 $route['auth/login'] = 'auth/login';
@@ -68,6 +72,8 @@ $route['forms/contact'] = 'forms/contact';
 $route['forms/contact-thanks'] = 'forms/contactthanks';
 $route['forms/forgot-password'] = 'forms/forgotpassword';
 $route['forms/forgot-password-thanks'] = 'forms/forgotpasswordthanks';
+$route['forms/flag-comment'] = 'forms/flag';
+$route['forms/flag-comment-thanks'] = 'forms/flagthanks';
 $route['forms/add-category'] = 'forms/addcategory';
 $route['forms/add-category-thanks'] = 'forms/addcategorythanks';
 $route['forms/add-item'] = 'forms/additem';

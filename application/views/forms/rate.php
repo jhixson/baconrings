@@ -1,4 +1,4 @@
-<div id="icon"><img src="<?php echo base_url(); ?>images/icon_large_Dorms.gif" border="0" height="67" width="67" /></div>
+<div id="icon"><img src="<?php echo base_url(); ?>images/icon_large_<?=str_replace(" ","", $category->category_name)?>.gif" border="0" height="67" width="67" /></div>
 
 		<div id="breadcrumbs" style="margin-top:1px;">
     <span class="breadcrumbs"><a href="/<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></a> > <a href="/<?php echo $campus->university_slug ?>/<?php echo $category->category_slug ?>"><?php echo $category->category_name ?></a> > ADD A RATING</span><br />

@@ -10,17 +10,27 @@
 			
 				<form action="/campus/view" method="post">
 
-			<select name="school">
-				<option value="">Choose a School</option>
-				<?php foreach($campuses as $campus): ?>
-  				<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
-  			<?php endforeach ?>
-			</select>
+				<select name="school">
+					<option value="">Choose a School</option>
+					<?php foreach($campuses as $campus): ?>
+  					<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
+  				<?php endforeach ?>
+				</select>
 
-			<input type="submit" value="GO" class="bluebutton" />
+				<input type="submit" value="GO" class="bluebutton" />
 
-      </form>
+      			</form>
 
+			</div>
+
+			<div id="directory">
+			
+				<strong>School Directory</strong>
+				<br /><a href="/directory/a">A</a>&nbsp;&nbsp;<a href="/directory/b">B</a>&nbsp;&nbsp;<a href="">C</a>&nbsp;&nbsp;D&nbsp;&nbsp;E&nbsp;&nbsp;F&nbsp;&nbsp;G
+				&nbsp;&nbsp;H&nbsp;&nbsp;I&nbsp;&nbsp;J&nbsp;&nbsp;K&nbsp;&nbsp;L&nbsp;&nbsp;M&nbsp;&nbsp;N&nbsp;&nbsp;O
+				&nbsp;&nbsp;P&nbsp;&nbsp;Q&nbsp;&nbsp;R&nbsp;&nbsp;S&nbsp;&nbsp;T&nbsp;&nbsp;U&nbsp;&nbsp;V&nbsp;&nbsp;W
+				&nbsp;&nbsp;X&nbsp;&nbsp;Y&nbsp;&nbsp;Z
+			
 			</div>
 
 		</div>

@@ -186,6 +186,67 @@ class Forms extends MY_Controller {
 
   }
 
+// add category form
+  public function flag()
+  {
+    $this->data['title'] = 'Flag a Rating';
+    
+    //set the flash data error message if there is one
+    $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+    $this->load->view('templates/header', $this->data);
+    $this->load->view('forms/flag', $this->data);
+    $this->load->view('templates/footer', $this->data);
+  }
+
+public function flagthanks()
+  {
+    $this->data['title'] = 'Thank You for Improving the Ratings';
+
+    //validate form input
+    $this->form_validation->set_rules('comments', 'comments', 'required');
+
+    $this->form_validation->set_error_delimiters('<li>','</li>');
+
+    if ($this->form_validation->run() == true)
+    {
+
+         $comments = $this->input->post('comments');
+      
+         // email functionality here
+        $to = "peruta@peruta.com";
+        $subject = "RateMyCampus flag form";
+        $emailmessage = "Comments: " . $comments . "\n";
+        $emailmessage .= "Rating: "  . "(need it here)" . "\n";
+        $from = "flagged@ratemycampus.com";
+        $headers = "From:" . "flagged@ratemycampus.com";
+        mail($to,$subject,$emailmessage,$headers);
+
+        $this->load->view('templates/header', $this->data);
+        $this->load->view('forms/addcategorythanks', $this->data);
+        $this->load->view('templates/footer', $this->data);
+    }
+    else
+    {
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+
+      $this->data['comments'] = array('comments' => 'comments',
+        'id' => 'comments',
+        'type' => 'text',
+        'value' => $this->input->post('comments')
+      );
+
+       $this->load->view('templates/header', $this->data);
+       $this->load->view('forms/addcategory', $this->data);
+       $this->load->view('templates/footer', $this->data);
+
+    }  
+
+  }
+
+
+
 
 // add category form
   public function addcategory()
@@ -467,11 +528,6 @@ class Forms extends MY_Controller {
   	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
   	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
   	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
-
-    //validate form input
-      $this->form_validation->set_rules('comments', 'Comments', 'required');
-      
-      $this->form_validation->set_error_delimiters('<li>','</li>');
 
 
   	if($this->data['item'])
