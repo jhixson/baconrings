@@ -254,4 +254,15 @@ class Campus extends MY_Controller {
   	$this->load->view('campus/fb', $this->data);
   	$this->load->view('templates/footer', $this->data);
 	}
+
+public function directory()
+  {
+    $this->data['title'] = 'Campus and University Directory';
+    
+
+    $this->load->view('templates/header', $this->data);
+    $this->load->view('campus/directory', $this->data);
+    $this->load->view('templates/footer', $this->data);
+  }
+
 }

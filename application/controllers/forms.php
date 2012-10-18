@@ -223,7 +223,7 @@ public function flagthanks()
         mail($to,$subject,$emailmessage,$headers);
 
         $this->load->view('templates/header', $this->data);
-        $this->load->view('forms/addcategorythanks', $this->data);
+        $this->load->view('forms/flagthanks', $this->data);
         $this->load->view('templates/footer', $this->data);
     }
     else
@@ -238,7 +238,7 @@ public function flagthanks()
       );
 
        $this->load->view('templates/header', $this->data);
-       $this->load->view('forms/addcategory', $this->data);
+       $this->load->view('forms/flag', $this->data);
        $this->load->view('templates/footer', $this->data);
 
     }  

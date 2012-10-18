@@ -1,7 +1,7 @@
 <h1>Flag This Rating</h1>
 
 		<p>
-			If you believe this rating is inconsistent with our <a href="">Site Guidelines</a>,
+			If you believe this rating is inconsistent with our <a href="/pages/site-guidelines">Site Guidelines</a>,
 			please use the form below to alert the Moderation Team.
 		</p>
 
