@@ -6,7 +6,7 @@
 
 		<div id="contact" class="contact">
 			
-			<form id="form" name="form" method="post" action="/forms/submit-correction-thanks">
+			<form id="form" name="form" method="post" action="/<?php echo $campus->university_slug ?>/<?php echo $category->category_slug ?>/<?php echo $item->item_slug ?>/submit-correction-thanks">
 
 				<label class="labelpadding">Name: </label>
 				<input type="text" name="name" id="name" class="textinput" value="<?php if (!empty($name)) echo $name['value'];?>" />
@@ -14,7 +14,7 @@
 				<label class="labelpadding">Email: <span class="required">*</span></label>
 				<input type="text" name="email" id="email" class="textinput <?php if (!empty($email)) echo 'textinputerror' ?>" value="<?php if (!empty($email)) echo $email['value'];?>" />
 
-				<label>College:
+				<label>College/School:
 				<span class="small">If applicable</span>
 				</label>
 				<input type="text" name="school" id="school" class="textinput" value="<?php if (!empty($school)) echo $school['value'];?>" />

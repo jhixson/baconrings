@@ -47,6 +47,6 @@
 
 	</table>	
 
-	<p><strong>Don't see the one you are looking for? <a href="/forms/add-item"><span class="bluelink">ADD IT HERE</span></a></strong></p>
+	<p><strong>Don't see the one you are looking for? <a href="/<?php echo $campus->university_slug ?>/<?php echo $category->category_slug ?>/add-item"><span class="bluelink">ADD IT HERE</span></a></strong></p>
 
 </div>

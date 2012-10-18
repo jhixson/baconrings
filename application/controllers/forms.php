@@ -13,8 +13,13 @@ class Forms extends MY_Controller {
 
   
   // submit correction form
-  public function submitcorrection()
+  public function submitcorrection($slug='')
   {
+    $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
+  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+  	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+  	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
+  	
     $this->data['title'] = 'Sumbit Correction';
     
     //set the flash data error message if there is one
@@ -26,8 +31,12 @@ class Forms extends MY_Controller {
   }
 
 
-  public function submitcorrectionthanks()
+  public function submitcorrectionthanks($slug='')
   {
+    $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
+  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+  	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+  	
     $this->data['title'] = 'Sumbit Correction Thank You';
 
     //validate form input
@@ -186,10 +195,73 @@ class Forms extends MY_Controller {
 
   }
 
+// add category form
+  public function flag()
+  {
+    $this->data['title'] = 'Flag a Rating';
+    
+    //set the flash data error message if there is one
+    $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+    $this->load->view('templates/header', $this->data);
+    $this->load->view('forms/flag', $this->data);
+    $this->load->view('templates/footer', $this->data);
+  }
+
+public function flagthanks()
+  {
+    $this->data['title'] = 'Thank You for Improving the Ratings';
+
+    //validate form input
+    $this->form_validation->set_rules('comments', 'comments', 'required');
+
+    $this->form_validation->set_error_delimiters('<li>','</li>');
+
+    if ($this->form_validation->run() == true)
+    {
+
+         $comments = $this->input->post('comments');
+      
+         // email functionality here
+        $to = "peruta@peruta.com";
+        $subject = "RateMyCampus flag form";
+        $emailmessage = "Comments: " . $comments . "\n";
+        $emailmessage .= "Rating: "  . "(need it here)" . "\n";
+        $from = "flagged@ratemycampus.com";
+        $headers = "From:" . "flagged@ratemycampus.com";
+        mail($to,$subject,$emailmessage,$headers);
+
+        $this->load->view('templates/header', $this->data);
+        $this->load->view('forms/flagthanks', $this->data);
+        $this->load->view('templates/footer', $this->data);
+    }
+    else
+    {
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+
+      $this->data['comments'] = array('comments' => 'comments',
+        'id' => 'comments',
+        'type' => 'text',
+        'value' => $this->input->post('comments')
+      );
+
+       $this->load->view('templates/header', $this->data);
+       $this->load->view('forms/flag', $this->data);
+       $this->load->view('templates/footer', $this->data);
+
+    }  
+
+  }
+
+
+
 
 // add category form
-  public function addcategory()
+  public function addcategory($slug='')
   {
+    $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
+  	
     $this->data['title'] = 'Suggest a Category to Add';
     
     //set the flash data error message if there is one
@@ -201,8 +273,10 @@ class Forms extends MY_Controller {
   }
 
 
-  public function addcategorythanks()
+  public function addcategorythanks($slug='')
   {
+    $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
+    
     $this->data['title'] = 'Thank You for Your Suggestion';
 
     //validate form input
@@ -270,8 +344,11 @@ class Forms extends MY_Controller {
 
 
 // add item form
-  public function additem()
+  public function additem($campus_slug='', $category_slug='')
   {
+    $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
+  	$this->data['category'] = $this->campus_model->get_single('category', array('category_slug' => $category_slug));
+    
     $this->data['title'] = 'Suggest an Item to Add';
     
     //set the flash data error message if there is one
@@ -289,8 +366,11 @@ class Forms extends MY_Controller {
   }
 
 
-  public function additemthanks()
+  public function additemthanks($campus_slug='', $category_slug='')
   {
+    $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
+  	$this->data['category'] = $this->campus_model->get_single('category', array('category_slug' => $category_slug));
+  	
     $this->data['title'] = 'Thank You for Your Suggestion';
 
     //pass in list of schools
@@ -303,7 +383,7 @@ class Forms extends MY_Controller {
     $this->form_validation->set_rules('email', 'email address', 'required|valid_email');
     $this->form_validation->set_rules('school', 'school', 'required');
     $this->form_validation->set_rules('item', 'item', 'required');
-    $this->form_validation->set_rules('category', 'category', 'required');
+    $this->form_validation->set_rules('cat', 'cat', 'required');
 
     $this->form_validation->set_error_delimiters('<li>','</li>');
 
@@ -314,7 +394,7 @@ class Forms extends MY_Controller {
          $email = $this->input->post('email');
          $school = $this->input->post('school');
          $item = $this->input->post('item');
-         $category = $this->input->post('category');
+         $category = $this->input->post('cat');
          $address = $this->input->post('address');
          $phone = $this->input->post('phone');
          $description = $this->input->post('description');
@@ -468,9 +548,11 @@ class Forms extends MY_Controller {
   	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
   	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
 
+
   	if($this->data['item'])
   	  $this->data['title'] = 'Rate '.$this->data['item']->item_name;
-  	else
+  	
+    else
     	show_404();
     
     //set the flash data error message if there is one

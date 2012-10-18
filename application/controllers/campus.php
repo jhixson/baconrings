@@ -137,7 +137,7 @@ class Campus extends MY_Controller {
     //die();
 
     $user = $this->ion_auth->user()->row();
-    $this->data['is_favorite'] = $this->ion_auth->logged_in() && $this->campus_model->is_favorite($user->id, $this->data['item']->item_id);
+    //$this->data['is_favorite'] = $this->ion_auth->logged_in() && $this->campus_model->is_favorite($user->id, $this->data['item']->item_id);
 	
   	$comments_list = $this->campus_model->get_list('rating', array('item_id' => $this->data['item']->item_id));
   	$comments = array();

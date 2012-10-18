@@ -1,8 +1,10 @@
-<h1><?php echo $campus->university_name ?></h1>
+<h1 class="left"><?php echo $campus->university_name ?></h1>
 
-<img src="<?php echo base_url(); ?>images/rss.gif" border="0" height="25" width="25" alt="rss" align="right" />
-<a href=""><img src="<?php echo base_url(); ?>images/icon_favorite.png" hspace="10" border="0" height="24" width="28" alt="rss" align="right" /></a>
-
+<div class="extra">
+  <img src="<?php echo base_url(); ?>images/rss.gif" border="0" height="25" width="25" alt="rss" align="right" />
+  <a href="/ajax/toggle_favorite/<?php echo $campus->university_id ?>" class="heart item">Add favorite</a>
+</div>
+<div style="clear:both;"></div>
 <div id="campusleft">
 
 	<div id="campusphoto">
@@ -97,7 +99,7 @@
         <?php endforeach ?>
   			<tr>
   				<td></td>
-  				<td colspan="2" style="font-size:11pt;text-transform:capitalize;"><br />Don't see what you are looking for? <a style="font-size:10pt;" href="/forms/add-category">Add it here</a></td>
+  				<td colspan="2" style="font-size:11pt;text-transform:capitalize;"><br />Don't see what you are looking for? <a style="font-size:10pt;" href="/<?php echo $campus->university_slug ?>/add-category">Add it here</a></td>
   			</tr>
 
   		</table>

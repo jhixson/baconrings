@@ -136,7 +136,16 @@ h1{
 	font-family:arial;
 	font-size:21pt;
 	font-weight:normal;
-	display:inline;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+h1.left {
+  float: left;
+}
+
+.extra {
+  float: right;
 }
 
 #homeleft{
@@ -184,6 +193,21 @@ h1{
 	height:30px;
 	font-size:14pt;
 	font-family:arial;
+}
+
+#directory{
+	margin-top:35px;
+	margin-left:17px;
+	font-size:11pt;
+}
+
+#directory a{
+	color:#9cc24d;
+	text-decoration:none;
+}
+
+#directory a:hover{
+	text-decoration:underline;
 }
 
 .bluebutton{

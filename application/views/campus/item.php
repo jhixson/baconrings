@@ -41,7 +41,7 @@
 		
 		<div id="itemphoto">
 		  <?php if($item->item_photo): ?>
-  			<img src="<?php echo base_url(); ?>images/<?php echo $item->item_photo ?>" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
+  			<img src="<?php echo base_url(); ?>photos/<?php echo $item->item_photo ?>" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
   		<?php endif ?>
 
 			<div style="text-align:right;padding-top:8px;">

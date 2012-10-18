@@ -46,6 +46,12 @@ $route['best-of'] = 'campus/bestof';
 
 $route['(:any)/(:any)/(:any)/rate'] = 'forms/rate/$3';
 $route['(:any)/(:any)/(:any)/rate-thanks'] = 'forms/ratethanks/$3';
+$route['(:any)/(:any)/(:any)/submit-correction'] = 'forms/submitcorrection/$3';
+$route['(:any)/(:any)/(:any)/submit-correction-thanks'] = 'forms/submitcorrectionthanks/$3';
+$route['(:any)/add-category'] = 'forms/addcategory/$1';
+$route['(:any)/add-category-thanks'] = 'forms/addcategorythanks/$1';
+$route['(:any)/(:any)/add-item'] = 'forms/additem/$1/$2';
+$route['(:any)/(:any)/add-item-thanks'] = 'forms/additemthanks/$1/$2';
 $route['(:any)/(:any)/(:any)/upload'] = 'campus/upload/$3';
 $route['(:any)/(:any)/(:any)/do_upload'] = 'campus/do_upload/$3';
 $route['(:any)/(:any)/(:any)'] = 'campus/item/$1/$2/$3';
@@ -56,6 +62,7 @@ $route['upload'] = 'campus/upload';
 $route['do_upload'] = 'campus/do_upload';
 
 $route['favorites'] = 'campus/favorites';
+$route['directory'] = 'campus/directory';
 $route['auth(\/index)?'] = 'auth/index';
 $route['login'] = 'auth/login';
 $route['auth/login'] = 'auth/login';
@@ -67,16 +74,18 @@ $route['auth/forgot_password'] = 'auth/forgot_password';
 
 $route['main'] = 'main/index';
 
-$route['forms/submit-correction'] = 'forms/submitcorrection';
-$route['forms/submit-correction-thanks'] = 'forms/submitcorrectionthanks';
+//$route['forms/submit-correction'] = 'forms/submitcorrection';
+//$route['forms/submit-correction-thanks'] = 'forms/submitcorrectionthanks';
 $route['forms/contact'] = 'forms/contact';
 $route['forms/contact-thanks'] = 'forms/contactthanks';
 $route['forms/forgot-password'] = 'forms/forgotpassword';
 $route['forms/forgot-password-thanks'] = 'forms/forgotpasswordthanks';
-$route['forms/add-category'] = 'forms/addcategory';
-$route['forms/add-category-thanks'] = 'forms/addcategorythanks';
-$route['forms/add-item'] = 'forms/additem';
-$route['forms/add-item-thanks'] = 'forms/additemthanks';
+$route['forms/flag-comment'] = 'forms/flag';
+$route['forms/flag-comment-thanks'] = 'forms/flagthanks';
+//$route['forms/add-category'] = 'forms/addcategory';
+//$route['forms/add-category-thanks'] = 'forms/addcategorythanks';
+//$route['forms/add-item'] = 'forms/additem';
+//$route['forms/add-item-thanks'] = 'forms/additemthanks';
 $route['forms/rate/(:any)'] = 'forms/rate/$1';
 $route['forms/rate-thanks/(:any)'] = 'forms/ratethanks/$3';
 
