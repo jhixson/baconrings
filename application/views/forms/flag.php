@@ -29,7 +29,7 @@
 			<form id="form" name="form" method="post" action="/forms/flag-comment-thanks">
 
 				<p><label class="labelpadding">Description: </label>
-				<textarea name="comments" id="comments" class="textareainput"><?php if (!empty($description)) echo $description['value'];?></textarea>
+				<textarea name="comments" id="comments" class="textareainput <?php if (!empty($comments)) echo 'textinputerror' ?>"><?php if (!empty($description)) echo $description['value'];?></textarea>
 				</p>
 
 				<button type="submit" name="submit" class="bluebutton" style="margin-left:153px;">Send</button>

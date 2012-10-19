@@ -754,6 +754,12 @@ h1.left {
 	color:#cc0000;
 }
 
+#infoMessage ul{
+	color:#cc0000;
+	list-style-image:url('/images/error_x.png');
+} 
+ 
+
 #infoMessage li{
 	color:#cc0000;
 }

@@ -378,6 +378,17 @@ class Auth extends MY_Controller {
 			$password = $this->input->post('password');
 
 			$additional_data = array('account_type' => $this->input->post('who'));
+		
+			 // email functionality here
+	        $to = $email;
+   		    $subject = "Welcome to the RateMyCampus Community";
+        	$emailmessage = "welcome" . "\n\n";
+        	$emailmessage .= "The RateMyCampus Team " . "\n";
+        	$from = "signup@ratemycampus.com";
+        	$headers = "From:" . "signup@ratemycampus.com";
+        	mail($to,$subject,$emailmessage,$headers);
+
+
 		}
 		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
 		{ //check to see if we are creating the user
