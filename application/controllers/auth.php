@@ -54,6 +54,8 @@ class Auth extends MY_Controller {
 		$this->form_validation->set_rules('identity', 'Identity', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
+		$this->form_validation->set_error_delimiters('<li>','</li>');
+
 		if ($this->form_validation->run() == true)
 		{ //check to see if the user is logging in
 			//check for "remember me"
@@ -395,9 +397,13 @@ class Auth extends MY_Controller {
 	  */
 
 		//validate form input
-		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
+		$this->form_validation->set_rules('school', 'School', 'required');
+		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email|matches[email2]');
+		$this->form_validation->set_rules('email2', 'Email Confirmation', 'required|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required');
+
+		$this->form_validation->set_error_delimiters('<li>','</li>');
 
 		if ($this->form_validation->run() == true)
 		{
@@ -406,6 +412,17 @@ class Auth extends MY_Controller {
 			$password = $this->input->post('password');
 
 			$additional_data = array('account_type' => $this->input->post('who'));
+		
+			 // email functionality here
+	        $to = $email;
+   		    $subject = "Welcome to the RateMyCampus Community";
+        	$emailmessage = "welcome" . "\n\n";
+        	$emailmessage .= "The RateMyCampus Team " . "\n";
+        	$from = "signup@ratemycampus.com";
+        	$headers = "From:" . "signup@ratemycampus.com";
+        	mail($to,$subject,$emailmessage,$headers);
+
+
 		}
 		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
 		{ //check to see if we are creating the user

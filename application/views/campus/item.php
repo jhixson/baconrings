@@ -40,10 +40,11 @@
 		</div>
 		
 		<div id="itemphoto">
-		  <?php if($item->item_photo): ?>
-  			<img src="<?php echo base_url(); ?>photos/<?php echo $item->item_photo ?>" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
-  		<?php endif ?>
-
+			<?php if($item->item_photo): ?>
+				<img src="<?php echo base_url(); ?>photos/<?php echo $item->item_photo ?>" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
+			<?php else: ?>
+				<img src="<?php echo base_url(); ?>photos/default_item.gif" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
+			<?php endif ?>
 			<div style="text-align:right;padding-top:8px;">
 				<a href="" target="_new"><img src="<?php echo base_url(); ?>images/icon_location.png" height="24" width="25" alt="map it" border="0" /></a>
 				<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/upload" ?>"><img src="<?php echo base_url(); ?>images/icon_camera.png" border="0" height="24" width="29" alt="photos" /></a>

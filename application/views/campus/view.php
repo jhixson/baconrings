@@ -57,7 +57,7 @@
 	<div id="campuscomment">
 
 		<div id="campuscommentcopy">
-			8/25/2012<br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec lorem turpis, eget feugiat nibh. Mauris a arcu turpis, a sagittis velit. Pellentesque viverra libero sed lacus sodales porta posuere arcu cursus. Maecenas pharetra malesuada mattis. Ut tristique dui in eros adipiscing dapibus. Nullam a porttitor odio.
+			8/25/2012 <span class="ratingsauthor">by a parent</span><br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec lorem turpis, eget feugiat nibh. Mauris a arcu turpis, a sagittis velit. Pellentesque viverra libero sed lacus sodales porta posuere arcu cursus. Maecenas pharetra malesuada mattis. Ut tristique dui in eros adipiscing dapibus. Nullam a porttitor odio.
 		</div>
 
 		<div id="campuscommentview">

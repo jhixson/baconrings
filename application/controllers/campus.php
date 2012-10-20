@@ -266,4 +266,15 @@ class Campus extends MY_Controller {
     else
       redirect('/login','location');
   }
+
+  public function directory()
+  {
+    $this->data['title'] = 'Campus and University Directory';
+    
+
+    $this->load->view('templates/header', $this->data);
+    $this->load->view('campus/directory', $this->data);
+    $this->load->view('templates/footer', $this->data);
+  }
+
 }

@@ -117,7 +117,7 @@ class Forms extends MY_Controller {
 // contact form
   public function contact()
   {
-    $this->data['title'] = 'Sumbit Correction';
+    $this->data['title'] = 'Contact Us';
     
     //set the flash data error message if there is one
     $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');

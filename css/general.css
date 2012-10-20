@@ -156,9 +156,10 @@ h1.left {
 #homeright{
 	margin-left:40px;
 	width:243px;
-	height:155px;
+	height:200px;
 	float:left;
 	background-image:url('/images/recent_rating_bg.gif');
+	background-repeat:no-repeat;
 	color:#484848;
 	font-size:10pt;
 	padding:45px 55px 0px 55px;
@@ -752,6 +753,12 @@ h1.left {
 .required{
 	color:#cc0000;
 }
+
+#infoMessage ul{
+	color:#cc0000;
+	list-style-image:url('/images/error_x.png');
+} 
+ 
 
 #infoMessage li{
 	color:#cc0000;
