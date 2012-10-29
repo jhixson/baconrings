@@ -140,6 +140,8 @@ h1{
 	text-transform: uppercase;
 }
 
+#itemratingscontainer h1 { text-transform: none; }
+
 h1.left {
   float: left;
 }

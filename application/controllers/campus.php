@@ -32,6 +32,7 @@ class Campus extends MY_Controller {
   	  redirect(base_url().$this->input->post('school'), 'location');
   	  
   	$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
+  	$this->data['campus_ratings'] = $this->campus_model->get_attribute_ratings_for_campus($this->data['campus']->university_id);
   	
   	if($this->data['campus'])
   	  $this->data['title'] = $this->data['campus']->university_name;
@@ -194,15 +195,11 @@ class Campus extends MY_Controller {
 
       $user = $this->ion_auth->user()->row();
       $faves = $this->campus_model->get_fave_schools($user->id); // replace with proper user_id
+      
+      //print_r($faves);
+      //die();
 
-      $favorites = array();
-      foreach($faves as $fave) {
-        $favorites[$fave->university_name][] = $fave;
-      }
-
-      //die(print_r($favorites, true));
-      $this->data['favorites'] = $favorites;
-
+      $this->data['favorites'] = $faves;
 
       $this->load->view('templates/header', $this->data);
       $this->load->view('campus/favorites', $this->data);
@@ -270,7 +267,16 @@ class Campus extends MY_Controller {
   public function directory()
   {
     $this->data['title'] = 'Campus and University Directory';
+    $campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
     
+    $this->data['campuses'] = array();
+    foreach($campuses as $c) {
+      $letter = strtoupper(substr($c->university_name, 0, 1));
+      $this->data['campuses'][$letter][] = $c;
+    }
+
+    //print_r($this->data['campuses']);
+    //die();
 
     $this->load->view('templates/header', $this->data);
     $this->load->view('campus/directory', $this->data);

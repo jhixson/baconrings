@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'mysql.baconrings.com';
+$db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'peruta';
 $db['default']['password'] = 'Syracuse#11';
 $db['default']['database'] = 'peruta';

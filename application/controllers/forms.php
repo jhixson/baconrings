@@ -196,8 +196,13 @@ class Forms extends MY_Controller {
   }
 
 // add category form
-  public function flag()
+  public function flag($campus_slug='', $item_slug='', $comment_id='')
   {
+    $this->data['comment'] = $this->campus_model->get_single('rating', array('rating_id' => $comment_id));
+    $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
+    if(!empty($item_slug))
+      $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $item_slug));
+    
     $this->data['title'] = 'Flag a Rating';
     
     //set the flash data error message if there is one
@@ -208,8 +213,12 @@ class Forms extends MY_Controller {
     $this->load->view('templates/footer', $this->data);
   }
 
-public function flagthanks()
+  public function flagthanks($campus_slug='', $item_slug='', $comment_id='')
   {
+    $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
+    if(!empty($item_slug))
+      $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $item_slug));
+      
     $this->data['title'] = 'Thank You for Improving the Ratings';
 
     //validate form input
@@ -581,7 +590,7 @@ public function flagthanks()
         $att_arr = $this->input->post('att');
         $comments = $this->input->post('comments');
 
-        $this->forms_model->save_rating($this->data['item'], $att_arr, $comments);
+        $this->forms_model->save_rating($this->data['item']->item_id, $att_arr, $comments);
 
         $this->load->view('templates/header', $this->data);
         $this->load->view('forms/ratethanks', $this->data);
@@ -603,7 +612,65 @@ public function flagthanks()
        $this->load->view('templates/footer', $this->data);
 
     }  
-
   }
+  
+  public function ratecampus($slug='')
+  {
+  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
+  	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => 0));
 
+  	if($this->data['campus'])
+  	  $this->data['title'] = 'Rate '.$this->data['campus']->university_name;
+  	
+    else
+    	show_404();
+    
+    //set the flash data error message if there is one
+    $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+    $this->load->view('templates/header', $this->data);
+    $this->load->view('forms/ratecampus', $this->data);
+    $this->load->view('templates/footer', $this->data);
+  }
+  
+  public function ratecampusthanks($slug='')
+  {
+    $this->data['title'] = 'Rating Submitted';
+  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
+  	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => 0));
+
+    //validate form input
+    $this->form_validation->set_rules('att', 'attributes', 'required');
+    $this->form_validation->set_rules('comments', 'comments', 'required');
+
+    $this->form_validation->set_error_delimiters('<li>','</li>');
+
+    if ($this->form_validation->run() == true && $this->data['campus'])
+    {
+        $att_arr = $this->input->post('att');
+        $comments = $this->input->post('comments');
+
+        $this->forms_model->save_rating($this->data['campus']->university_id, $att_arr, $comments);
+
+        $this->load->view('templates/header', $this->data);
+        $this->load->view('forms/ratecampusthanks', $this->data);
+        $this->load->view('templates/footer', $this->data);
+    }
+    else
+    {
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+
+      $this->data['comments'] = array('name' => 'comments',
+        'id' => 'comments',
+        'type' => 'text',
+        'value' => $this->form_validation->set_value('comments'),
+      );
+
+       $this->load->view('templates/header', $this->data);
+       $this->load->view('forms/ratecampus', $this->data);
+       $this->load->view('templates/footer', $this->data);
+
+    }  
+  }
 }

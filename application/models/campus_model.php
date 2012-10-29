@@ -86,6 +86,24 @@ class Campus_model extends CI_Model {
     return $this->db->query($sql, array($item_id))->result();
 	}
 	
+	public function get_attribute_ratings_for_campus($university_id) {
+    $sql = "select university.university_id, rating.rating_id, AVG( attributerating.attributerating_rating ) AS score, attribute.attribute_name
+    FROM  `university` 
+    INNER JOIN rating ON ( university.university_id = rating.item_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id
+    AND university.university_id = rating.item_id ) 
+    INNER JOIN attribute ON ( attribute.category_id = 0
+    AND attribute.attribute_id = attributerating.attribute_id ) 
+    WHERE university.university_id = ?
+    GROUP BY attribute.attribute_name";
+
+     //$this->db->query($sql, array($item_id));
+     //$query = $this->db->get();
+     //die($this->db->last_query());
+
+     return $this->db->query($sql, array($university_id))->result();
+ 	}
+	
 	public function get_num_ratings_for_item($item_id) {
 	  $sql = "select count(*) as total from (SELECT item.item_id, rating.rating_id, attributerating.attributerating_rating as ar
     FROM  `item` 
@@ -199,7 +217,7 @@ class Campus_model extends CI_Model {
   }
 
 	//for favorites page - schools
-	public function get_fave_schools($user_id) {
+	public function get_fave_items($user_id) {
 	  $this->db->select('favorites.favorites_id, university.university_id, university.university_name, university.university_slug, item.item_id, item.item_name, item.item_slug, category.category_name, category.category_slug, AVG( attributerating.attributerating_rating ) AS score');
     $this->db->from('favorites');
     $this->db->join('item', 'favorites.item_id = item.item_id', 'inner');
@@ -215,6 +233,25 @@ class Campus_model extends CI_Model {
     //die($this->db->last_query());
 
     return $this->db->get()->result();
+	}
+	
+	public function get_fave_schools($user_id) {
+	  $this->db->select('favorites.favorites_id, university.university_id, university.university_name, university.university_slug, AVG( attributerating.attributerating_rating ) AS score');
+    $this->db->from('favorites');
+    $this->db->join('item', 'favorites.item_id = item.item_id', 'inner');
+    $this->db->join('category', 'category.category_id = item.category_id', 'inner');
+    $this->db->join('university', 'item.university_id = university.university_id', 'inner');
+    $this->db->join('rating', 'item.item_id = rating.item_id', 'left');
+    $this->db->join('attributerating', 'rating.rating_id = attributerating.rating_id', 'left');
+    $this->db->where('favorites.users_id', $user_id);
+    $this->db->group_by('item.item_name');
+    $this->db->order_by('university.university_name');
+    
+    //$query = $this->db->get();
+    //die($this->db->last_query());
+    
+    return $this->db->get()->result();
+    
 	}
 
   public function toggle_favorite($user_id, $item_id) {

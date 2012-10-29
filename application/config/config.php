@@ -15,7 +15,7 @@
 |
 */
 
-$config['base_url']	= 'http://dev.baconrings.com/';
+$config['base_url']	= 'http://wutang.local:8888/';
 
 /*
 |--------------------------------------------------------------------------

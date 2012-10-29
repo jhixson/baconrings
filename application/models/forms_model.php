@@ -4,6 +4,7 @@ class Forms_model extends CI_Model {
 
 	public function __construct() {
 		parent::__construct();
+		$this->load->library('ion_auth');
 	}
 
 	// input stuff
@@ -11,13 +12,14 @@ class Forms_model extends CI_Model {
   		$this->db->insert($table, $data);
   }
 
-  public function save_rating($item, $attribute_ratings, $comments) {
-    if(!empty($item) && !empty($attribute_ratings) && !empty($comments)) {
+  public function save_rating($item_id, $attribute_ratings, $comments) {
+    if(!empty($item_id) && !empty($attribute_ratings) && !empty($comments)) {
+      $user = $this->ion_auth->user()->row();
       $rating_data = array(
         'rating_comments' => $comments,
         'rating_ip' => $_SERVER['REMOTE_ADDR'],
-        'users_id' => '2',
-        'item_id' => $item->item_id,
+        'users_id' => $user->user_id,
+        'item_id' => $item_id,
         'rating_date' => date("Y-m-d H:i:s")
       );
       $this->db->insert('rating', $rating_data);

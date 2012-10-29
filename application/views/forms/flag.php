@@ -18,7 +18,7 @@
 		</p>
 
 		<p><strong>The rating's comment:</strong>
-		<br /><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etc. Etc.</em>
+		<br /><em><?php echo $comment->rating_comments ?></em>
 
 
 

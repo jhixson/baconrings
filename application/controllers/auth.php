@@ -80,13 +80,22 @@ class Auth extends MY_Controller {
       //die();
       if($userId != 0) {
         $query = $this->db->get_where('users', array('facebook_id' => $userId));
+        //print_r($query);
+        //die();
         if( count($query->result()) == 0 ) {
           $profile = $this->facebook->api('/me');
           $user_data = array(
             'facebook_id' => $userId,
             'facebook_token' => $_GET['code']
           );
-          $fb_user_id = $this->ion_auth->register($profile['username'], '', $profile['email'], $user_data);
+          
+          $q2 = $this->db->get_where('users', array('email' => $profile['email']));
+          if( count($q2->result()) > 0 ) {
+            $fb_user_id - $q2->row()->id;
+            $this->db->update('users', array('facebook_id' => $userId), array('email' => $profile['email']));
+          }
+          else
+            $fb_user_id = $this->ion_auth->register($profile['username'], '', $profile['email'], $user_data);
         }
         else {
           $profile['email'] = $query->row()->email;
@@ -99,7 +108,13 @@ class Auth extends MY_Controller {
             'user_id' => $fb_user_id
           );
         $this->session->set_userdata($session_data); // this sets up the login data
-				redirect($this->config->item('base_url'), 'refresh');
+				//redirect($this->config->item('base_url'), 'refresh');
+				if($query->row()->university_id) {
+          $u = $this->campus_model->get_single('university', array('university_id' => $query->row()->university_id));
+				  redirect('/'.$u->university_slug, 'refresh');
+				}
+				else
+					redirect(base_url(), 'refresh');
       }
       else
 				redirect(base_url().'auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
@@ -411,7 +426,7 @@ class Auth extends MY_Controller {
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
 
-			$additional_data = array('account_type' => $this->input->post('who'));
+			$additional_data = array('account_type' => $this->input->post('who'), 'university_id' => $this->input->post('school'));
 		
 			 // email functionality here
 	        $to = $email;
@@ -485,7 +500,7 @@ class Auth extends MY_Controller {
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
 			
-			$this->data['campuses'] = $this->campus_model->get_list('university', array());
+			$this->data['campuses'] = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
 			$this->load->view('templates/header', $this->data);
 			$this->load->view('auth/create_user', $this->data);
 			$this->load->view('templates/footer', $this->data);

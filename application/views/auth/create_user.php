@@ -25,7 +25,7 @@
 				<select name="school" id="school">
   				<option value="">Choose a School</option>
   				<?php foreach($campuses as $campus): ?>
-    				<option value="<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></option>
+    				<option value="<?php echo $campus->university_id ?>"><?php echo $campus->university_name ?></option>
     			<?php endforeach ?>
   			</select>
 	
