@@ -9,7 +9,7 @@
 
 	<div id="campusphoto">
 	  <?php if($campus->university_photo): ?>
-		<img src="<?php echo base_url(); ?>photos/campus/<?php echo $campus->university_photo ?>" alt="<?php echo $campus->university_name ?>" height="120" width="584" />
+		<img src="<?php echo base_url(); ?>photos/<?php echo $campus->university_photo ?>" alt="<?php echo $campus->university_name ?>" height="120" width="584" />
 		<?php else: ?>
 		<img src="<?php echo base_url(); ?>photos/default_university.gif" alt="<?php echo $campus->university_name ?>" height="120" width="584" />
 		<?php endif ?>

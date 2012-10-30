@@ -382,8 +382,87 @@ class Auth extends MY_Controller {
 			 // email functionality here
 	        $to = $email;
    		    $subject = "Welcome to the RateMyCampus Community";
-        	$emailmessage = "welcome" . "\n\n";
-        	$emailmessage .= "The RateMyCampus Team " . "\n";
+        	$emailmessage = '<html>
+
+<head>
+
+  <title>Welcome to the RateMyCampus Community</title>
+
+<style>
+
+#container{
+	width:650px;
+	background-color:#ffffff;
+	margin:0 auto;
+}
+
+#header{
+	width:650px;
+	height:82px;
+}
+
+#main{
+	width:620px;
+	padding:15px;
+}
+
+#footer{
+	width:620px;
+	height:40px;
+	border-top:4px solid #000000;
+	background-color:#9cc24d;
+	padding:15px;
+}
+
+</style>
+
+</head>
+
+<body bgcolor="#000000">
+
+<div id="container">
+
+	<div id="header"><a href="http://wwww.ratemycampus.com"><img src="http://dev.baconrings.com/images/newsletter_header.gif" alt="ratemycampus.com" border="0" width="650" height="82"></a></div>
+
+	<div id="main" style="font-family:arial;font-size:11pt;">
+
+		<br />
+
+		<span style="font-family:arial;font-size:17pt;letter-spacing:3px">WELCOME</span>
+
+		<p>Thank you for joining the RateMyCampus community! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor ligula sed enim tincidunt placerat. Aenean felis lectus, feugiat et iaculis vel, sollicitudin rutrum magna. Quisque sed sapien id mauris tempor sagittis vitae non augue. Curabitur iaculis placerat mi eget sagittis.</p>
+
+		<p>The RateMyCampus Team</p>
+
+		<br />
+
+		<p align="center">
+			<a href="http://dev.baconrings.com/ithaca-college"><img src="http://dev.baconrings.com/images/newsletter_startrating.gif" border="0" width="184" height="42" alt="start rating" hspace="21" /></a>
+
+			<a href="http://dev.baconrings.com"><img src="http://dev.baconrings.com/images/newsletter_findschools.gif" border="0" width="184" height="42" alt="find schools" hspace="21" /></a>
+		</p>
+
+
+	</div>
+
+	<div id="footer" style="font-family:arial;font-size:10pt;line-height:20px;">
+
+		<div id="social" style="float:right;width:52px;">
+			<a href=""><img src="http://dev.baconrings.com/images/newsletter_facebook.png" alt="find us on facebook" border="0" width="22" height="22" /></a>
+			<a href=""><img src="http://dev.baconrings.com/images/newsletter_twitter.png" alt="we are on twitter" border="0" width="22" height="22" /></a>
+		</div>
+
+		<strong><a style="color:#000000;text-decoration:none;" href="http://www.ratemycampus.com">find schools</a>  &nbsp;|&nbsp;  <a style="color:#000000;text-decoration:none;" href="http://www.ratemycampus.com/forms/contact">contact us</a></strong>
+		<br />&copy; Copyright 2012. All Rights Reserved. RateMyCampus.com
+
+	</div>
+
+</div>
+
+</body>
+
+</html>';
+        	
         	$from = "signup@ratemycampus.com";
         	$headers = "From:" . "signup@ratemycampus.com";
         	mail($to,$subject,$emailmessage,$headers);
