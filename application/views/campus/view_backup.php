@@ -2,14 +2,14 @@
 
 <div class="extra">
   <img src="<?php echo base_url(); ?>images/rss.gif" border="0" height="25" width="25" alt="rss" align="right" />
-  <a href="/toggle_favorite/<?php echo $campus->university_id ?>" class="heart item">Add favorite</a>
+  <a href="/ajax/toggle_favorite/<?php echo $campus->university_id ?>" class="heart item">Add favorite</a>
 </div>
 <div style="clear:both;"></div>
 <div id="campusleft">
 
 	<div id="campusphoto">
 	  <?php if($campus->university_photo): ?>
-		<img src="<?php echo base_url(); ?>photos/campus/<?php echo $campus->university_photo ?>" alt="<?php echo $campus->university_name ?>" height="120" width="584" />
+		<img src="<?php echo base_url(); ?>photos/<?php echo $campus->university_photo ?>" alt="<?php echo $campus->university_name ?>" height="120" width="584" />
 		<?php else: ?>
 		<img src="<?php echo base_url(); ?>photos/default_university.gif" alt="<?php echo $campus->university_name ?>" height="120" width="584" />
 		<?php endif ?>
@@ -27,21 +27,27 @@
 
 		<br /><strong style="font-size:14pt"><?php echo $overall_rating->total ?> TOTAL RATINGS</strong>
 
-		<br /><br />
-		
-		<table cellpadding="0" cellspacing="0" border="0">
+		<br /><br /><table cellpadding="0" cellspacing="0" border="0">
+
 		<tr>
-		<?php $i = 1; ?>
-		<?php foreach($campus_ratings as $rating): ?>
-			<td width="196"><?php echo $rating->attribute_name ?></td>
-			<td width="85"><?php echo number_format($rating->score, 1, '.', ',') ?></td>
-			<?php
-			if($i % 2 == 0)
-			  echo "</tr><tr>\n";
-			$i++;
-			?>
-		<?php endforeach ?>
+			<td width="196">school spirit</td>
+			<td width="85">4.1</td>
+			<td width="206">reputation</td>
+			<td width="40">2.3</td>
 		</tr>
+		<tr>
+			<td width="196">academic rigor</td>
+			<td width="85">3.3</td>
+			<td width="206">party scene</td>
+			<td width="40">2.1</td>
+		</tr>
+		<tr>
+			<td width="196">professor availability</td>
+			<td width="85">4.1</td>
+			<td width="206">diversity</td>
+			<td width="40">4.8</td>
+		</tr>
+
 		</table>
 
 	</div>
@@ -57,7 +63,7 @@
 		<div id="campuscommentview">
 			<br />
 			<a href=""><img src="images/view_rating.png" border="0" width="102" height="36" alt="view rating" /></a>
-			<a href="<?php echo $campus->university_slug."/COMMENT-ID/flag" ?>"><img src="images/flag_this.png" vspace="6" width="61" height="23" border="0" alt="flag this" /></a>
+			<a href=""><img src="images/flag_this.png" vspace="6" width="61" height="23" border="0" alt="flag this" /></a>
 		</div>
 
 		<div id="clear" style="clear:both;"></div>
