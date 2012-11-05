@@ -74,51 +74,6 @@ class Auth extends MY_Controller {
 				redirect(base_url().'auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		}
-    // Facebook passes back a token in code query var
-    else if(isset($_GET['code'])) {
-      //var_dump($userId);
-      //die();
-      if($userId != 0) {
-        $query = $this->db->get_where('users', array('facebook_id' => $userId));
-        //print_r($query);
-        //die();
-        if( count($query->result()) == 0 ) {
-          $profile = $this->facebook->api('/me');
-          $user_data = array(
-            'facebook_id' => $userId,
-            'facebook_token' => $_GET['code']
-          );
-          
-          $q2 = $this->db->get_where('users', array('email' => $profile['email']));
-          if( count($q2->result()) > 0 ) {
-            $fb_user_id - $q2->row()->id;
-            $this->db->update('users', array('facebook_id' => $userId), array('email' => $profile['email']));
-          }
-          else
-            $fb_user_id = $this->ion_auth->register($profile['username'], '', $profile['email'], $user_data);
-        }
-        else {
-          $profile['email'] = $query->row()->email;
-          $fb_user_id = $query->row()->id;
-        }
-        $session_data = array(
-            'identity' => 'email',
-            'email' => $profile['email'],
-            'id' => $fb_user_id,
-            'user_id' => $fb_user_id
-          );
-        $this->session->set_userdata($session_data); // this sets up the login data
-				//redirect($this->config->item('base_url'), 'refresh');
-				if($query->row()->university_id) {
-          $u = $this->campus_model->get_single('university', array('university_id' => $query->row()->university_id));
-				  redirect('/'.$u->university_slug, 'refresh');
-				}
-				else
-					redirect(base_url(), 'refresh');
-      }
-      else
-				redirect(base_url().'auth/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
-    }
 		else
 		{  //the user is not logging in so display the login page
 			//set the flash data error message if there is one
@@ -141,6 +96,67 @@ class Auth extends MY_Controller {
 			$this->load->view('templates/footer', $this->data);
 		}
 	}
+	
+	function fb(){
+      // Try to get the user's id on Facebook
+    $userId = $this->facebook->getUser();
+    //var_dump($userId);
+    //die();
+    log_message('error', 'FB User: '.$userId);
+    
+
+      // If user is not yet authenticated, the id will be zero
+      if($userId == 0 && !isset($_GET['code'])){
+          // Generate a login url
+          $this->data['url'] = $this->facebook->getLoginUrl(array('scope'=>'email')); 
+          redirect($this->data['url'],'refresh');
+      } else {
+        $this->data['user'] = $userId;
+        $query = $this->db->get_where('users', array('facebook_id' => $userId));
+        if( count($query->result()) == 0 ) {
+          // Get user's data and print it
+          $profile = $this->facebook->api('/me');
+          $this->data['user_profile'] = $profile;
+
+          $user_data = array(
+            'facebook_id' => $userId,
+            'facebook_token' => $_GET['code']
+          );
+          
+          $q2 = $this->db->get_where('users', array('email' => $profile['email']));
+          if( count($q2->result()) > 0 ) {
+            $fb_user_id - $q2->row()->id;
+            $this->db->update('users', array('facebook_id' => $userId), array('email' => $profile['email']));
+          }
+          else
+            $fb_user_id = $this->ion_auth->register($profile['username'], '', $profile['email'], $user_data);
+
+        } else {
+          $profile['email'] = $query->row()->email;
+          $fb_user_id = $query->row()->id;
+        }
+
+        $session_data = array(
+              'identity' => 'email',
+              'email' => $profile['email'],
+              'id'                   => $fb_user_id, //kept for backwards compatibility
+              'user_id'              => $fb_user_id, //everyone likes to overwrite id so we'll use user_id
+          );
+
+          $this->session->set_userdata($session_data);
+          
+          if($query->row()->university_id) {
+            $u = $this->campus_model->get_single('university', array('university_id' => $query->row()->university_id));
+
+            // this redirect seems to be clobbering the session data, so render the view and set a cookie for the university_id
+  				  redirect('/'.$u->university_slug, 'location');
+				  }
+      }
+      $this->load->view('main/index', $this->data);
+      //$this->load->view('templates/header', $this->data);
+			//$this->load->view('auth/login', $this->data);
+			//$this->load->view('templates/footer', $this->data);
+  }
 
 	//log the user out
 	function logout()

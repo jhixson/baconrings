@@ -80,6 +80,8 @@ $route['auth/logout'] = 'auth/logout';
 $route['signup'] = 'auth/create_user';
 $route['auth/create_user'] = 'auth/create_user';
 $route['auth/forgot_password'] = 'auth/forgot_password';
+$route['auth/fb'] = 'auth/fb';
+
 
 $route['main'] = 'main/index';
 
