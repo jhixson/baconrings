@@ -13,11 +13,10 @@
 	<table cellpadding="3" cellspacing="0" border="0">
 
 		<tr>
-			<td width="25"></td>
+			<td width="100"></td>
 			<td width="245" class="theader" valign="bottom">NAME</td>
 			<td width="90" class="theader" align="center">TOTAL RATINGS</td>
 			<td width="95" class="theader" align="center">AVERAGE RATING</td>
-			<td width="100"></td>
 			<td width="96" class="theader" valign="bottom" align="right">SHARE</td>
 		</tr>
 
@@ -25,11 +24,10 @@
 		$bgcolor="#e1e1e1";
 		foreach($item_ratings as $k => $v): ?>
 			<tr bgcolor="<?php echo $bgcolor ?>">
-				<td align="right"><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug."/" ?>"><img src="/images/arrow_black.png" height="15" width="8" alt="" hspace="2" /></a></td>
-				<td><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug ?>" class="categorylink" style="color:#<?php echo $category->category_color1 ?>;"><?php echo $k ?></a></td>
+				<td align="center"><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug."/rate" ?>"><img src="<?php echo base_url(); ?>images/rate_it_small.png" border="0" width="76" height="21" alt="rate it" /></a></td>
+				<td><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug ?>" style="color:#<?php echo $category->category_color1 ?>;text-decoration:none;font-weight:bold;"><?php echo $k ?></a></td>
 				<td align="center"><?php echo $v->total ?></td>
 				<td align="center"><?php echo number_format($v->score, 1, '.', ',') ?></td>
-				<td align="center"><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug."/rate" ?>"><img src="<?php echo base_url(); ?>images/rate_it_small.png" border="0" width="76" height="21" alt="rate it" /></a></td>
 				<td align="right">
 					<a href=""><img src="<?php echo base_url(); ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a><a
 					href=""><img src="<?php echo base_url(); ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a><a
@@ -49,6 +47,6 @@
 
 	</table>	
 
-	<p><strong>Don't see the one you are looking for? <a href="/<?php echo $campus->university_slug ?>/<?php echo $category->category_slug ?>/add-item"><span class="bluelink">ADD IT HERE</span></a></strong></p>
+	<p><strong>Don't see the one you are looking for? <a href="/forms/add-item"><span class="bluelink">ADD IT HERE</span></a></strong></p>
 
 </div>

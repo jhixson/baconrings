@@ -6,7 +6,7 @@
 
 		<div id="contact" class="contact">
 			
-			<form id="form" name="form" method="post" action="/<?php echo $campus->university_slug ?>/<?php echo $category->category_slug ?>/add-item-thanks">
+			<form id="form" name="form" method="post" action="/forms/add-item-thanks">
 
 				<label class="labelpadding">Name: </label>
 				<input type="text" name="name" id="name" class="textinput" value="<?php if (!empty($name)) echo $name['value'];?>" />
@@ -18,12 +18,12 @@
 				<select name="school" id="school" <?php if (!empty($school)) echo 'class="textinputerror"'?>>
 
 					<option value="">Choose...</option>
-					<?php foreach($schools as $c): ?>
+					<?php foreach($schools as $campus): ?>
 
-						<?php if ($c->university_name == $school['value']):?>
-							<option selected="selected" value="<?php echo $c->university_name ?>"><?php echo $c->university_name ?></option>
+						<?php if ($campus->university_name == $school['value']):?>
+							<option selected="selected" value="<?php echo $campus->university_name ?>"><?php echo $campus->university_name ?></option>
 						<?php else:?>	
-  							<option value="<?php echo $c->university_name ?>"><?php echo $c->university_name ?></option>
+  							<option value="<?php echo $campus->university_name ?>"><?php echo $campus->university_name ?></option>
   						<?php endif?>
 
   					<?php endforeach ?>
@@ -36,12 +36,12 @@
 				<input type="text" name="item" id="item" class="textinput <?php if (!empty($item)) echo 'textinputerror' ?>" value="<?php if (!empty($item)) echo $item['value'];?>" />
 				
 				<label class="labelpadding">Category:<span class="required">*</span></label>
-				<select name="cat" id="cat" <?php if (!empty($category)) echo 'class="textinputerror"'?>>
+				<select name="category" id="category" <?php if (!empty($category)) echo 'class="textinputerror"'?>>
 
 					<option value="">Choose...</option>
 					<?php foreach($categories as $categoryy): ?>
   						
-  						<?php if ($categoryy->category_name == $cat['value']):?>
+  						<?php if ($categoryy->category_name == $category['value']):?>
   							<option selected="selected" value="<?php echo $categoryy->category_name ?>"><?php echo $categoryy->category_name ?></option>
   						<?php else:?>
 	  						<option value="<?php echo $categoryy->category_name ?>"><?php echo $categoryy->category_name ?></option>
