@@ -83,17 +83,26 @@
 
 		<div id="ratingsbox">
 
-			<table cellpadding="3" cellspacing="0" border="0">
-  		<?php foreach($category_ratings as $k => $v): ?>
+		<table cellpadding="3" cellspacing="0" border="0">
+  			
+  				<?php if (empty($category_ratings)): ?>
+  					<tr>
+  						<td width="43"></td>
+  						<td width="215" style="font-style:italic;font-weight:normal;text-transform:capitalize;">No categories yet.</td>
+  					</tr>
+  				<?php endif?>
+
+  				<?php foreach($category_ratings as $k => $v): ?>
+  					<tr>
+  						<td align="right" width="43" style="color:#<?php echo $v->color ?>;font-size:26pt;line-height:25px;">&#8226;</td>
+  						<td width="215"><a href="/<?php echo $campus->university_slug."/".$v->slug ?>"><?php echo $k ?></a></td>
+  						<td width="50"><?php echo number_format($v->score, 1, '.', ',') ?></td>
+  					</tr>
+   		     	<?php endforeach ?>
+
   			<tr>
-  				<td align="right" width="30" style="color:#<?php echo $v->color ?>;font-size:26pt;line-height:25px;">&#8226;</td>
-  				<td width="140"><a href="/<?php echo $campus->university_slug."/".$v->slug ?>"><?php echo $k ?></a></td>
-  				<td width="50"><?php echo number_format($v->score, 1, '.', ',') ?></td>
-  			</tr>
-        <?php endforeach ?>
-  			<tr>
-  				<td></td>
-  				<td colspan="2" style="font-size:11pt;text-transform:capitalize;"><br />Don't see what you are looking for? <a style="font-size:10pt;" href="/<?php echo $campus->university_slug ?>/add-category">Add it here</a></td>
+  				<td width="30"></td>
+  				<td colspan="2" width="265" style="font-size:11pt;text-transform:capitalize;"><br />Don't see what you are looking for? <a style="font-size:10pt;" href="/<?php echo $campus->university_slug ?>/add-category">Add a category here</a></td>
   			</tr>
 
   		</table>
@@ -108,6 +117,13 @@
   	<div id="activity">
 
   		<table cellpadding="3" cellspacing="0" border="0" style="margin-left:30px;">
+  		  
+  		  <?php if (empty($recent_activity)): ?>
+  		  		<tr>
+  		  			<td width="265" style="font-style:italic;">No recent activity for this school.</td>
+  		  		</tr>
+  		  <?php endif ?>
+
   		  <?php foreach($recent_activity as $activity): ?>
   		    <?php if(isset($activity->rating_id)): ?>
   			    <tr>

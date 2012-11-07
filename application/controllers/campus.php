@@ -148,7 +148,7 @@ class Campus extends MY_Controller {
   	  $comments[$c->rating_id]->ratings = $this->campus_model->get_user_ratings($c->item_id, $c->rating_id);
   	  $comments[$c->rating_id]->comment_text = $c->rating_comments;
   	  $comments[$c->rating_id]->rating_date = $c->rating_date;
-	  }
+    }
 	  
 	  //print_r($comments);
   	//die();

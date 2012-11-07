@@ -85,39 +85,53 @@
 			<td width="172" class="theader">SHARE</td>
 		</tr>
 
-    <?php $i = 0; ?>
-    <?php foreach($comments as $k => $comment): ?>
-		  <tr valign="top" bgcolor="<?php echo $i % 2 == 0 ? "#e1e1e1" : "#ffffff"?>">
-  			<td class="ratingscopy"><?php echo date("n/j/Y", strtotime($comment->rating_date)) ?></td>
-  			<td>
-  				<table cellpadding="0" cellspacing="0" border="0">
-  				<?php foreach($comment->ratings as $rating): ?>
-  					<tr>
-  						<td class="ratingslabel"><?php echo $rating->attribute_name ?></td>
-  						<td>&nbsp;&nbsp;&nbsp;</td>
-  						<td width="110" height="13" class="ratingslabel">
-  						  <div class="rating_bar">
-  						    <span style="width: <?php echo ($rating->attributerating_rating / 5.0) * 100 ?>%"><?php echo $rating->attributerating_rating ?></span>
-  						  </div>
-  						</td>
-  					</tr>
-          <?php endforeach ?>
-  				</table>
-  			</td>
-  			<td class="ratingscopy"><span class="ratingsauthor">by a parent</span><br />
-  			<?php echo nl2br($comment->comment_text) ?>
-  			</td>
-  			<td>&nbsp;</td>
-  			<td>
-  				<a href=""><img src="<?php echo base_url() ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a><a
-  				href=""><img src="<?php echo base_url() ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a><a
-  				href=""><img src="<?php echo base_url() ?>images/share_email.gif" border="0" height="24" width="24" alt="share to email" /></a>
 
-  				<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/".$k."/flag" ?>"><img src="<?php echo base_url() ?>images/flag_this.png" align="right" border="0" height="23" width="61" alt="flag this" /></a>
-  			</td>
-  		</tr>
-  		<?php $i++; ?>
-    <?php endforeach ?>
+		<?php if($num_ratings == 0):?> 
+
+			<tr>
+				<td colspan="5">
+					<em>There are no ratings for this item, be the first to rate it!</em> <a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/rate" ?>"><img src="/images/rate_it_small.png" height="21" hspace="10" width="76" alt="rate it" border="0" /></a>
+				</td>
+			</tr>
+
+		<?php else:?>
+		
+    		<?php $i = 0; ?>
+    		<?php foreach($comments as $k => $comment): ?>
+		  		<tr valign="top" bgcolor="<?php echo $i % 2 == 0 ? "#e1e1e1" : "#ffffff"?>">
+  					<td class="ratingscopy"><?php echo date("n/j/Y", strtotime($comment->rating_date)) ?></td>
+ 		 			<td>
+  						<table cellpadding="0" cellspacing="0" border="0">
+  						<?php foreach($comment->ratings as $rating): ?>
+  							<tr>
+  								<td class="ratingslabel"><?php echo $rating->attribute_name ?></td>
+  								<td>&nbsp;&nbsp;&nbsp;</td>
+  								<td width="110" height="13" class="ratingslabel">
+  								  <div class="rating_bar">
+  								    <span style="width: <?php echo ($rating->attributerating_rating / 5.0) * 100 ?>%"><?php echo $rating->attributerating_rating ?></span>
+  								  </div>
+  								</td>
+  							</tr>
+         		 		<?php endforeach ?>
+  						</table>
+  					</td>
+  					<td class="ratingscopy"><span class="ratingsauthor">by (users type here)</span><br />
+  					<?php echo nl2br($comment->comment_text) ?>
+  					</td>
+  					<td>&nbsp;</td>
+  					<td>
+  						<a href=""><img src="<?php echo base_url() ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a><a
+  						href=""><img src="<?php echo base_url() ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a><a
+  						href=""><img src="<?php echo base_url() ?>images/share_email.gif" border="0" height="24" width="24" alt="share to email" /></a>
+
+  						<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/".$k."/flag" ?>"><img src="<?php echo base_url() ?>images/flag_this.png" align="right" border="0" height="23" width="61" alt="flag this" /></a>
+  					</td>
+  				</tr>
+  				<?php $i++; ?>
+    		<?php endforeach?>
+
+		<?php endif ?>    
+
 	</table>
 
 </div>

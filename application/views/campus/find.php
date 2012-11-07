@@ -42,7 +42,7 @@
 		<br /><table cellpadding="0" cellspacing="0" border="0">
 
 	  	<?php foreach($recent_campuses as $campus): ?>
-  		<tr valign="top"><td width="25"><img src="images/activity_plus.png" width="21" height="21" hspace="5" border="0" alt="new" /></td>
+  		<tr valign="top"><td width="25"><img src="images/activity_check.png" width="21" height="21" hspace="5" border="0" alt="new" /></td>
   			<td><a href="/<?php echo $campus->university_slug ?>" class="homerightname">
   			<?php echo $campus->university_name ?></a></td>
   		</tr>

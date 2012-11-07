@@ -10,7 +10,7 @@
 
 		<h1><?php echo $item->item_name ?></h1>
 
-		<br /><br />
+		<br />
 		
 		<div id="overallratinglabel">OVERALL</div>
 		<div id="overallrating">
@@ -41,11 +41,10 @@
 		
 		<div id="itemphoto">
 			<?php if($item->item_photo): ?>
-  				<img src="<?php echo base_url(); ?>photos/<?php echo $campus->university_slug ?>/<?php echo $item->item_photo ?>" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
-  			<?php else: ?>
-  				<img src="<?php echo base_url(); ?>photos/default_item.gif" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
-  			<?php endif ?>
-
+				<img src="<?php echo base_url(); ?>photos/<?php echo $campus->university_slug ?>/<?php echo $item->item_photo ?>" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
+			<?php else: ?>
+				<img src="<?php echo base_url(); ?>photos/default_item.gif" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
+			<?php endif ?>
 			<div style="text-align:right;padding-top:8px;">
 				<a href="" target="_new"><img src="<?php echo base_url(); ?>images/icon_location.png" height="24" width="25" alt="map it" border="0" /></a>
 				<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/upload" ?>"><img src="<?php echo base_url(); ?>images/icon_camera.png" border="0" height="24" width="29" alt="photos" /></a>
@@ -87,7 +86,7 @@
 		</tr>
 
     <?php $i = 0; ?>
-    <?php foreach($comments as $comment): ?>
+    <?php foreach($comments as $k => $comment): ?>
 		  <tr valign="top" bgcolor="<?php echo $i % 2 == 0 ? "#e1e1e1" : "#ffffff"?>">
   			<td class="ratingscopy"><?php echo date("n/j/Y", strtotime($comment->rating_date)) ?></td>
   			<td>
@@ -102,7 +101,7 @@
   						  </div>
   						</td>
   					</tr>
-          <?php endforeach ?>
+          		<?php endforeach ?>
   				</table>
   			</td>
   			<td class="ratingscopy"><span class="ratingsauthor">by a parent</span><br />
@@ -114,7 +113,7 @@
   				href=""><img src="<?php echo base_url() ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a><a
   				href=""><img src="<?php echo base_url() ?>images/share_email.gif" border="0" height="24" width="24" alt="share to email" /></a>
 
-  				<a href=""><img src="<?php echo base_url() ?>images/flag_this.png" align="right" border="0" height="23" width="61" alt="flag this" /></a>
+  				<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/".$k."/flag" ?>"><img src="<?php echo base_url() ?>images/flag_this.png" align="right" border="0" height="23" width="61" alt="flag this" /></a>
   			</td>
   		</tr>
   		<?php $i++; ?>

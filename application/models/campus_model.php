@@ -116,10 +116,11 @@ class Campus_model extends CI_Model {
 	}
 	
 	public function get_user_ratings($item_id, $rating_id) {
-	  $sql = "select rating.rating_date, attributerating.attributerating_rating, attribute.attribute_name
+	  $sql = "select rating.rating_date, attributerating.attributerating_rating, attribute.attribute_name, users.account_type
     FROM `rating`
     INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
     INNER JOIN attribute ON ( attributerating.attribute_id = attribute.attribute_id ) 
+    INNER JOIN users ON ( rating.users_id = users.id )
     WHERE rating.item_id = ? AND rating.rating_id = ?";
     
     return $this->db->query($sql, array($item_id, $rating_id))->result();
