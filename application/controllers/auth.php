@@ -151,6 +151,8 @@ class Auth extends MY_Controller {
             // this redirect seems to be clobbering the session data, so render the view and set a cookie for the university_id
   				  redirect('/'.$u->university_slug, 'location');
 				  }
+				  else
+				    redirect('/', 'location');
       }
       $this->load->view('main/index', $this->data);
       //$this->load->view('templates/header', $this->data);

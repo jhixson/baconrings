@@ -125,6 +125,10 @@ class Campus extends MY_Controller {
     	show_404(); // instead of this we need a "no items found message"
     	
   	$this->data['overall_rating'] = $this->campus_model->get_rating_for_item($this->data['item']->item_id);
+    if(!isset($this->data['overall_rating']->score)) {
+      $this->data['overall_rating'] = new stdClass;
+      $this->data['overall_rating']->score = 0;
+    }
   	$this->data['num_ratings'] = $this->campus_model->get_num_ratings_for_item($this->data['item']->item_id);
     $this->data['item_ratings'] = $this->campus_model->get_attribute_ratings($this->data['item']->item_id);
 
@@ -134,8 +138,6 @@ class Campus extends MY_Controller {
       if($ranking->item_id == $this->data['item']->item_id)
         $this->data['ranking'] += $k;
     }
-    //print_r($ranking);
-    //die();
 
     $user = $this->ion_auth->user()->row();
     //$this->data['is_favorite'] = $this->ion_auth->logged_in() && $this->campus_model->is_favorite($user->id, $this->data['item']->item_id);
