@@ -36,7 +36,13 @@
 	<div id="iteminfocontainer">
 
     <div id="itemcopy">
-  		<?php echo $item->item_description ?>
+  		
+  		<?php if ($item->item_description): ?>
+  			<?php echo $item->item_description ?>
+  		<?php else: ?>
+  			<em>There is no description for this item. You may submit one by clicking on the Submit Correction button below.</em>
+  		<?php endif ?>
+
 		</div>
 		
 		<div id="itemphoto">
@@ -46,8 +52,28 @@
 				<img src="<?php echo base_url(); ?>photos/default_item.gif" border="0" height="115" width="160" alt="<?php echo $item->item_name ?>" />
 			<?php endif ?>
 			<div style="text-align:right;padding-top:8px;">
-				<a href="" target="_new"><img src="<?php echo base_url(); ?>images/icon_location.png" height="24" width="25" alt="map it" border="0" /></a>
-				<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/upload" ?>"><img src="<?php echo base_url(); ?>images/icon_camera.png" border="0" height="24" width="29" alt="photos" /></a>
+				
+				<div style="float:left;">
+					<a href="" target="_new"><img src="<?php echo base_url(); ?>images/icon_location.png" height="24" width="25" alt="map it" border="0" /></a>
+				</div>	
+
+				<div id="addressinfo">
+				<?php if ($item->item_address): ?><?php echo $item->item_address ?><?php endif?>
+				<?php if ($item->item_address2): ?><br /><?php echo $item->item_address2 ?><?php endif?>
+				
+				<?php if (($item->item_city) || ($item->item_state) ||($item->item_zip)): ?><br /><?php endif?>
+
+				<?php if ($item->item_city): ?><?php echo $item->item_city ?><?php endif?>
+
+				<?php if ($item->item_state): ?>,<?php endif?>
+				
+				<?php if ($item->item_state): ?><?php echo $item->item_state ?>&nbsp;<?php endif?>
+				<?php if ($item->item_zip): ?><?php echo $item->item_zip ?><?php endif?>
+				
+				<?php if ($item->item_phone): ?><br /><?php echo $item->item_phone ?><?php endif?>
+				</div>
+
+				<!--<a href="/<?php// echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/upload" ?>"><img src="<?php// echo base_url(); ?>images/icon_camera.png" border="0" height="24" width="29" alt="photos" /></a>-->
 			</div>
 
 		</div>
