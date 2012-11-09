@@ -140,6 +140,8 @@ h1{
 	text-transform: uppercase;
 }
 
+#itemratingscontainer h1 { text-transform: none; }
+
 h1.left {
   float: left;
 }
@@ -408,7 +410,7 @@ h1.left {
 }
 
 #listingcontainer{
-	margin:25px 0 0 77px;
+	margin:25px 0 0 57px;
 	float:left;
 	border: 0px solid #999;
 
@@ -449,6 +451,15 @@ h1.left {
 	text-decoration:underline;
 }
 
+.categorylink{
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.categorylink:hover{
+	text-decoration:underline;
+	font-weight:bold;
+}
 
 /* used on individual item ratings pages */
 

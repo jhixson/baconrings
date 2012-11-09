@@ -213,6 +213,15 @@ h1.left {
 	text-decoration:underline;
 }
 
+.directorylink{
+	color:#00acda;
+}
+
+.directorylink:hover{
+	color:#00acda;
+	text-decoration:none;
+}
+
 .bluebutton{
 	color:#ffffff;
 	height:30px;
