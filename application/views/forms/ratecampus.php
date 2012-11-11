@@ -24,18 +24,26 @@
           </p>
         <?php endforeach ?>
 
-				<br /><p class="spacing">Please keep comments clean. Comments that are inconsistent with <a href="">Site Guidelines</a> will be removed.</p>
+				<br /><p class="spacing">Please keep comments clean. Comments that are inconsistent with <a href="/pages/site-guidelines" class="ratelink">Site Guidelines</a> will be removed.</p>
 
 				<p><label class="labelpadding">Comments:</label>
 				<textarea name="comments" id="comments" class="textareainput <?php if (!empty($comments)) echo 'textinputerror' ?>"><?php if (!empty($comments)) echo $comments['value'];?></textarea>
 				</p>
 
 
-				<p class="spacing">By clicking the Submit button, I acknowledge that I have read and agreed to the RateMyCampus <a href="">Site Guidelines</a>, <a href="">Terms of Use</a>, and <a href="">Privacy Policy</a>.</p>
+				<p class="spacing">By clicking the Submit button, I acknowledge that I have read and agreed to the RateMyCampus <a href="/pages/site-guidelines" class="ratelink">Site Guidelines</a>, <a href="/pages/terms-of-use" class="ratelink">Terms of Use</a>, and <a href="/pages/privacy-policy" class="ratelink">Privacy Policy</a>.</p>
 
-				<button type="submit" class="bluebutton" style="margin-left:153px;">Submit</button>
+				<div style="margin-left:153px;">
+					<?php
+          			require_once('recaptchalib.php');
+          			$publickey = "6Lc27NgSAAAAAMfxyzUa1X6zMS2Qx9bk6zwRKQcB";
+          			echo recaptcha_get_html($publickey);
+        			?>
+        		</div>
+				
+				<p><button type="submit" class="bluebutton" style="margin-left:153px;">Submit</button></p>
 
-				<br /><br /><p class="spacing">Submitted data become the property of RateMyCampus.com. IP addresses are logged (<a href="">Privacy Policy</a>).
+				<br /><br /><p class="spacing">Submitted data become the property of RateMyCampus.com. IP addresses are logged (<a href="/pages/privacy-policy" class="ratelink">Privacy Policy</a>).
 
 				</form>
 

@@ -8,6 +8,26 @@ body, p, br, td{
 	color:#000000;
 }
 
+a{
+	color:#00acda;
+	text-decoration:underline;
+}
+
+a:hover{
+	color:#00acda;
+	text-decoration:none;
+}
+
+.ratelink{
+	color:#000000;
+	text-decoration:underline;	
+}
+
+.ratelink:hover{
+	color:#000000;
+	text-decoration:none;	
+}
+
 #container{
 	width:970px;
 	margin: 0 auto;

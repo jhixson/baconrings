@@ -19,7 +19,7 @@
 
 		<span class="overalllabel">OVERALL RATING</span>
 
-		<a href=""><img src="<?php echo base_url(); ?>images/rate_it_large.png" vspace="10" alt="rate this" border="0" height="42" width="150" align="right" /></a>
+		<a href="<?php echo base_url(); ?><?php echo $campus->university_slug ?>/rate"><img src="<?php echo base_url(); ?>images/rate_it_large.png" vspace="10" alt="rate this" border="0" height="42" width="150" align="right" /></a>
 
 		<div id="overallbig">
 		  <span style="width: <?php echo ($overall_rating->score / 5.0) * 100 ?>%"><?php echo number_format($overall_rating->score, 1, '.', ',') ?></span>

@@ -61,7 +61,7 @@
 				<?php if ($item->item_address): ?><?php echo $item->item_address ?><?php endif?>
 				<?php if ($item->item_address2): ?><br /><?php echo $item->item_address2 ?><?php endif?>
 				
-				<?php if (($item->item_city) || ($item->item_state) ||($item->item_zip)): ?><br /><?php endif?>
+				<?php if (($item->item_city) || ($item->item_state) || ($item->item_zip)): ?><br /><?php endif?>
 
 				<?php if ($item->item_city): ?><?php echo $item->item_city ?><?php endif?>
 
