@@ -1,7 +1,7 @@
 <h1>My Favorites</h1>
 
 		<p></p>
-
+    <?php if(count($favorites) > 0): ?>
 		<table cellpadding="3" cellspacing="0" border="0">
 		
 		
@@ -22,6 +22,9 @@
 				<?php endforeach ?>
 
 		</table>
+		<?php else: ?>
+		  <p>You don't have any favorites yet. <a href="/">Go discover some schools.</a></p>
+		<?php endif ?>
 
 		<br /><br />
 

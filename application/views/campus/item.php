@@ -115,7 +115,7 @@
          		 		<?php endforeach ?>
   						</table>
   					</td>
-  					<td class="ratingscopy"><span class="ratingsauthor">by (users type here)</span><br />
+  					<td class="ratingscopy"><span class="ratingsauthor">by <?php echo $comment->who ?> </span><br />
   					<?php echo nl2br($comment->comment_text) ?>
   					</td>
   					<td>&nbsp;</td>

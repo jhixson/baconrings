@@ -16,11 +16,26 @@ class Campus extends MY_Controller {
 	{
   	$this->data['title'] = 'Find Your Campus';
   	
+  	//die($this->ion_auth->user()->row()->id);
+  	  	
   	//$user = $this->facebook->getUser();
   	//$this->data['user_profile'] = $user;
   	
-  	$this->data['recent_campuses'] = $this->campus_model->get_list('university', array(), 5, 0, 'university_id', 'desc');
-
+  	//$this->data['recent_campuses'] = $this->campus_model->get_list('university', array(), 5, 0, 'university_id', 'desc');
+  	$arr = $this->campus_model->get_recent_campus_ratings();
+  	$this->data['recent_campuses'] = array();
+  	foreach($arr as $a) {
+  	  $temp = new stdClass;
+  	  $temp->university_name = $a->university_name;
+  	  $temp->university_slug = $a->university_slug;
+  	  if(!in_array($temp,$this->data['recent_campuses']))
+    	  $this->data['recent_campuses'][] = $temp;
+  	}
+  	
+  	$this->data['recent_campuses'] = array_slice($this->data['recent_campuses'], 0, 5);
+  	
+  	//die(print_r($recent_campuses, true));
+  	
   	$this->load->view('templates/header', $this->data);
   	$this->load->view('campus/find', $this->data);
   	$this->load->view('templates/footer', $this->data);
@@ -47,8 +62,20 @@ class Campus extends MY_Controller {
   	  $categories[$category->category_name]->color = $category->category_color2;
   	  $categories[$category->category_name]->slug = $category->category_slug;
     }
+    
+    $user = $this->ion_auth->user()->row();
+    $this->data['is_favorite'] = $this->ion_auth->logged_in() && $this->campus_model->is_favorite($user->id, $this->data['campus']->university_id);
 
-    $this->data['overall_rating'] = $this->campus_model->get_rating_for_campus($this->data['campus']->university_id);
+    //$this->data['overall_rating'] = $this->campus_model->get_rating_for_campus($this->data['campus']->university_id);
+    $this->data['overall_rating'] = new stdClass;
+    $this->data['overall_rating']->score = 0;
+    $totes = 0;
+    foreach($this->data['campus_ratings'] as $r) {
+      $totes += $r->score;
+    }
+    $count = !empty($this->data['campus_ratings']) ? count($this->data['campus_ratings']) : 1;
+    $this->data['overall_rating']->score = $totes / $count;
+    $this->data['overall_rating']->total = $this->campus_model->get_num_ratings_for_campus($this->data['campus']->university_id);
   	
   	$this->data['best_thing'] = $this->campus_model->best_thing($categories);
   	$this->data['worst_thing'] = $this->campus_model->worst_thing($categories);
@@ -146,8 +173,13 @@ class Campus extends MY_Controller {
   	$comments = array();
   	foreach($comments_list as $c) {
   	  $comments[$c->rating_id]->ratings = $this->campus_model->get_user_ratings($c->item_id, $c->rating_id);
+  	  $first = $comments[$c->rating_id]->ratings[0];
   	  $comments[$c->rating_id]->comment_text = $c->rating_comments;
   	  $comments[$c->rating_id]->rating_date = $c->rating_date;
+  	  if(isset($first->account_type) && $first->account_type == "Alumni")
+  	    $comments[$c->rating_id]->who = "an alumnus";
+  	  else
+    	  $comments[$c->rating_id]->who = isset($first->account_type) ? strtolower("a ".$first->account_type) : "a user";
     }
 	  
 	  //print_r($comments);
@@ -197,6 +229,18 @@ class Campus extends MY_Controller {
 
       $user = $this->ion_auth->user()->row();
       $faves = $this->campus_model->get_fave_schools($user->id); // replace with proper user_id
+      
+      foreach($faves as $fav) {
+        $campus_ratings = $this->campus_model->get_attribute_ratings_for_campus($fav->university_id);
+        //$fav->rating = new stdClass;
+        $fav->score = 0;
+        $totes = 0;
+        foreach($campus_ratings as $r) {
+          $totes += $r->score;
+        }
+        $count = !empty($campus_ratings) ? count($campus_ratings) : 1;
+        $fav->score = $totes / $count;
+      }
       
       //print_r($faves);
       //die();

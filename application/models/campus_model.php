@@ -89,9 +89,9 @@ class Campus_model extends CI_Model {
 	public function get_attribute_ratings_for_campus($university_id) {
     $sql = "select university.university_id, rating.rating_id, AVG( attributerating.attributerating_rating ) AS score, attribute.attribute_name
     FROM  `university` 
-    INNER JOIN rating ON ( university.university_id = rating.item_id ) 
+    INNER JOIN rating ON ( university.university_id = rating.university_id ) 
     INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id
-    AND university.university_id = rating.item_id ) 
+    AND university.university_id = rating.university_id ) 
     INNER JOIN attribute ON ( attribute.category_id = 0
     AND attribute.attribute_id = attributerating.attribute_id ) 
     WHERE university.university_id = ?
@@ -103,6 +103,17 @@ class Campus_model extends CI_Model {
 
      return $this->db->query($sql, array($university_id))->result();
  	}
+ 	
+ 	public function get_num_ratings_for_campus($university_id) {
+	  $sql = "select count(*) as total from (SELECT university.university_id, rating.rating_id, attributerating.attributerating_rating as ar
+    FROM  `university` 
+    INNER JOIN rating ON ( university.university_id = rating.university_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
+    WHERE university.university_id = ?
+    GROUP BY rating.rating_id) as x";
+    
+    return $this->db->query($sql, array($university_id))->row()->total;
+	}
 	
 	public function get_num_ratings_for_item($item_id) {
 	  $sql = "select count(*) as total from (SELECT item.item_id, rating.rating_id, attributerating.attributerating_rating as ar
@@ -116,7 +127,7 @@ class Campus_model extends CI_Model {
 	}
 	
 	public function get_user_ratings($item_id, $rating_id) {
-	  $sql = "select rating.rating_date, attributerating.attributerating_rating, attribute.attribute_name, users.account_type
+	  $sql = "select rating.rating_date, rating.users_id, attributerating.attributerating_rating, attribute.attribute_name, users.account_type
     FROM `rating`
     INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
     INNER JOIN attribute ON ( attributerating.attribute_id = attribute.attribute_id ) 
@@ -194,6 +205,16 @@ class Campus_model extends CI_Model {
     return $this->db->query($sql, array($university_id, $category_id))->result();
   }
   
+  public function get_recent_campus_ratings() {
+    $sql = "select rating.rating_id, rating.rating_date as item_dateadded, university.university_name, university.university_slug 
+    FROM rating, university
+    where rating.university_id = university.university_id
+    order by item_dateadded desc
+    limit 50";
+        
+    return $this->db->query($sql)->result();
+  }
+  
   public function get_recent_ratings($university_id) {
     $sql = "select rating.rating_id, rating.rating_date as item_dateadded, item.item_name, item.item_slug, category.category_name, category.category_slug FROM `rating`
     left join item on rating.item_id = item.item_id
@@ -237,15 +258,10 @@ class Campus_model extends CI_Model {
 	}
 	
 	public function get_fave_schools($user_id) {
-	  $this->db->select('favorites.favorites_id, university.university_id, university.university_name, university.university_slug, AVG( attributerating.attributerating_rating ) AS score');
+	  $this->db->select('favorites.favorites_id, university.university_id, university.university_name, university.university_slug');
     $this->db->from('favorites');
-    $this->db->join('item', 'favorites.item_id = item.item_id', 'inner');
-    $this->db->join('category', 'category.category_id = item.category_id', 'inner');
-    $this->db->join('university', 'item.university_id = university.university_id', 'inner');
-    $this->db->join('rating', 'item.item_id = rating.item_id', 'left');
-    $this->db->join('attributerating', 'rating.rating_id = attributerating.rating_id', 'left');
+    $this->db->join('university', 'favorites.item_id = university.university_id', 'inner');
     $this->db->where('favorites.users_id', $user_id);
-    $this->db->group_by('item.item_name');
     $this->db->order_by('university.university_name');
     
     //$query = $this->db->get();

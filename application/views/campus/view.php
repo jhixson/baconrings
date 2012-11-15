@@ -2,7 +2,7 @@
 
 <div class="extra">
   <img src="<?php echo base_url(); ?>images/rss.gif" border="0" height="25" width="25" alt="rss" align="right" />
-  <a href="/toggle_favorite/<?php echo $campus->university_id ?>" class="heart item">Add favorite</a>
+  <a href="/toggle_favorite/<?php echo $campus->university_id ?>" class="heart item <?php echo $is_favorite ? 'active' : '' ?>">Add favorite</a>
 </div>
 <div style="clear:both;"></div>
 <div id="campusleft">
@@ -19,7 +19,7 @@
 
 		<span class="overalllabel">OVERALL RATING</span>
 
-		<a href=""><img src="<?php echo base_url(); ?>images/rate_it_large.png" vspace="10" alt="rate this" border="0" height="42" width="150" align="right" /></a>
+		<a href="<?php echo $campus->university_slug ?>/rate"><img src="<?php echo base_url(); ?>images/rate_it_large.png" vspace="10" alt="rate this" border="0" height="42" width="150" align="right" /></a>
 
 		<div id="overallbig">
 		  <span style="width: <?php echo ($overall_rating->score / 5.0) * 100 ?>%"><?php echo number_format($overall_rating->score, 1, '.', ',') ?></span>

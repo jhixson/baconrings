@@ -11,11 +11,11 @@
 				<label style="height:100px;">I am a:<span class="required">*</span>
 				<span class="small">Who are you?</span>
 				</label>
-				<input type="radio" name="who" value="1" /> Student<br />
-				<input type="radio" name="who" value="2" /> Parent<br />
-				<input type="radio" name="who" value="3" /> Professor<br />
-				<input type="radio" name="who" value="4" /> Alumni<br />
-				<input type="radio" name="who" value="5" /> Other<br />
+				<input type="radio" name="who" value="Student" /> Student<br />
+				<input type="radio" name="who" value="Parent" /> Parent<br />
+				<input type="radio" name="who" value="Professor" /> Professor<br />
+				<input type="radio" name="who" value="Alumni" /> Alumni<br />
+				<input type="radio" name="who" value="User" /> Other<br />
 				<br />
 				
 

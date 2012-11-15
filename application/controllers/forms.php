@@ -650,7 +650,7 @@ class Forms extends MY_Controller {
         $att_arr = $this->input->post('att');
         $comments = $this->input->post('comments');
 
-        $this->forms_model->save_rating($this->data['campus']->university_id, $att_arr, $comments);
+        $this->forms_model->save_campus_rating($this->data['campus']->university_id, $att_arr, $comments);
 
         $this->load->view('templates/header', $this->data);
         $this->load->view('forms/ratecampusthanks', $this->data);

@@ -65,7 +65,13 @@ class Auth extends MY_Controller {
 			{ //if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect($this->config->item('base_url'), 'refresh');
+				
+				if($this->ion_auth->user()->row()->university_id != 0) {
+          $u = $this->campus_model->get_single('university', array('university_id' => $this->ion_auth->user()->row()->university_id));
+				  redirect('/'.$u->university_slug, 'location');
+			  }
+				else
+  				redirect($this->config->item('base_url'), 'refresh');
 			}
 			else
 			{ //if the login was un-successful
@@ -104,7 +110,6 @@ class Auth extends MY_Controller {
     //die();
     log_message('error', 'FB User: '.$userId);
     
-
       // If user is not yet authenticated, the id will be zero
       if($userId == 0 && !isset($_GET['code'])){
           // Generate a login url
@@ -112,6 +117,7 @@ class Auth extends MY_Controller {
           redirect($this->data['url'],'refresh');
       } else {
         $this->data['user'] = $userId;
+        log_message('error', 'FB User: '.$userId);
         $query = $this->db->get_where('users', array('facebook_id' => $userId));
         if( count($query->result()) == 0 ) {
           // Get user's data and print it
@@ -145,14 +151,14 @@ class Auth extends MY_Controller {
 
           $this->session->set_userdata($session_data);
           
-          if($query->row()->university_id) {
+          if($query->row()->university_id != 0) {
             $u = $this->campus_model->get_single('university', array('university_id' => $query->row()->university_id));
 
-            // this redirect seems to be clobbering the session data, so render the view and set a cookie for the university_id
   				  redirect('/'.$u->university_slug, 'location');
 				  }
-				  else
+				  elseif($userId != 0) {
 				    redirect('/', 'location');
+        	}
       }
       $this->load->view('main/index', $this->data);
       //$this->load->view('templates/header', $this->data);
