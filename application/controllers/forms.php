@@ -578,6 +578,7 @@ class Forms extends MY_Controller {
     $this->data['title'] = 'Rating Submitted';
   	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
   	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+    $this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
 
     //validate form input
     $this->form_validation->set_rules('att', 'attributes', 'required');

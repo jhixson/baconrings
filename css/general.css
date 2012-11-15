@@ -8,6 +8,26 @@ body, p, br, td{
 	color:#000000;
 }
 
+a{
+	color:#00acda;
+	text-decoration:underline;
+}
+
+a:hover{
+	color:#00acda;
+	text-decoration:none;
+}
+
+.ratelink{
+	color:#000000;
+	text-decoration:underline;	
+}
+
+.ratelink:hover{
+	color:#000000;
+	text-decoration:none;	
+}
+
 #container{
 	width:970px;
 	margin: 0 auto;
@@ -211,6 +231,15 @@ h1.left {
 
 #directory a:hover{
 	text-decoration:underline;
+}
+
+.directorylink{
+	color:#00acda;
+}
+
+.directorylink:hover{
+	color:#00acda;
+	text-decoration:none;
 }
 
 .bluebutton{
@@ -576,6 +605,10 @@ h1.left {
 	color:#2d2d2d;
 	font-style:italic;
 	font-size:10pt;
+}
+
+#addressinfo{
+	font-size:8pt;
 }
 
 /* used on campus rating page */

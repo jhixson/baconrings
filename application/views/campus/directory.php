@@ -13,7 +13,7 @@
 <?php foreach($campuses as $letter => $schools): ?>		
   <p id="<?php echo $letter ?>"><strong><?php echo $letter ?></strong></p>
   <?php foreach($schools as $campus): ?>		
-    <p><a href="/<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></a></p>
+    <p><a class="directorylink" href="/<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></a></p>
   <?php endforeach ?>
 <?php endforeach ?>
 
