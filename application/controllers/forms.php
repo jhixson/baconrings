@@ -7,6 +7,8 @@ class Forms extends MY_Controller {
 		parent::__construct();
     $this->load->library('session');
     $this->load->library('form_validation');
+    $this->load->library('ion_auth');
+    
 		$this->load->model('campus_model');
     $this->load->model('forms_model');
 	}
@@ -196,7 +198,7 @@ class Forms extends MY_Controller {
   }
 
 // add category form
-  public function flag($campus_slug='', $item_slug='', $comment_id='')
+  public function flag($campus_slug='', $comment_id='', $item_slug='')
   {
     $this->data['comment'] = $this->campus_model->get_single('rating', array('rating_id' => $comment_id));
     $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
@@ -213,7 +215,7 @@ class Forms extends MY_Controller {
     $this->load->view('templates/footer', $this->data);
   }
 
-  public function flagthanks($campus_slug='', $item_slug='', $comment_id='')
+  public function flagthanks($campus_slug='', $comment_id='', $item_slug='')
   {
     $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
     if(!empty($item_slug))
@@ -617,21 +619,26 @@ class Forms extends MY_Controller {
   
   public function ratecampus($slug='')
   {
-  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
-  	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => 0));
+    if($this->ion_auth->logged_in()) {
+  	  $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
+    	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => 0));
 
-  	if($this->data['campus'])
-  	  $this->data['title'] = 'Rate '.$this->data['campus']->university_name;
+    	if($this->data['campus'])
+    	  $this->data['title'] = 'Rate '.$this->data['campus']->university_name;
   	
-    else
-    	show_404();
+      else
+      	show_404();
     
-    //set the flash data error message if there is one
-    $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-    $this->load->view('templates/header', $this->data);
-    $this->load->view('forms/ratecampus', $this->data);
-    $this->load->view('templates/footer', $this->data);
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+      $this->load->view('templates/header', $this->data);
+      $this->load->view('forms/ratecampus', $this->data);
+      $this->load->view('templates/footer', $this->data);
+    }
+    else {
+      $_SESSION['alert'] = 'You need to be logged in to add ratings. <a href="/login">Click here</a> to log in.';
+      redirect('/'.$slug,'location');
+    }
   }
   
   public function ratecampusthanks($slug='')

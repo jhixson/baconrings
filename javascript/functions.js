@@ -24,6 +24,9 @@ $(document).ready(function() {
             heart.addClass('active');
           }
         }
+        else if(data.status == 'err')
+          if(confirm('You must be logged in to add favorites. Click OK to log in or Cancel to stay on this page.'))
+            window.location.href = '/login';
       }, 'json');
     }
   });

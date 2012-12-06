@@ -41,6 +41,20 @@ class Campus extends MY_Controller {
   	$this->load->view('templates/footer', $this->data);
 	}
 	
+	public function view_rating($rating_id) {
+	  $this->data['rating'] = $this->campus_model->get_single('rating', array('rating_id' => $rating_id));
+	  $this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['rating']->university_id));
+    $this->data['campus_ratings'] = $this->campus_model->get_attribute_ratings_by_id($rating_id);
+	  
+	  $this->data['title'] = 'View rating for '.$this->data['campus']->university_name;
+    
+    //die(print_r($this->data['campus_ratings'],true));
+    
+    $this->load->view('templates/header', $this->data);
+  	$this->load->view('campus/view_rating', $this->data);
+  	$this->load->view('templates/footer', $this->data);
+	}
+	
 	public function view($slug='')
 	{
 	  if($this->input->post('school'))
@@ -48,6 +62,8 @@ class Campus extends MY_Controller {
   	  
   	$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
   	$this->data['campus_ratings'] = $this->campus_model->get_attribute_ratings_for_campus($this->data['campus']->university_id);
+  	
+  //	die(print_r($this->data['campus_ratings'],true));
   	
   	if($this->data['campus'])
   	  $this->data['title'] = $this->data['campus']->university_name;
@@ -67,6 +83,8 @@ class Campus extends MY_Controller {
     $this->data['is_favorite'] = $this->ion_auth->logged_in() && $this->campus_model->is_favorite($user->id, $this->data['campus']->university_id);
 
     //$this->data['overall_rating'] = $this->campus_model->get_rating_for_campus($this->data['campus']->university_id);
+    $this->data['campus_rating_comments'] = $this->campus_model->get_ratings_for_campus($this->data['campus']->university_id);
+
     $this->data['overall_rating'] = new stdClass;
     $this->data['overall_rating']->score = 0;
     $totes = 0;

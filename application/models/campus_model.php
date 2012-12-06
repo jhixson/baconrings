@@ -41,6 +41,18 @@ class Campus_model extends CI_Model {
     return $this->db->query($sql, array($university_id))->row();
 	}
 
+  public function get_ratings_for_campus($university_id) {
+    $this->db->select('rating.*, users.account_type');
+    $this->db->from('rating');
+    $this->db->join('users', 'users.id = rating.users_id', 'left');
+    $this->db->where('rating.university_id', $university_id);
+    $this->db->order_by('rating_date', "desc");
+    
+    //$query = $this->db->get();
+    //die($this->db->last_query());
+    
+    return $this->db->get()->result();
+  }
 	
 	public function get_rating_for_category($university_id, $category_id) {
     $sql = "select ar as score, count(*) as total from (SELECT item.item_id, rating.rating_id, avg(attributerating.attributerating_rating) as ar
@@ -102,6 +114,20 @@ class Campus_model extends CI_Model {
      //die($this->db->last_query());
 
      return $this->db->query($sql, array($university_id))->result();
+ 	}
+ 	
+ 	public function get_attribute_ratings_by_id($rating_id) {
+    $sql = "select university.university_id, rating.rating_id, AVG( attributerating.attributerating_rating ) AS score, attribute.attribute_name
+    FROM  `university` 
+    INNER JOIN rating ON ( university.university_id = rating.university_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id
+    AND university.university_id = rating.university_id ) 
+    INNER JOIN attribute ON ( attribute.category_id = 0
+    AND attribute.attribute_id = attributerating.attribute_id ) 
+    WHERE rating.rating_id = ?
+    GROUP BY attribute.attribute_name";
+
+     return $this->db->query($sql, array($rating_id))->result();
  	}
  	
  	public function get_num_ratings_for_campus($university_id) {

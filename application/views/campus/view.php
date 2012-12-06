@@ -1,3 +1,6 @@
+<?php if(isset($_SESSION['alert'])): ?>
+  <p class="alert"><?php echo $_SESSION['alert'] ?></p>
+<?php unset($_SESSION['alert']); endif; ?>
 <h1 class="left"><?php echo $campus->university_name ?></h1>
 
 <div class="extra">
@@ -50,19 +53,34 @@
 
 	<div id="campuscomment">
 
-		<div id="campuscommentcopy">
-			8/25/2012 <span class="ratingsauthor">by a parent</span><br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec lorem turpis, eget feugiat nibh. Mauris a arcu turpis, a sagittis velit. Pellentesque viverra libero sed lacus sodales porta posuere arcu cursus. Maecenas pharetra malesuada mattis. Ut tristique dui in eros adipiscing dapibus. Nullam a porttitor odio.
-		</div>
+		
+		<?php foreach($campus_rating_comments as $cc): ?>
+		  <div id="campuscommentcopy">
+  		  <?php echo date("m/d/Y",strtotime($cc->rating_date)) ?>
+  		  
+  		  <?php
+  		  if(isset($cc->account_type) && $cc->account_type == "Alumni")
+    	    $who = "an alumnus";
+    	  else
+      	  $who = isset($cc->account_type) ? strtolower("a ".$cc->account_type) : "a user";
+  		  ?>
+  		  <span class="ratingsauthor">by <?php echo $who ?></span><br />
+  		  <?php echo $cc->rating_comments ?>
+  		</div>
+	
 
-		<div id="campuscommentview">
-			<br />
-			<a href=""><img src="images/view_rating.png" border="0" width="102" height="36" alt="view rating" /></a>
-			<a href="<?php echo $campus->university_slug."/COMMENT-ID/flag" ?>"><img src="images/flag_this.png" vspace="6" width="61" height="23" border="0" alt="flag this" /></a>
-		</div>
+		  <div id="campuscommentview">
+  			
+  			<a href="<?php echo $campus->university_slug."/rating/".$cc->rating_id ?>"><img src="images/view_rating.png" border="0" width="102" height="36" alt="view rating" /></a>
+  			<a href="<?php echo $campus->university_slug."/".$cc->rating_id."/flag" ?>"><img src="images/flag_this.png" vspace="6" width="61" height="23" border="0" alt="flag this" /></a>
+  		</div>
 
-		<div id="clear" style="clear:both;"></div>
+  		<div id="clear" style="clear:both;"><br /></div>
+		
+			<?php endforeach ?>
 
 	</div>
+	<!-- hide for now...
 	<div id="paging">
 
 		1 &middot;
@@ -71,6 +89,7 @@
 		<a href="">4</a>
 
 	</div>
+	-->
 
 </div>
 

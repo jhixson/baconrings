@@ -916,3 +916,9 @@ h1.left {
 tr.header td {
   background-color: #b2e6f4;
 }
+
+p.alert {
+  background-color: #ffa;
+  padding: 10px;
+  margin: 0 0 20px 0;
+}
