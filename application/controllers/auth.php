@@ -446,8 +446,9 @@ class Auth extends MY_Controller {
 
 		if ($this->form_validation->run() == true)
 		{
-			$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
+			//$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
 			$email = $this->input->post('email');
+			$username = $email;
 			$password = $this->input->post('password');
 
 			$additional_data = array('account_type' => $this->input->post('who'), 'university_id' => $this->input->post('school'));

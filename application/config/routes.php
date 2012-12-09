@@ -90,6 +90,7 @@ $route['main'] = 'main/index';
 //$route['forms/submit-correction-thanks'] = 'forms/submitcorrectionthanks';
 $route['forms/contact'] = 'forms/contact';
 $route['forms/contact-thanks'] = 'forms/contactthanks';
+$route['forgot_password'] = 'forms/forgotpassword';
 $route['forms/forgot-password'] = 'forms/forgotpassword';
 $route['forms/forgot-password-thanks'] = 'forms/forgotpasswordthanks';
 $route['forms/flag-comment'] = 'forms/flag';
