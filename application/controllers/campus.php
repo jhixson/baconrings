@@ -269,8 +269,14 @@ class Campus extends MY_Controller {
       $this->load->view('campus/favorites', $this->data);
       $this->load->view('templates/footer', $this->data);
     }
-    else
-      redirect('/login','location');
+    else {
+      //redirect('/login','location');
+      $this->data['title'] = "Login";
+      $this->data['message'] = 'You need to be logged in to use My Schools!';
+      $this->load->view('templates/header', $this->data);
+      $this->load->view('auth/login', $this->data);
+      $this->load->view('templates/footer', $this->data);
+    }
   }
   
   public function upload($slug='') {

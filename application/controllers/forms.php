@@ -554,24 +554,33 @@ class Forms extends MY_Controller {
 // rate form
   public function rate($slug='')
   {
-  	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
-  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
-  	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
-  	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
+    if($this->ion_auth->logged_in()) {
+  	  $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
+    	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+    	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+    	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
 
 
-  	if($this->data['item'])
-  	  $this->data['title'] = 'Rate '.$this->data['item']->item_name;
+    	if($this->data['item'])
+    	  $this->data['title'] = 'Rate '.$this->data['item']->item_name;
   	
-    else
-    	show_404();
+      else
+      	show_404();
     
-    //set the flash data error message if there is one
-    $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
-    $this->load->view('templates/header', $this->data);
-    $this->load->view('forms/rate', $this->data);
-    $this->load->view('templates/footer', $this->data);
+      $this->load->view('templates/header', $this->data);
+      $this->load->view('forms/rate', $this->data);
+      $this->load->view('templates/footer', $this->data);
+    }
+    else{
+    		$this->data['title'] = "Login";
+    		$this->data['message'] = "You must be logged in to rate stuff. Don't worry, we never show your username with the rating.";
+    		$this->load->view('templates/header', $this->data);
+    		$this->load->view('auth/login', $this->data);
+    		$this->load->view('templates/footer', $this->data);
+    	}
   }
 
 
@@ -581,6 +590,7 @@ class Forms extends MY_Controller {
   	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
   	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
     $this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+    $this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
 
     //validate form input
     $this->form_validation->set_rules('att', 'attributes', 'required');
@@ -636,8 +646,13 @@ class Forms extends MY_Controller {
       $this->load->view('templates/footer', $this->data);
     }
     else {
-      $_SESSION['alert'] = 'You need to be logged in to add ratings. <a href="/login">Click here</a> to log in.';
-      redirect('/'.$slug,'location');
+      //$_SESSION['alert'] = 'You need to be logged in to add ratings. <a href="/login">Click here</a> to log in.';
+      //redirect('/'.$slug,'location');
+      $this->data['title'] = "Login";
+  		$this->data['message'] = "You must be logged in to rate stuff. Don't worry, we never show your username with the rating.";
+  		$this->load->view('templates/header', $this->data);
+  		$this->load->view('auth/login', $this->data);
+  		$this->load->view('templates/footer', $this->data);
     }
   }
   
