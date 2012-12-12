@@ -30,6 +30,11 @@
 
 		<br /><strong style="font-size:14pt"><?php echo $overall_rating->total ?> TOTAL RATINGS</strong>
 
+    <?php
+      if($overall_rating->total == 0)
+        echo "<br /><br />Be the first to rate this campus on it's location, reputation, party scene, and more. ";
+    ?>
+
 		<br /><br />
 		
 		<table cellpadding="0" cellspacing="0" border="0">
@@ -53,31 +58,42 @@
 
 	<div id="campuscomment">
 
-		
+    <?php if (empty($campus_rating_comments)): ?>
+    <em>There are no comments or ratings yet.</em>
+    <?php endif?>
+
+		<?php $i = 0; ?>
 		<?php foreach($campus_rating_comments as $cc): ?>
-		  <div id="campuscommentcopy">
-  		  <?php echo date("m/d/Y",strtotime($cc->rating_date)) ?>
+		  
+      <!-- this div is just for bgcolor in the loop -->
+      <div style="background-color:<?php echo $i % 2 == 0 ? "#ffffff;" : "#e1e1e1;"?>;">
+
+        <div id="campuscommentcopy">
+    		  <em><?php echo date("m/d/Y",strtotime($cc->rating_date)) ?></em>
   		  
-  		  <?php
-  		  if(isset($cc->account_type) && $cc->account_type == "Alumni")
-    	    $who = "an alumnus";
-    	  else
-      	  $who = isset($cc->account_type) ? strtolower("a ".$cc->account_type) : "a user";
-  		  ?>
-  		  <span class="ratingsauthor">by <?php echo $who ?></span><br />
-  		  <?php echo $cc->rating_comments ?>
-  		</div>
+     		  <?php
+     		  if(isset($cc->account_type) && $cc->account_type == "Alumni")
+      	    $who = "an alumnus";
+      	  else
+         	  $who = isset($cc->account_type) ? strtolower("a ".$cc->account_type) : "a user";
+     		  ?>
+     		  <span class="ratingsauthor">by <?php echo $who ?></span><br />
+     		  <?php echo $cc->rating_comments ?>
+     		</div>
 	
 
-		  <div id="campuscommentview">
+		    <div id="campuscommentview">
   			
-  			<a href="<?php echo $campus->university_slug."/rating/".$cc->rating_id ?>"><img src="images/view_rating.png" border="0" width="102" height="36" alt="view rating" /></a>
-  			<a href="<?php echo $campus->university_slug."/".$cc->rating_id."/flag" ?>"><img src="images/flag_this.png" vspace="6" width="61" height="23" border="0" alt="flag this" /></a>
-  		</div>
+  	   		<a href="<?php echo $campus->university_slug."/rating/".$cc->rating_id ?>"><img src="images/view_rating.png" border="0" width="102" height="36" alt="view rating" /></a>
+  	  		<a href="<?php echo $campus->university_slug."/".$cc->rating_id."/flag" ?>"><img src="images/flag_this.png" vspace="6" width="61" height="23" border="0" alt="flag this" /></a>
+  		  </div>
 
-  		<div id="clear" style="clear:both;"><br /></div>
+    		<div id="clear" style="clear:both;"><br /></div>
 		
-			<?php endforeach ?>
+      </div>
+
+      <?php $i++; ?>
+			<?php endforeach ?>    
 
 	</div>
 	<!-- hide for now...
@@ -105,24 +121,33 @@
 		<table cellpadding="3" cellspacing="0" border="0">
   			
   				<?php if (empty($category_ratings)): ?>
-  					<tr>
+  					
+            <tr>
   						<td width="43"></td>
   						<td width="215" style="font-style:italic;font-weight:normal;text-transform:capitalize;">No categories yet.</td>
   					</tr>
-  				<?php endif?>
 
-  				<?php foreach($category_ratings as $k => $v): ?>
-  					<tr>
-  						<td align="right" width="43" style="color:#<?php echo $v->color ?>;font-size:26pt;line-height:25px;">&#8226;</td>
-  						<td width="215"><a href="/<?php echo $campus->university_slug."/".$v->slug ?>"><?php echo $k ?></a></td>
-  						<td width="50"><?php echo number_format($v->score, 1, '.', ',') ?></td>
-  					</tr>
-   		     	<?php endforeach ?>
+            <tr>
+              <td width="30"></td>
+              <td colspan="2" width="265" style="font-size:11pt;text-transform:capitalize;"><br />Help us by <a style="font-size:10pt;" href="/<?php echo $campus->university_slug ?>/add-category">adding</a> dorms, dining halls, libraries and more.</td>
+            </tr>
+  				
+          <?php else: ?>
 
-  			<tr>
-  				<td width="30"></td>
-  				<td colspan="2" width="265" style="font-size:11pt;text-transform:capitalize;"><br />Don't see what you are looking for? <a style="font-size:10pt;" href="/<?php echo $campus->university_slug ?>/add-category">Add a category here</a></td>
-  			</tr>
+  				  <?php foreach($category_ratings as $k => $v): ?>
+  				  	<tr>
+  		  				<td align="right" width="43" style="color:#<?php echo $v->color ?>;font-size:26pt;line-height:25px;">&#8226;</td>
+  		  				<td width="215"><a href="/<?php echo $campus->university_slug."/".$v->slug ?>"><?php echo $k ?></a></td>
+  		  				<td width="50"><?php echo number_format($v->score, 1, '.', ',') ?></td>
+  		  			</tr>
+   		      <?php endforeach ?>
+
+            <tr>
+  				    <td width="30"></td>
+  				    <td colspan="2" width="265" style="font-size:11pt;text-transform:capitalize;"><br />Don't see what you are looking for? <a style="font-size:10pt;" href="/<?php echo $campus->university_slug ?>/add-category">Add a category here</a></td>
+  			    </tr>
+
+          <?php endif?>
 
   		</table>
   	</div>

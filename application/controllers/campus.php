@@ -243,7 +243,7 @@ class Campus extends MY_Controller {
   public function favorites()
   {
     if($this->ion_auth->logged_in()) {
-      $this->data['title'] = 'My Favorites';
+      $this->data['title'] = 'My Schools';
 
       $user = $this->ion_auth->user()->row();
       $faves = $this->campus_model->get_fave_schools($user->id); // replace with proper user_id
@@ -272,7 +272,7 @@ class Campus extends MY_Controller {
     else {
       //redirect('/login','location');
       $this->data['title'] = "Login";
-      $this->data['message'] = 'You need to be logged in to use My Schools!';
+      $this->data['message'] = '<li>You need to be logged in to use My Schools!</li><br /><br />';
       $this->load->view('templates/header', $this->data);
       $this->load->view('auth/login', $this->data);
       $this->load->view('templates/footer', $this->data);

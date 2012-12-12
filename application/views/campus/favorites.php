@@ -1,4 +1,4 @@
-<h1>My Favorites</h1>
+<h1>My Schools</h1>
 
 		<p></p>
     <?php if(count($favorites) > 0): ?>

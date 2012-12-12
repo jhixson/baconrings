@@ -23,6 +23,10 @@
 				<input type="text" name="category" id="category" class="textinput <?php if (!empty($category)) echo 'textinputerror' ?>" value="<?php if (!empty($category)) echo $category['value'];?>" />
 				</p>
 
+				<p><label class="labelpadding">Help us by providing a list of items for this category:</label>
+				<textarea name="comments" id="comments" class="textareainput <?php if (!empty($comments)) echo 'textinputerror' ?>"><?php if (!empty($comments)) echo $comments['value'];?></textarea>
+				</p>
+
 				<button type="submit" name="submit" class="bluebutton" style="margin-left:153px;">Send</button>
 
 				<input type="hidden" name="sender" value="yes" />

@@ -303,6 +303,7 @@ class Forms extends MY_Controller {
          $email = $this->input->post('email');
          $school = $this->input->post('school');
          $category = $this->input->post('category');
+         $comments = $this->input->post('comments');
       
          // email functionality here
         $to = "peruta@peruta.com";
@@ -311,6 +312,7 @@ class Forms extends MY_Controller {
         $emailmessage .= "Email: "  . $email . "\n";
         $emailmessage .= "School: " . $school . "\n";
         $emailmessage .= "Category: " . $category . "\n";
+        $emailmessage .= "List of Items: " . $comments . "\n";
         $from = $email;
         $headers = "From:" . $email;
         mail($to,$subject,$emailmessage,$headers);
@@ -343,6 +345,11 @@ class Forms extends MY_Controller {
         'id' => 'category',
         'type' => 'text',
         'value' => $this->form_validation->set_value('category'),
+      );
+      $this->data['comments'] = array('name' => 'comments',
+        'id' => 'comments',
+        'type' => 'text',
+        'value' => $this->input->post('comments'),
       );
 
        $this->load->view('templates/header', $this->data);
@@ -576,7 +583,7 @@ class Forms extends MY_Controller {
     }
     else{
     		$this->data['title'] = "Login";
-    		$this->data['message'] = "You must be logged in to rate stuff. Don't worry, we never show your username with the rating.";
+    		$this->data['message'] = "<li>You must be logged in to rate stuff. Don't worry, we never show your username with any ratings.</li><br /><br />";
     		$this->load->view('templates/header', $this->data);
     		$this->load->view('auth/login', $this->data);
     		$this->load->view('templates/footer', $this->data);
@@ -649,7 +656,7 @@ class Forms extends MY_Controller {
       //$_SESSION['alert'] = 'You need to be logged in to add ratings. <a href="/login">Click here</a> to log in.';
       //redirect('/'.$slug,'location');
       $this->data['title'] = "Login";
-  		$this->data['message'] = "You must be logged in to rate stuff. Don't worry, we never show your username with the rating.";
+  		$this->data['message'] = "<li>You must be logged in to rate stuff. Don't worry, we never show your username with any ratings.</li><br /><br />";
   		$this->load->view('templates/header', $this->data);
   		$this->load->view('auth/login', $this->data);
   		$this->load->view('templates/footer', $this->data);
