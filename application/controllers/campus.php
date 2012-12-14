@@ -221,7 +221,7 @@ class Campus extends MY_Controller {
     if($this->data['campus'])
       $this->data['title'] = 'Best of '.$this->data['campus']->university_name;
     else
-      $this->data['title'] = 'Best of all Schools';
+      $this->data['title'] = 'Best of All Campuses';
     
     //$this->campus_model->get_rating_for_all('1');
     $this->data['categories'] = $this->campus_model->get_list('category');

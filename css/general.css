@@ -817,13 +817,13 @@ h1.left {
 #searchbox{
 	position:relative;
 	z-index:2;
-	height:93px;
+	height:103px;
 	width:548px;
 	background-image:url('/images/searchbox_bg.png');
 	margin-left:90px;
 	margin-top:0px;
 	text-align:center;
-	padding-top:85px;
+	padding-top:75px;
 }
 
 #searchbox select{
@@ -833,6 +833,13 @@ h1.left {
 	height:30px;
 	font-size:14pt;
 	font-family:arial;
+}
+
+#alphalink{
+	width:100%;
+	padding-top:12px;
+	padding-left:90px;
+	text-align:left;
 }
 
 
