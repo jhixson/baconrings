@@ -49,8 +49,6 @@
 
   					<input type="submit" value="GO" class="bluebutton" />
 
-            <div id="alphalink"><a href="/directory" style="font-size:10pt;">Alphabetical Directory</a></div>
-
   			</form>
 
   		</div>
