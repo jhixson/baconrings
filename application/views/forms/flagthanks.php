@@ -5,12 +5,15 @@
 	<p>Thank you for helping us improve the quality of the ratings.</p>
 
 	<p>
-		<form action="/ithaca-college">
-		
-		<button type="submit" name="submit" class="bluebutton">Back to Ithaca College</button>
-
+	  <?php if(isset($item)): ?>
+		<form action="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug ?>">
+  		<button type="submit" class="bluebutton">Back to <?php echo $item->item_name ?></button>
 		</form>
-
+		<?php else: ?>
+      <form action="/<?php echo $campus->university_slug ?>">
+    		<button type="submit" class="bluebutton">Back to <?php echo $campus->university_name ?></button>
+  		</form>
+  	<?php endif ?>
 	</p>
 
 

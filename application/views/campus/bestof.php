@@ -23,46 +23,25 @@
 
 		<br /><br />
 
+    <?php if(isset($best_campuses)): ?>
 		<div id="bestoflist" style="float:none;width:100%;">
 		<table cellpadding="3" cellspacing="0" border="0" align="center">
 
 			<tr bgcolor="#9cc24d">
 				<td colspan="4" width="457"><span class="bestofheader">OVERALL BEST CAMPUS</span></td>
 			</tr>
-			<tr valign="top">
-				<td width="25" align="right">1.</td>
-				<td width="288"><a href="">Allegheny College</a></td>
-				<td width="100">PA</td>
-				<td width="" align="right">5.0</td>
-			</tr>
-			<tr valign="top">
-				<td width="25" align="right">2.</td>
-				<td width="288"><a href="">Syracuse University</a></td>
-				<td width="100">NY</td>
-				<td width="" align="right">4.9</td>
-			</tr>
-			<tr valign="top">
-				<td width="25" align="right">3.</td>
-				<td width="288"><a href="">Ithaca College</a></td>
-				<td width="100">NY</td>
-				<td width="" align="right">4.8</td>
-			</tr>
-			<tr valign="top">
-				<td width="25" align="right">4.</td>
-				<td width="288"><a href="">Richmond College</a></td>
-				<td width="100">VA</td>
-				<td width="" align="right">4.6</td>
-			</tr>
-			<tr valign="top">
-				<td width="25" align="right">5.</td>
-				<td width="288"><a href="">Rhode Island School of Design</a></td>
-				<td width="100">RI</td>
-				<td width="" align="right">4.5</td>
-			</tr>
-       
-        </table>
-    	</div>
-
+			<?php $rank = 1; ?>
+			<?php foreach($best_campuses as $bCampus): ?>
+        <tr valign="top">
+  				<td width="25" align="right"><?php echo $rank ?>.</td>
+  				<td width="288"><a href="/<?php echo $bCampus->university_slug ?>"><?php echo $bCampus->university_name ?></a></td>
+  				<td width="100"><?php echo $bCampus->state_abbr ?></td>
+  				<td width="" align="right"><?php echo number_format($bCampus->score, 1, '.', ',') ?></td>
+  			</tr>
+      <?php $rank++; endforeach ?>
+    </table>
+  	</div>
+    <?php endif ?>
 
 		<br />
 

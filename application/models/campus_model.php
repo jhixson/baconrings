@@ -116,6 +116,28 @@ class Campus_model extends CI_Model {
      return $this->db->query($sql, array($university_id))->result();
  	}
  	
+ 	public function get_best_of_campuses() {
+    $sql = "select university.university_id, university.university_name, university.university_slug, state.state_abbr, AVG( attributerating.attributerating_rating ) AS score
+    FROM  `university` 
+    INNER JOIN rating ON ( university.university_id = rating.university_id )
+    INNER JOIN state ON ( university.state_id = state.state_id ) 
+    INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id
+    AND university.university_id = rating.university_id ) 
+    INNER JOIN attribute ON ( attribute.category_id = 0
+    AND attribute.attribute_id = attributerating.attribute_id ) 
+    GROUP BY university.university_id
+    ORDER BY score DESC
+    LIMIT 5";
+
+     //$this->db->query($sql, array($item_id));
+     //$query = $this->db->get();
+     //die($this->db->last_query());
+
+     return $this->db->query($sql)->result();
+ 	}
+ 	
+  
+ 	
  	public function get_attribute_ratings_by_id($rating_id) {
     $sql = "select university.university_id, rating.rating_id, AVG( attributerating.attributerating_rating ) AS score, attribute.attribute_name
     FROM  `university` 

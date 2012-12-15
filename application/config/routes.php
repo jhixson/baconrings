@@ -38,9 +38,6 @@
 |
 */
 
-$route['(:any)/submit-correction'] = 'forms/submitcorrection';
-$route['(:any)/submit-correction-thanks'] = 'forms/submitcorrectionthanks';
-
 $route['404_override'] = '';
 $route['toggle_favorite/(:any)'] = 'ajax/toggle_favorite/$1';
 $route['pages/(:any)'] = 'pages/view/$1';
@@ -59,9 +56,9 @@ $route['(:any)/add-category-thanks'] = 'forms/addcategorythanks/$1';
 $route['(:any)/(:any)/add-item'] = 'forms/additem/$1/$2';
 $route['(:any)/(:any)/add-item-thanks'] = 'forms/additemthanks/$1/$2';
 $route['(:any)/(:any)/(:any)/(:num)/flag'] = 'forms/flag/$1/$4/$3';
-$route['(:any)/(:any)/(:any)/flag-thanks'] = 'forms/flagthanks/$1/$4/$3';
+$route['(:any)/(:any)/(:any)/(:num)/flag-thanks'] = 'forms/flagthanks/$1/$4/$3';
 $route['(:any)/(:num)/flag'] = 'forms/flag/$1/$2';
-$route['(:any)/flag-thanks'] = 'forms/flagthanks/$1/$2';
+$route['(:any)/(:num)/flag-thanks'] = 'forms/flagthanks/$1/$2';
 $route['(:any)/(:any)/(:any)/upload'] = 'campus/upload/$3';
 $route['(:any)/(:any)/(:any)/do_upload'] = 'campus/do_upload/$3';
 $route['(:any)/(:any)/(:any)'] = 'campus/item/$1/$2/$3';

@@ -53,9 +53,11 @@
 			<?php endif ?>
 			<div style="text-align:right;padding-top:8px;">
 				
+			<?php if ($item->item_address && $item->item_city && $item->item_state): ?>
 				<div style="float:left;">
-					<a href="" target="_new"><img src="<?php echo base_url(); ?>images/icon_location.png" height="24" width="25" alt="map it" border="0" /></a>
+					<a href="https://maps.google.com/maps?q=<?php echo $item->item_address." ".$item->item_city.", ".$item->item_state ?>&amp;hl=en&amp;t=m&amp;z=16" target="_blank"><img src="<?php echo base_url(); ?>images/icon_location.png" height="24" width="25" alt="map it" border="0" /></a>
 				</div>	
+			<?php endif ?>
 
 				<div id="addressinfo">
 				<?php if ($item->item_address): ?><?php echo $item->item_address ?><?php endif?>
@@ -86,7 +88,7 @@
 
 </div>	
 
-<a href="/forms/submit-correction"><img src="<?php echo base_url() ?>images/submit_correction.gif" alt="submit correction" width="137" border="0" height="20" align="right" vspace="5" /></a>
+<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/submit-correction" ?>"><img src="<?php echo base_url() ?>images/submit_correction.gif" alt="submit correction" width="137" border="0" height="20" align="right" vspace="5" /></a>
 
 
 <div id="ratingscontainer">

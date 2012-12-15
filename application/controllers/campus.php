@@ -220,8 +220,10 @@ class Campus extends MY_Controller {
     $university_id = $this->data['campus'] ? $this->data['campus']->university_id : '';
     if($this->data['campus'])
       $this->data['title'] = 'Best of '.$this->data['campus']->university_name;
-    else
+    else {
+      $this->data['best_campuses'] = $this->campus_model->get_best_of_campuses();
       $this->data['title'] = 'Best of All Campuses';
+    }
     
     //$this->campus_model->get_rating_for_all('1');
     $this->data['categories'] = $this->campus_model->get_list('category');
@@ -229,8 +231,8 @@ class Campus extends MY_Controller {
     foreach($this->data['categories'] as $category) {
       $category->best_of = $this->campus_model->best_of($category->category_id, $university_id);
     }
-    
-    //print_r($this->data['categories']);
+        
+    //print_r($this->data['best_campuses']);
   	//die();
         
     $this->load->view('templates/header', $this->data);

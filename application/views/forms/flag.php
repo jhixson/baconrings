@@ -26,7 +26,12 @@
 
 		<div id="contact" class="contact">
 			
-			<form id="form" name="form" method="post" action="/forms/flag-comment-thanks">
+			<?php if(isset($item)): ?>
+			<form id="form" name="form" method="post" action="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/"
+			.$comment->rating_id."/flag-thanks" ?>">
+			<?php else: ?>
+		  <form id="form" name="form" method="post" action="/<?php echo $campus->university_slug."/".$comment->rating_id."/flag-thanks" ?>">
+  		<?php endif ?>
 
 				<p><label class="labelpadding">Description: </label>
 				<textarea name="comments" id="comments" class="textareainput <?php if (!empty($comments)) echo 'textinputerror' ?>"><?php if (!empty($description)) echo $description['value'];?></textarea>

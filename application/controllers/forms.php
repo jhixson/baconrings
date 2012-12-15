@@ -202,8 +202,10 @@ class Forms extends MY_Controller {
   {
     $this->data['comment'] = $this->campus_model->get_single('rating', array('rating_id' => $comment_id));
     $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
-    if(!empty($item_slug))
+    if(!empty($item_slug)) {
       $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $item_slug));
+      $this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+    }
     
     $this->data['title'] = 'Flag a Rating';
     
@@ -217,9 +219,12 @@ class Forms extends MY_Controller {
 
   public function flagthanks($campus_slug='', $comment_id='', $item_slug='')
   {
+    $this->data['comment'] = $this->campus_model->get_single('rating', array('rating_id' => $comment_id));
     $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
-    if(!empty($item_slug))
+    if(!empty($item_slug)) {
       $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $item_slug));
+      $this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+    }
       
     $this->data['title'] = 'Thank You for Improving the Ratings';
 
@@ -234,13 +239,25 @@ class Forms extends MY_Controller {
          $comments = $this->input->post('comments');
       
          // email functionality here
-        $to = "peruta@peruta.com";
-        $subject = "RateMyCampus flag form";
-        $emailmessage = "Comments: " . $comments . "\n";
-        $emailmessage .= "Rating: "  . "(need it here)" . "\n";
-        $from = "flagged@ratemycampus.com";
-        $headers = "From:" . "flagged@ratemycampus.com";
-        mail($to,$subject,$emailmessage,$headers);
+        $this->load->library('email');
+        
+        $this->email->from('flagged@ratemycampus.com', 'flagged@ratemycampus.com');
+        $this->email->to('hixsonj@gmail.com'); 
+        $this->email->to('peruta@peruta.com'); 
+        
+        $this->email->subject('RateMyCampus flag form');
+        $emailmessage = "Rating: " . $this->data['comment']->rating_comments . "<br />\n";
+        $emailmessage .= "University: " . $this->data['campus']->university_name . "<br />\n";
+        if(isset($this->data['item'])) {
+          $emailmessage .= "Category: " . $this->data['category']->category_name . "<br />\n";
+          $emailmessage .= "Item: " . $this->data['item']->item_name . "<br />\n";
+        }
+        $emailmessage .= "Comments on rating: " . $comments . "<br />\n";
+        $this->email->message($emailmessage);	
+
+        $this->email->send();
+
+        //echo $this->email->print_debugger();
 
         $this->load->view('templates/header', $this->data);
         $this->load->view('forms/flagthanks', $this->data);
