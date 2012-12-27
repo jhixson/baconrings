@@ -53,6 +53,7 @@ class Forms extends MY_Controller {
          $name = $this->input->post('name');
          $email = $this->input->post('email');
          $school = $this->input->post('school');
+         $itemm = $this->input->post('itemm');
          $comments = $this->input->post('comments');
       
          //insert stuff
@@ -60,6 +61,7 @@ class Forms extends MY_Controller {
           'correction_name' => $name ,
           'correction_email' => $email ,
           'correction_school' => $school ,
+          'correction_item' => $itemm ,
           'correction_comments' => $comments ,
           'correction_date' => date("Y-m-d")
         );
@@ -72,6 +74,7 @@ class Forms extends MY_Controller {
         $emailmessage = "Name: " . $name . "\n";
         $emailmessage .= "Email: "  . $email . "\n";
         $emailmessage .= "School: " . $school . "\n";
+        $emailmessage .= "Item: " . $itemm . "\n";
         $emailmessage .= "Comments: " . $comments . "\n";
         $from = $email;
         $headers = "From:" . $email;
@@ -600,6 +603,7 @@ class Forms extends MY_Controller {
     }
     else{
     		$this->data['title'] = "Login";
+			 $this->data['location'] = $this->uri->uri_string();
     		$this->data['message'] = "<li>You must be logged in to rate stuff. Don't worry, we never show your username with any ratings.</li><br /><br />";
     		$this->load->view('templates/header', $this->data);
     		$this->load->view('auth/login', $this->data);
@@ -619,6 +623,25 @@ class Forms extends MY_Controller {
     //validate form input
     $this->form_validation->set_rules('att', 'attributes', 'required');
     $this->form_validation->set_rules('comments', 'comments', 'required');
+	
+	// captcha
+	require_once('/home/peruta/dev.baconrings.com/application/views/forms/recaptchalib.php');
+	$privatekey = "6Lc27NgSAAAAAH1q-aJOpzUAESS30J-E5I_WV1Q_";
+	$resp = recaptcha_check_answer ($privatekey,
+                                $_SERVER["REMOTE_ADDR"],
+                                $_POST["recaptcha_challenge_field"],
+                                $_POST["recaptcha_response_field"]);
+	$this->data['resp'] = $resp;
+	if (!$resp->is_valid) {
+		$att_arr = $this->input->post('att');
+        $comments = $this->input->post('comments');
+
+        $this->forms_model->save_rating($this->data['item']->item_id, $att_arr, $comments);
+
+        $this->load->view('templates/header', $this->data);
+        $this->load->view('forms/ratethanks', $this->data);
+        $this->load->view('templates/footer', $this->data);
+	}
 
     $this->form_validation->set_error_delimiters('<li>','</li>');
 
@@ -673,6 +696,7 @@ class Forms extends MY_Controller {
       //$_SESSION['alert'] = 'You need to be logged in to add ratings. <a href="/login">Click here</a> to log in.';
       //redirect('/'.$slug,'location');
       $this->data['title'] = "Login";
+	  $this->data['location'] = $this->uri->segment(1);
   		$this->data['message'] = "<li>You must be logged in to rate stuff. Don't worry, we never show your username with any ratings.</li><br /><br />";
   		$this->load->view('templates/header', $this->data);
   		$this->load->view('auth/login', $this->data);
