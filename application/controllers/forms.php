@@ -715,12 +715,26 @@ class Forms extends MY_Controller {
     $this->form_validation->set_rules('comments', 'comments', 'required');
 
     $this->form_validation->set_error_delimiters('<li>','</li>');
+	
+	// recaptcha
+	require_once('recaptchalib.php');
+	$privatekey = "6Lc27NgSAAAAAH1q-aJOpzUAESS30J-E5I_WV1Q_";
+	$resp = recaptcha_check_answer ($privatekey,
+                                $_SERVER["REMOTE_ADDR"],
+                                $_POST["recaptcha_challenge_field"],
+                                $_POST["recaptcha_response_field"]);
+
+	if (!$resp->is_valid) {
+		$this->data['campus'] = FALSE;
+	}
+		
 
     if ($this->form_validation->run() == true && $this->data['campus'])
     {
         $att_arr = $this->input->post('att');
         $comments = $this->input->post('comments');
 
+		
         $this->forms_model->save_campus_rating($this->data['campus']->university_id, $att_arr, $comments);
 
         $this->load->view('templates/header', $this->data);
