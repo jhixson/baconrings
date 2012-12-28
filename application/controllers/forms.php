@@ -717,14 +717,15 @@ class Forms extends MY_Controller {
     $this->form_validation->set_error_delimiters('<li>','</li>');
 	
 	// recaptcha
-	require_once('recaptchalib.php');
+	//include('recaptchalib.php');
+	$this->load->helper('recaptchalib');
 	$privatekey = "6Lc27NgSAAAAAH1q-aJOpzUAESS30J-E5I_WV1Q_";
 	$resp = recaptcha_check_answer ($privatekey,
                                 $_SERVER["REMOTE_ADDR"],
                                 $_POST["recaptcha_challenge_field"],
                                 $_POST["recaptcha_response_field"]);
 
-	if (!$resp->is_valid) {
+	//if (!$resp->is_valid) {
 		if ($this->form_validation->run() == true && $this->data['campus']){
 			$att_arr = $this->input->post('att');
 			$comments = $this->input->post('comments');
@@ -750,6 +751,6 @@ class Forms extends MY_Controller {
 		$this->load->view('templates/footer', $this->data);
 
 		} 
-	}	
+	//}	
   }
 }
