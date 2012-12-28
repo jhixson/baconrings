@@ -725,37 +725,31 @@ class Forms extends MY_Controller {
                                 $_POST["recaptcha_response_field"]);
 
 	if (!$resp->is_valid) {
-		$this->data['campus'] = FALSE;
-	}
-		
-
-    if ($this->form_validation->run() == true && $this->data['campus'])
-    {
-        $att_arr = $this->input->post('att');
-        $comments = $this->input->post('comments');
+		if ($this->form_validation->run() == true && $this->data['campus']){
+			$att_arr = $this->input->post('att');
+			$comments = $this->input->post('comments');
 
 		
-        $this->forms_model->save_campus_rating($this->data['campus']->university_id, $att_arr, $comments);
+			$this->forms_model->save_campus_rating($this->data['campus']->university_id, $att_arr, $comments);
 
-        $this->load->view('templates/header', $this->data);
-        $this->load->view('forms/ratecampusthanks', $this->data);
-        $this->load->view('templates/footer', $this->data);
-    }
-    else
-    {
-      //set the flash data error message if there is one
-      $this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+			$this->load->view('templates/header', $this->data);
+			$this->load->view('forms/ratecampusthanks', $this->data);
+			$this->load->view('templates/footer', $this->data);
+		}else{
+		//set the flash data error message if there is one
+		$this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
 
-      $this->data['comments'] = array('name' => 'comments',
-        'id' => 'comments',
-        'type' => 'text',
-        'value' => $this->form_validation->set_value('comments'),
-      );
+		$this->data['comments'] = array('name' => 'comments',
+			'id' => 'comments',
+			'type' => 'text',
+			'value' => $this->form_validation->set_value('comments'),
+		);
 
-       $this->load->view('templates/header', $this->data);
-       $this->load->view('forms/ratecampus', $this->data);
-       $this->load->view('templates/footer', $this->data);
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('forms/ratecampus', $this->data);
+		$this->load->view('templates/footer', $this->data);
 
-    }  
+		} 
+	}	
   }
 }
