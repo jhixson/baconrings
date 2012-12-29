@@ -37,6 +37,7 @@ class Campus extends MY_Controller {
   	//die(print_r($recent_campuses, true));
 	
 		// campus list for dropdown
+		/*
 	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
     
     $this->data['campuses'] = array();
@@ -44,7 +45,7 @@ class Campus extends MY_Controller {
       $letter = strtoupper(substr($c->university_name, 0, 1));
       $this->data['campuses'][$letter][] = $c;
     }
-  	
+  	*/
   	$this->load->view('templates/header', $this->data);
   	$this->load->view('campus/find', $this->data);
   	$this->load->view('templates/footer', $this->data);
@@ -58,16 +59,7 @@ class Campus extends MY_Controller {
 	  $this->data['title'] = 'View rating for '.$this->data['campus']->university_name;
     
     //die(print_r($this->data['campus_ratings'],true));
-	
-		// campus list for dropdown
-	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
-    
-    $this->data['campuses'] = array();
-    foreach($campuses as $c) {
-      $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
-    }
-    
+
     $this->load->view('templates/header', $this->data);
   	$this->load->view('campus/view_rating', $this->data);
   	$this->load->view('templates/footer', $this->data);
@@ -82,16 +74,7 @@ class Campus extends MY_Controller {
   	$this->data['campus_ratings'] = $this->campus_model->get_attribute_ratings_for_campus($this->data['campus']->university_id);
   	
   //	die(print_r($this->data['campus_ratings'],true));
-  
-  	// campus list for dropdown
-	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
-    
-    $this->data['campuses'] = array();
-    foreach($campuses as $c) {
-      $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
-    }
-  	
+
   	if($this->data['campus'])
   	  $this->data['title'] = $this->data['campus']->university_name;
   	else
@@ -175,16 +158,7 @@ class Campus extends MY_Controller {
   	//die();
   	
   	$this->data['item_ratings'] = $items;
-	
-		// campus list for dropdown
-	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
-    
-    $this->data['campuses'] = array();
-    foreach($campuses as $c) {
-      $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
-    }
-  	
+
   	if($this->data['items'])
   	  $this->data['title'] = $this->data['category']->category_name . " at " . $this->data['campus']->university_name;
   	else
@@ -220,15 +194,6 @@ class Campus extends MY_Controller {
         $this->data['ranking'] += $k;
     }
 
-		// campus list for dropdown
-	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
-    
-    $this->data['campuses'] = array();
-    foreach($campuses as $c) {
-      $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
-    }
-	
     $user = $this->ion_auth->user()->row();
     //$this->data['is_favorite'] = $this->ion_auth->logged_in() && $this->campus_model->is_favorite($user->id, $this->data['item']->item_id);
 	
@@ -258,17 +223,6 @@ class Campus extends MY_Controller {
   // best of
   public function bestof($slug='')
   {
-  
-  	// campus list for dropdown
-	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
-    
-    $this->data['campuses'] = array();
-    foreach($campuses as $c) {
-      $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
-    }
-	
-	
 	  if($this->input->post('school'))
   	  redirect(base_url().'best-of/'.$this->input->post('school'), 'location');
 
@@ -300,16 +254,6 @@ class Campus extends MY_Controller {
   // favorites for schools
   public function favorites()
   {
-  
-  	// campus list for dropdown
-	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
-    
-    $this->data['campuses'] = array();
-    foreach($campuses as $c) {
-      $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
-    }
-	
     if($this->ion_auth->logged_in()) {
       $this->data['title'] = 'My Schools';
 
@@ -351,15 +295,6 @@ class Campus extends MY_Controller {
   
   public function upload($slug='') {
     if($this->ion_auth->logged_in()) {
-		// campus list for dropdown
-	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
-    
-    $this->data['campuses'] = array();
-    foreach($campuses as $c) {
-      $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
-    }
-	
       $this->data['title'] = 'Upload';
       $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
       $this->load->view('templates/header', $this->data);
@@ -371,15 +306,6 @@ class Campus extends MY_Controller {
   }
   
   public function do_upload() {
-  	// campus list for dropdown
-	$campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
-    
-    $this->data['campuses'] = array();
-    foreach($campuses as $c) {
-      $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
-    }
-	
     $this->data['title'] = 'Upload';
     if($this->ion_auth->logged_in()) {
       
@@ -425,12 +351,13 @@ class Campus extends MY_Controller {
   public function directory()
   {
     $this->data['title'] = 'Campus and University Directory';
+
     $campuses = $this->campus_model->get_list('university', array(), 100000, 0, 'university_name', 'desc');
     
-    $this->data['campuses'] = array();
+    $this->data['campus_dir'] = array();
     foreach($campuses as $c) {
       $letter = strtoupper(substr($c->university_name, 0, 1));
-      $this->data['campuses'][$letter][] = $c;
+      $this->data['campus_dir'][$letter][] = $c;
     }
 
     //print_r($this->data['campuses']);

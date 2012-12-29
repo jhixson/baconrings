@@ -10,7 +10,7 @@
   
 </div>
 
-<?php foreach($campuses as $letter => $schools): ?>		
+<?php foreach($campus_dir as $letter => $schools): ?>		
   <p id="<?php echo $letter ?>"><strong><?php echo $letter ?></strong></p>
   <?php foreach($schools as $campus): ?>		
     <p><a class="directorylink" href="/<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></a></p>
