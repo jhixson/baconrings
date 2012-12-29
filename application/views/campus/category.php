@@ -25,13 +25,13 @@
 		$bgcolor="#e1e1e1";
 		foreach($item_ratings as $k => $v): ?>
 			<tr bgcolor="<?php echo $bgcolor ?>">
-				<td align="right"><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug."/" ?>"><img src="/images/arrow_black.png" height="15" width="8" alt="" hspace="2" /></a></td>
+				<td align="right"><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug ?>"><img src="/images/arrow_black.png" height="15" width="8" alt="" hspace="2" /></a></td>
 				<td><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug ?>" class="categorylink" style="color:#<?php echo $category->category_color1 ?>;"><?php echo $k ?></a></td>
 				<td align="center"><?php echo $v->total ?></td>
 				<td align="center"><?php echo number_format($v->score, 1, '.', ',') ?></td>
 				<td align="center"><a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$v->slug."/rate" ?>"><img src="<?php echo base_url(); ?>images/rate_it_small.png" border="0" width="76" height="21" alt="rate it" /></a></td>
 				<td align="right">
-					<a href=""><img src="<?php echo base_url(); ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a><a
+					<a href="https://www.facebook.com/dialog/feed?app_id=<?php echo $this->facebook->getAppId() ?>&amp;link=<?php echo base_url().$campus->university_slug."/".$category->category_slug."/".$v->slug ?>&amp;caption=See how it stacks up against other <?php echo strtolower($category->category_name) ?> at <?php echo $campus->university_name ?>&amp;redirect_uri=<?php echo base_url().$campus->university_slug."/".$category->category_slug."/".$v->slug ?>"><img src="<?php echo base_url(); ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a><a
 					href=""><img src="<?php echo base_url(); ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a><a
 					href=""><img src="<?php echo base_url(); ?>images/share_email.gif" border="0" height="24" width="24" alt="share to email" /></a></td>
 			</tr>

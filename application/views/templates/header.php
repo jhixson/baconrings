@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 	<title><?php echo $title ?> - RateMyCampus</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/general.css" />
-
-  	</head>
+  <meta property="fb:app_id" content="304042739681011" />
+  <meta property="og:title" content="<?php echo isset($item) ? $item->item_name : "" ?><?php echo isset($item) && isset($campus) ? " at ".$campus->university_name : "" ?>" />
+  <meta property="og:description" content="See other ratings and add yours at RateMyCampus.com" />
+  <meta property="og:image" content="<?php echo base_url() ?>images/opengraph_logo.png" />
+  <meta property="og:url" content="<?php echo current_url() ?>" />
+  <meta property="og:type" content="website" />
+  </head>
 
   <body>
   
