@@ -10,12 +10,16 @@
   
 </div>
 
+<div style="float:left;width:45%;">
 <?php foreach($campus_dir as $letter => $schools): ?>		
   <p id="<?php echo $letter ?>"><strong><?php echo $letter ?></strong></p>
   <?php foreach($schools as $campus): ?>		
     <p><a class="directorylink" href="/<?php echo $campus->university_slug ?>"><?php echo $campus->university_name ?></a></p>
   <?php endforeach ?>
+  <?php if($letter == 'L'): ?>
+    </div><div style="float:left;width:45%;">
+  <?php endif ?>
 <?php endforeach ?>
-
+</div>
 
 <p></p>

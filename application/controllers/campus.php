@@ -201,7 +201,8 @@ class Campus extends MY_Controller {
   	$comments = array();
   	foreach($comments_list as $c) {
   	  $comments[$c->rating_id]->ratings = $this->campus_model->get_user_ratings($c->item_id, $c->rating_id);
-  	  $first = $comments[$c->rating_id]->ratings[0];
+  	  if(isset($ratings[0]))
+        $first = $comments[$c->rating_id]->ratings[0];
   	  $comments[$c->rating_id]->comment_text = $c->rating_comments;
   	  $comments[$c->rating_id]->rating_date = $c->rating_date;
   	  if(isset($first->account_type) && $first->account_type == "Alumni")
