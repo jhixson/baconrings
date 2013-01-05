@@ -745,7 +745,7 @@ class Forms extends MY_Controller {
 			'type' => 'text',
 			'value' => $this->form_validation->set_value('comments'),
 		);
-
+    
 		$this->load->view('templates/header', $this->data);
 		$this->load->view('forms/ratecampus', $this->data);
 		$this->load->view('templates/footer', $this->data);

@@ -44,6 +44,10 @@
     <?php endif ?>
 
 		<br />
+		
+		<?php if(isset($campus) && empty($empty_best_of)): ?>
+		  <p>This school has no ratings yet.</p>
+		<?php endif ?>
 
     <?php $i = 0; ?>
     <?php foreach($categories as $category): ?>

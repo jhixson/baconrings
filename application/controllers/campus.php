@@ -242,8 +242,10 @@ class Campus extends MY_Controller {
     foreach($this->data['categories'] as $category) {
       $category->best_of = $this->campus_model->best_of($category->category_id, $university_id);
     }
-        
-    //print_r($this->data['best_campuses']);
+    
+    $this->data['empty_best_of'] = $this->campus_model->empty_best_of($this->data['categories']);
+    
+    //print_r($this->data['empty_best_of']);
   	//die();
         
     $this->load->view('templates/header', $this->data);

@@ -740,6 +740,7 @@ h1.left {
 
 #rateform .spacing{
 	margin-left:150px;
+	clear: both;
 }
 
 #rateform a{
@@ -754,6 +755,21 @@ h1.left {
 #rateform .amazing{
 	font-weight:bold;
 	color:#d04546;
+}
+
+#rateform #comments {
+  float: left;
+}
+
+#rateform #char_count {
+  color: #666;
+  float: left;
+  margin: 92px 0 0 10px;
+  padding: 5px 20px 3px 0;
+}
+
+#rateform #char_count.ok {
+  background: transparent url('/images/circle_check.png') right center no-repeat;
 }
 
 /* contact form */

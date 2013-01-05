@@ -358,4 +358,12 @@ class Campus_model extends CI_Model {
     else
       return '';
   }
+  
+  public function empty_best_of($categories) {
+    return array_filter($categories, "empty_best_of_filter");
+  }
+}
+
+function empty_best_of_filter($category) {
+  return isset($category->best_of) && !empty($category->best_of);
 }

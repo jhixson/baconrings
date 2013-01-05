@@ -28,6 +28,7 @@
 
 				<p><label class="labelpadding">Comments:</label>
 				<textarea name="comments" id="comments" class="textareainput <?php if (!empty($comments)) echo 'textinputerror' ?>"><?php if (!empty($comments)) echo $comments['value'];?></textarea>
+				<span id="char_count">0/150</span>
 				</p>
 
 
@@ -43,7 +44,7 @@
 				
 				<p><button type="submit" class="bluebutton" style="margin-left:153px;">Submit</button></p>
 
-				<br /><br /><p class="spacing">Submitted data become the property of RateMyCampus.com. IP addresses are logged (<a href="/pages/privacy-policy" class="ratelink">Privacy Policy</a>).
+				<br /><br /><p class="spacing">Submitted data become the property of RateMyCampus.com.<br />IP addresses are logged (<a href="/pages/privacy-policy" class="ratelink">Privacy Policy</a>).
 
 				</form>
 
