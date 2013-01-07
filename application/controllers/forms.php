@@ -602,8 +602,15 @@ class Forms extends MY_Controller {
       $this->load->view('templates/footer', $this->data);
     }
     else{
+        $this->load->helper('cookie');
+        $cookie = array(
+          'name'   => 'redirect_url',
+          'value'  => current_url(),
+          'expire' => '3600'
+        );
+        set_cookie($cookie);
     		$this->data['title'] = "Login";
-			 $this->data['location'] = $this->uri->uri_string();
+			  $this->data['location'] = $this->uri->uri_string();
     		$this->data['message'] = "<li>You must be logged in to rate stuff. Don't worry, we never show your username with any ratings.</li><br /><br />";
     		$this->load->view('templates/header', $this->data);
     		$this->load->view('auth/login', $this->data);
@@ -695,8 +702,15 @@ class Forms extends MY_Controller {
     else {
       //$_SESSION['alert'] = 'You need to be logged in to add ratings. <a href="/login">Click here</a> to log in.';
       //redirect('/'.$slug,'location');
+      $this->load->helper('cookie');
+      $cookie = array(
+          'name'   => 'redirect_url',
+          'value'  => current_url(),
+          'expire' => '3600'
+      );
+      set_cookie($cookie);
       $this->data['title'] = "Login";
-	  $this->data['location'] = $this->uri->segment(1);
+	    $this->data['location'] = $this->uri->segment(1);
   		$this->data['message'] = "<li>You must be logged in to rate stuff. Don't worry, we never show your username with any ratings.</li><br /><br />";
   		$this->load->view('templates/header', $this->data);
   		$this->load->view('auth/login', $this->data);

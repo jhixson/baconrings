@@ -288,6 +288,13 @@ class Campus extends MY_Controller {
     }
     else {
       //redirect('/login','location');
+      $this->load->helper('cookie');
+      $cookie = array(
+          'name'   => 'redirect_url',
+          'value'  => current_url(),
+          'expire' => '3600'
+      );
+      set_cookie($cookie);
       $this->data['title'] = "Login";
       $this->data['message'] = '<li>You need to be logged in to use My Schools!</li><br /><br />';
       $this->load->view('templates/header', $this->data);

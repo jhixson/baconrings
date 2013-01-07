@@ -66,7 +66,10 @@ class Auth extends MY_Controller {
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				
-				if($this->ion_auth->user()->row()->university_id != 0) {
+				$ref = $this->input->server('HTTP_REFERER');
+				if(!empty($ref))
+				  redirect($ref, 'location');
+				else if($this->ion_auth->user()->row()->university_id != 0) {
           $u = $this->campus_model->get_single('university', array('university_id' => $this->ion_auth->user()->row()->university_id));
 				  redirect('/'.$u->university_slug, 'location');
 			  }
@@ -151,9 +154,14 @@ class Auth extends MY_Controller {
 
           $this->session->set_userdata($session_data);
           
-          if($query->row()->university_id != 0) {
+          $this->load->helper('cookie');
+          $ref = get_cookie('redirect_url');
+          if(!empty($ref)) {
+            delete_cookie('redirect_url');
+  				  redirect($ref, 'location');
+				  }
+          else if($query->row()->university_id != 0) {
             $u = $this->campus_model->get_single('university', array('university_id' => $query->row()->university_id));
-
   				  redirect('/'.$u->university_slug, 'location');
 				  }
 				  elseif($userId != 0) {

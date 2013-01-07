@@ -33,6 +33,7 @@ $(document).ready(function() {
   });
   
   $('#rateform #comments').keyup(function(e) {
+    console.log('ok');
     var len = $(this).val().length;
     var cc = $('#char_count');
     cc.text(len+'/'+comment_min);
@@ -42,11 +43,14 @@ $(document).ready(function() {
       cc.removeClass('ok');
   });
   
+  if($('#rateform #comments').length > 0)
+    $('#rateform #comments').trigger('keyup');
+  
   $('#rateform form').submit(function(e) {
     if($('#char_count').length > 0) {
       var len = $('#rateform #comments').val().length;
       if(len < comment_min) {
-        alert('In order to increase the quality of ratings, we ask that your comment be at least 150 characters.');
+        alert('In order to increase the quality of ratings, we ask that your comment be at least '+comment_min+' characters.');
         return false;
       }
     }
