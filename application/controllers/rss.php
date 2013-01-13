@@ -272,7 +272,7 @@ class Rss extends MY_Controller {
 						echo "</pubDate>";
 			
 			}
-		echo $output;
+	
 		echo "</channel>
 						</rss>";	
 			
