@@ -227,6 +227,55 @@ class Rss extends MY_Controller {
 	}
 	
 	function comments(){
+		// rss/school/comments
+		$school = $this->uri->segment(2);
+		$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $school));
+		$this->data['campus_rating_comments'] = $this->campus_model->get_ratings_for_campus($this->data['campus']->university_id);
+	
+		
+		//print_r($this->data['campus']);
+		
+		$now = date("D, d M Y H:i:s T");
+		$output = "<?xml version=\"1.0\"?>
+				<rss version=\"2.0\">
+				<channel>
+                    <title>Comments on ". $this->data['campus']->university_name ." RSS Feed</title>
+                    <link>". base_url()."$school</link>
+                    <description>Comments on ".$this->data['campus']->university_name ."</description>
+				<image>
+						<url>". base_url()."photos/campus/$school.jpg</url>
+						<title>". $this->data['campus']->university_name ."</title>
+						<link>". base_url()."$school</link>
+					</image>
+                    <language>en-us</language>
+                    <pubDate>".$now."</pubDate> 
+                    <lastBuildDate>".$now."</lastBuildDate>
+					";
+		echo $output;
+		$i = 0;
+		foreach($this->data['campus_rating_comments'] as $cc){
+		echo  "<item><title>Comment by ";
+		 if(isset($cc->account_type) && $cc->account_type == "Alumni"){
+      	    $who = "an alumnus";
+      	 } else{
+         	  $who = isset($cc->account_type) ? strtolower("a ".$cc->account_type) : "a user";
+         	  
+         	  }
+         	  echo $who;
+         	  
+						//echo $item_rating->attribute_name;
+						echo "</title><description>";
+						echo $cc->rating_comments;
+						echo " </description></item>";
+						echo "<pubDate>";
+						echo date("m/d/Y",strtotime($cc->rating_date));
+						echo "</pubDate>";
+			
+			}
+		echo $output;
+		echo "</channel>
+						</rss>";	
+			
 	}
 	
 }
