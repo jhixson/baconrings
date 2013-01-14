@@ -460,7 +460,12 @@ class Auth extends MY_Controller {
 			$password = $this->input->post('password');
 
 			$additional_data = array('account_type' => $this->input->post('who'), 'university_id' => $this->input->post('school'));
-		
+
+		}
+		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
+		{ //check to see if we are creating the user
+			//redirect them back to the admin page
+			
 			 // email functionality here
 	        $to = $email;
    		    $subject = "Welcome to the RateMyCampus Community";
@@ -548,16 +553,17 @@ class Auth extends MY_Controller {
         	$from = "signup@ratemycampus.com";
         	$headers = "From:" . "signup@ratemycampus.com";
         	mail($to,$subject,$emailmessage,$headers);
-
-
-		}
-		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
-		{ //check to see if we are creating the user
-			//redirect them back to the admin page
+        	
 			$this->session->set_flashdata('message', "User Created");
 
-			if ($this->ion_auth->login($this->input->post('email'), $this->input->post('password')))
-        redirect(base_url(), 'refresh');
+			if ($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
+        //redirect(base_url(), 'refresh');
+        $this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->input->post('school')));
+      	
+        $this->load->view('templates/header', $this->data);
+  			$this->load->view('auth/thank_you', $this->data);
+  			$this->load->view('templates/footer', $this->data);
+      }
       else
         redirect(base_url()."auth", 'refresh');
 		}
