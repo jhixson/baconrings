@@ -632,6 +632,7 @@ class Forms extends MY_Controller {
     $this->form_validation->set_rules('comments', 'comments', 'required');
 	
 	// captcha
+	//require_once('/Applications/MAMP/htdocs/baconrings/application/views/forms/recaptchalib.php');
 	require_once('/home/peruta/dev.baconrings.com/application/views/forms/recaptchalib.php');
 	$privatekey = "6Lc27NgSAAAAAH1q-aJOpzUAESS30J-E5I_WV1Q_";
 	$resp = recaptcha_check_answer ($privatekey,
@@ -640,15 +641,19 @@ class Forms extends MY_Controller {
                                 $_POST["recaptcha_response_field"]);
 	$this->data['resp'] = $resp;
 	if (!$resp->is_valid) {
-		$att_arr = $this->input->post('att');
-        $comments = $this->input->post('comments');
+	  $this->data['message'] = "<li>Captcha was incorrect.</li>";
+	  
+	  $this->data['comments'] = array('name' => 'comments',
+      'id' => 'comments',
+      'type' => 'text',
+      'value' => $this->form_validation->set_value('comments'),
+    );
 
-        $this->forms_model->save_rating($this->data['item']->item_id, $att_arr, $comments);
-
-        $this->load->view('templates/header', $this->data);
-        $this->load->view('forms/ratethanks', $this->data);
-        $this->load->view('templates/footer', $this->data);
-	}
+     $this->load->view('templates/header', $this->data);
+     $this->load->view('forms/rate', $this->data);
+     $this->load->view('templates/footer', $this->data);
+   }
+   else {
 
     $this->form_validation->set_error_delimiters('<li>','</li>');
 
@@ -677,9 +682,9 @@ class Forms extends MY_Controller {
        $this->load->view('templates/header', $this->data);
        $this->load->view('forms/rate', $this->data);
        $this->load->view('templates/footer', $this->data);
-
     }  
   }
+}
   
   public function ratecampus($slug='')
   {
@@ -732,14 +737,29 @@ class Forms extends MY_Controller {
 	
 	// recaptcha
 	//include('recaptchalib.php');
-	$this->load->helper('recaptchalib');
+	//$this->load->helper('recaptchalib');
+	//require_once('/Applications/MAMP/htdocs/baconrings/application/views/forms/recaptchalib.php');
+	require_once('/home/peruta/dev.baconrings.com/application/views/forms/recaptchalib.php');
 	$privatekey = "6Lc27NgSAAAAAH1q-aJOpzUAESS30J-E5I_WV1Q_";
 	$resp = recaptcha_check_answer ($privatekey,
                                 $_SERVER["REMOTE_ADDR"],
                                 $_POST["recaptcha_challenge_field"],
                                 $_POST["recaptcha_response_field"]);
 
-	//if (!$resp->is_valid) {
+	if (!$resp->is_valid) {
+	  $this->data['message'] = "<li>Captcha was incorrect.</li>";
+
+		$this->data['comments'] = array('name' => 'comments',
+			'id' => 'comments',
+			'type' => 'text',
+			'value' => $this->form_validation->set_value('comments'),
+		);
+    
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('forms/ratecampus', $this->data);
+		$this->load->view('templates/footer', $this->data);
+	}
+	else {
 		if ($this->form_validation->run() == true && $this->data['campus']){
 			$att_arr = $this->input->post('att');
 			$comments = $this->input->post('comments');
@@ -763,8 +783,7 @@ class Forms extends MY_Controller {
 		$this->load->view('templates/header', $this->data);
 		$this->load->view('forms/ratecampus', $this->data);
 		$this->load->view('templates/footer', $this->data);
-
 		} 
-	//}	
   }
+}
 }
