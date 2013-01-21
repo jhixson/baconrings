@@ -42,7 +42,7 @@
 			<?php echo form_input($email2);?>
 
       <label>Password:<span class="required">*</span>
-			<span class="small">Min. size 6 chars</span>
+			<span class="small">Min. size 8 chars</span>
 			</label>			
 			<?php $password = array('name' => 'password', 'id' => 'password', 'class' => 'textinput'); ?>
       <?php echo form_password($password);?>

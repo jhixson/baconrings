@@ -47,6 +47,13 @@
 		
 		<?php if(isset($campus) && empty($empty_best_of)): ?>
 		  <p>This school has no ratings yet.</p>
+		  
+		  <p>&nbsp;</p>
+
+		  <form action="/<?php echo $campus->university_slug ?>">
+	  		<p><button type="submit" name="submit" class="bluebutton">Rate <?php echo $campus->university_name ?></button></p>
+		  </form>
+		  
 		<?php endif ?>
 
     <?php $i = 0; ?>
@@ -72,7 +79,8 @@
 
 		</div>
 		<?php echo ($i % 2 == 1) ? '<div id="clear" style="clear:both;"></div>' : '' ?>
-		<?php $i++; endif ?>
+		<?php $i++; ?>
+		<?php endif ?>
     <?php endforeach ?>
 
 <br /><br />

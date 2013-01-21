@@ -24,6 +24,9 @@
 		</table>
 		<?php else: ?>
 		  <p>You don't have any favorites yet. <a href="/">Go discover some schools.</a></p>
+		  
+		  <br /><p align="center"><img src="/images/my_schools.jpg" width="534" height="234" border="0" alt="just click the heart." /></p>
+		  
 		<?php endif ?>
 
 		<br /><br />

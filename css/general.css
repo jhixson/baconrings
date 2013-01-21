@@ -276,8 +276,28 @@ h1.left {
 #campusinfo{
 	width:562px;
 	background-color:#b2e6f4;
-	padding:11px;
+	padding:5px 11px 11px 11px;
 }
+
+/* for 4square thumbnails */
+#thumbs-box {
+	width: 562px;
+	height: 52px;
+	margin-bottom:15px;
+}
+
+#thumbs-box ul{
+	padding:0;
+	margin:0;
+}
+
+ul#thumbs-list li {
+	float:left;
+	width:52px;
+	height:52px;
+	list-style:none;
+}
+
 
 #campusinfo td{
 	font-weight:bold;
@@ -840,6 +860,7 @@ h1.left {
 	margin-top:0px;
 	text-align:center;
 	padding-top:75px;
+	display:none;
 }
 
 #searchbox select{

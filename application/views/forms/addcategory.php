@@ -17,7 +17,7 @@
 				<label>College/School:
 				<span class="small">If applicable</span>
 				</label>
-				<input type="text" name="school" id="school" class="textinput" value="<?php if (!empty($school)) echo $school['value'];?>" />
+				<input type="text" name="school" id="school" class="textinput" value="<?php if (!empty($school)) echo $school['value'];else echo $campus->university_name; ?>" />
 
 				<p><label class="labelpadding">Category to add:<span class="required">*</span></label>
 				<input type="text" name="category" id="category" class="textinput <?php if (!empty($category)) echo 'textinputerror' ?>" value="<?php if (!empty($category)) echo $category['value'];?>" />

@@ -19,6 +19,52 @@
 	</div>
 
 	<div id="campusinfo">
+	  
+	<?php if(isset($campus->university_4sq)): ?>
+
+    <div id="thumbs-box">
+      <ul id="thumbs-list">
+        
+        <script type="text/javascript">
+
+        jQuery(document).ready(function() {
+
+        var clientID = "LKRIBKTJT4V23I0LFLPWHVKKM5GVIFU4TV4FSMOG0QHEB2U4";
+        var clientSecret = "ZUTNCSZVVBSR1QOE5JZBIOVD4RJSHJ2T0DCCJEVRRKU5U34R";
+        var venueID = '<?php echo $campus->university_4sq ?>';
+        var photoLimit = 100;
+        var counter = 1;
+    
+        jQuery.getJSON("https://api.foursquare.com/v2/venues/" + venueID + "/photos?group=venue&client_id="+clientID+"&limit="+photoLimit+"&client_secret="+clientSecret+"&v=20120101", function(data) {
+          jQuery.each(data.response.photos.items, function(i,item){
+     
+          var photoThumbURL = item.sizes.items[2].url;
+          var photoMediumURL = item.sizes.items[1].url;
+            
+          if (counter > 10) {
+            var photoString = "<li style='display:none;'><a href="+ photoMediumURL +" rel='lightbox[album]'><img src=" + photoThumbURL + " width='52' height='52' border='0' /></a></li>";           
+
+          } else if (counter === 10) {
+            var photoString = "<li><a href="+ photoMediumURL +" rel='lightbox[album]'><img src=" + photoThumbURL + " width='52' height='52' border='0' /></a></li>";
+
+          } else {
+            var photoString = "<li style='padding-right:4px;'><a href="+ photoMediumURL +" rel='lightbox[album]'><img src=" + photoThumbURL + " width='52' height='52' border='0' /></a></li>";
+          }
+
+          counter++;
+
+          jQuery("ul#thumbs-list").append(photoString);
+          });
+        });
+        
+        });
+
+      </script>
+
+      </ul>
+    </div>
+
+    <?php endif ?>
 
 		<span class="overalllabel">OVERALL RATING</span>
 

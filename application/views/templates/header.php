@@ -2,13 +2,21 @@
 <html>
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 	<title><?php echo $title ?> - RateMyCampus</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/general.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/general.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/lightbox.css" />
+
   <meta property="fb:app_id" content="<?php echo $this->facebook->getAppId() ?>" />
   <meta property="og:title" content="<?php echo isset($item) ? $item->item_name : "" ?><?php echo isset($item) && isset($campus) ? " at ".$campus->university_name : "" ?>" />
   <meta property="og:description" content="Check out other ratings and add yours at RateMyCampus.com" />
   <meta property="og:image" content="<?php echo base_url() ?>images/opengraph_logo.png" />
   <meta property="og:url" content="<?php echo current_url() ?>" />
   <meta property="og:type" content="website" />
+
+  <script type="text/javascript" src="<?php echo base_url(); ?>javascript/modernizr.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>javascript/jquery.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>javascript/jquery-ui.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>javascript/lightbox.js"></script>
+    
   </head>
 
   <body>
@@ -37,11 +45,26 @@
   		<div id="navigation">
   			<a href="<?php echo base_url(); ?>" onmouseover="document.nav1.src='<?php echo base_url(); ?>images/nav1b.gif'" onmouseout="document.nav1.src='<?php echo base_url(); ?>images/nav1.gif'"><img src="<?php echo base_url(); ?>images/nav1.gif" id="nav1" name="nav1" border="0" height="61" width="138" alt="home" /></a><a
   			href="<?php echo base_url(); ?>favorites" onmouseover="document.nav2.src='<?php echo base_url(); ?>images/nav2b.gif'" onmouseout="document.nav2.src='<?php echo base_url(); ?>images/nav2.gif'"><img src="<?php echo base_url(); ?>images/nav2.gif" id="nav2" name="nav2" border="0" height="61" width="178" alt="my schools" /></a><a
-  			href="<?php echo base_url(); ?>" onmouseover="document.nav3.src='<?php echo base_url(); ?>images/nav3b.gif';document.getElementById('searchbox').style.visibility='visible';" onmouseout="document.nav3.src='<?php echo base_url(); ?>images/nav3.gif';document.getElementById('searchbox').style.visibility='hidden';"><img src="<?php echo base_url(); ?>images/nav3.gif" id="nav3" name="nav3" border="0" height="61" width="185" alt="find schools" /></a><a
+  			href="<?php echo base_url(); ?>" onmouseover="document.nav3.src='<?php echo base_url(); ?>images/nav3b.gif'" onmouseout="document.nav3.src='<?php echo base_url(); ?>images/nav3.gif'"><img src="<?php echo base_url(); ?>images/nav3.gif" id="nav3" name="nav3" border="0" height="61" width="185" alt="find schools" /></a><a
   			href="<?php echo base_url(); ?>best-of" onmouseover="document.nav4.src='<?php echo base_url(); ?>images/nav4b.gif'" onmouseout="document.nav4.src='<?php echo base_url(); ?>images/nav4.gif'"><img src="<?php echo base_url(); ?>images/nav4.gif" id="nav4" name="nav4" border="0" height="61" width="151" alt="best of" /></a>
   		</div>
 
-  		<div id="searchbox" name="searchbox" style="visibility:hidden;" onmouseover="document.getElementById('searchbox').style.visibility='visible';document.getElementById('nav3').src='<?php echo base_url(); ?>images/nav3b.gif';" onmouseout="document.getElementById('searchbox').style.visibility='hidden';document.getElementById('nav3').src='<?php echo base_url(); ?>images/nav3.gif';">
+      <script type="text/javascript">
+        jQuery(document).ready(function() {
+          jQuery("#nav3").hover(function() {
+              jQuery("#searchbox").show();
+          }, function() {
+          });
+
+          jQuery("#searchbox").hover(function() {
+          }, function() {
+              jQuery(this).hide();
+          });
+
+        });
+      </script>
+
+  		<div id="searchbox" name="searchbox">
 
         <form action="/campus/view" method="post">
 

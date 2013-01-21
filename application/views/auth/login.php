@@ -22,6 +22,10 @@
       <?php echo form_checkbox($remember);?>
       <br style="clear: both;" /><br style="clear: both;" />
       <?php $submit = array('name' => 'submit', 'type' => 'submit', 'class' => 'bluebutton', 'content' => 'Log In', 'style' => 'margin-left: 153px', 'tabindex' => '4'); ?>
+    <?php if(isset($location)){
+  	?>
+  	<input type="hidden" name="location" value="<?php echo $location; ?>" />
+  	<?php } ?>
       <?php echo form_button($submit); ?>
       
     <?php echo form_close();?>
