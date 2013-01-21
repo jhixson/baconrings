@@ -5,6 +5,8 @@ class Pages extends MY_Controller {
   function __construct()
 	{
 		parent::__construct();
+		$this->load->model('campus_model');
+		$this->load->library('ion_auth');
 	}
 
 	public function view($page = 'home')
@@ -15,11 +17,18 @@ class Pages extends MY_Controller {
   		show_404();
   	}
 
-  	$data['title'] = ucfirst($page); // Capitalize the first letter
+  	$this->data['title'] = ucfirst($page); // Capitalize the first letter
+	
+	if($this->ion_auth->logged_in()){
+		$this->data['logged_in'] = true;
+	}else{
+		$this->data['logged_in'] = false;
+	}
+	
 
-  	$this->load->view('templates/header', $data);
-  	$this->load->view('pages/'.$page, $data);
-  	$this->load->view('templates/footer', $data);
+  	$this->load->view('templates/header', $this->data);
+  	$this->load->view('pages/'.$page, $this->data);
+  	$this->load->view('templates/footer', $this->data);
 	}
 
 
