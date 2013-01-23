@@ -11,6 +11,7 @@ class Rss extends MY_Controller {
 
 	function index(){
 		// main rss feed
+		echo "test";
 	}
 	
 	function school(){
@@ -48,9 +49,9 @@ class Rss extends MY_Controller {
 		$output = "<?xml version=\"1.0\"?>
 				<rss version=\"2.0\">
 				<channel>
-                    <title>". $this->data['campus']->university_name ." RSS Feed</title>
+                    <title>". $this->data['campus']->university_name ." RateMyCampus RSS Feed</title>
                     <link>". base_url()."$school</link>
-                    <description>".$this->data['campus']->university_name ." RSS Feed</description>
+                    <description>".$this->data['campus']->university_name ." RateMyCampus RSS Feed</description>
 					<image>
 						<url>". base_url()."photos/campus/$school.jpg</url>
 						<title>". $this->data['campus']->university_name ."</title>
@@ -58,7 +59,6 @@ class Rss extends MY_Controller {
 					</image>
                     <language>en-us</language>
                     <pubDate>".$now."</pubDate> 
-                    <lastBuildDate>".$now."</lastBuildDate>
 					
 					<item>
 						<title>Overall Rating</title>
@@ -124,12 +124,31 @@ class Rss extends MY_Controller {
 		}
 	*/
 		$overall_num = number_format($this->data['overall_rating']->score, 1, '.', ',');
+
+		$comments_list = $this->campus_model->get_list('rating', array('item_id' => $this->data['item']->item_id));
+  	$comments = array();
+  	foreach($comments_list as $c) {
+  	  $comments[$c->rating_id]->ratings = $this->campus_model->get_user_ratings($c->item_id, $c->rating_id);
+  	  if(isset($ratings[0]))
+        $first = $comments[$c->rating_id]->ratings[0];
+  	  $comments[$c->rating_id]->comment_text = $c->rating_comments;
+  	  $comments[$c->rating_id]->rating_date = $c->rating_date;
+  	  if(isset($first->account_type) && $first->account_type == "Alumni")
+  	    $comments[$c->rating_id]->who = "an alumnus";
+  	  else
+    	  $comments[$c->rating_id]->who = isset($first->account_type) ? strtolower("a ".$first->account_type) : "a user";
+    }
+	  
+	  //print_r($comments);
+  	//die();
+  	
+  	$this->data['comments'] = $comments;
 	
 		$now = date("D, d M Y H:i:s T");
 		$output = "<?xml version=\"1.0\"?>
 				<rss version=\"2.0\">
 				<channel>
-                    <title>". $this->data['item']->item_name ." at ". $this->data['campus']->university_name ." RSS Feed</title>
+                    <title>". $this->data['item']->item_name ." at ". $this->data['campus']->university_name ." RateMyCampus RSS Feed</title>
                     <link>". base_url()."$school/dorms/$dorm</link>
                     <description>".$this->data['item']->item_description ."</description>
 					<image>
@@ -138,25 +157,46 @@ class Rss extends MY_Controller {
 						<link>". base_url()."$school/dorms/$dorm</link>
 					</image>
                     <language>en-us</language>
-                    <pubDate>".$now."</pubDate> 
-                    <lastBuildDate>".$now."</lastBuildDate>
-					
-					<item>
+                    <pubDate>".$now."</pubDate>
+					";
+
+					/*<item>
 						<title>Overall Rating</title>
 						<description>".$overall_num."</description>
-						<pubDate>".$now."</pubDate>
 					</item>
-					
-					";
+					*/
+
 					echo $output;
-					foreach($this->data['item_ratings'] as $item_rating){
+					foreach($this->data['comments'] as $cc){
+//print_r($cc);
+		echo  "<item><title>Comment by ";
+		 if(isset($cc->account_type) && $cc->account_type == "Alumni"){
+      	    $who = "an alumnus";
+      	 } else{
+         	  $who = isset($cc->account_type) ? strtolower("a ".$cc->account_type) : "a user";
+         	  
+         	  }
+         	  echo $who;
+         	  
+						//echo $item_rating->attribute_name;
+						echo "</title><description>";
+						//echo $cc->rating_comments;
+						echo $cc->comment_text;
+						echo " </description></item>";
+						//echo "<pubDate>";
+						//echo date("m/d/Y",strtotime($cc->rating_date));
+						//echo "</pubDate>";
+			
+			}
+
+					/*foreach($this->data['item_ratings'] as $item_rating){
 						echo  "<item><title>";
 						echo $item_rating->attribute_name;
 						echo "</title><description>";
 						$score = number_format($item_rating->score, 1, '.', ','); 
 						echo $score; 
 						echo " </description></item>";
-					}
+					}*/
 					echo "</channel>
 						</rss>";
 	}
@@ -189,13 +229,33 @@ class Rss extends MY_Controller {
 				$this->data['ranking'] += $k;
 		}
 	*/
+		$comments_list = $this->campus_model->get_list('rating', array('item_id' => $this->data['item']->item_id));
+  	$comments = array();
+  	foreach($comments_list as $c) {
+  	  $comments[$c->rating_id]->ratings = $this->campus_model->get_user_ratings($c->item_id, $c->rating_id);
+  	  if(isset($ratings[0]))
+        $first = $comments[$c->rating_id]->ratings[0];
+  	  $comments[$c->rating_id]->comment_text = $c->rating_comments;
+  	  $comments[$c->rating_id]->rating_date = $c->rating_date;
+  	  if(isset($first->account_type) && $first->account_type == "Alumni")
+  	    $comments[$c->rating_id]->who = "an alumnus";
+  	  else
+    	  $comments[$c->rating_id]->who = isset($first->account_type) ? strtolower("a ".$first->account_type) : "a user";
+    }
+	  
+	  //print_r($comments);
+  	//die();
+  	
+  	$this->data['comments'] = $comments;
+
+
 		$overall_num = number_format($this->data['overall_rating']->score, 1, '.', ',');
 	
 		$now = date("D, d M Y H:i:s T");
 		$output = "<?xml version=\"1.0\"?>
 				<rss version=\"2.0\">
 				<channel>
-                    <title>". $this->data['item']->item_name ." at ". $this->data['campus']->university_name ." RSS Feed</title>
+                    <title>". $this->data['item']->item_name ." at ". $this->data['campus']->university_name ." RateMyCampus RSS Feed</title>
                     <link>". base_url()."$school/$category/$item_slug</link>
                     <description>".$this->data['item']->item_description ."</description>
 					<image>
@@ -204,29 +264,53 @@ class Rss extends MY_Controller {
 						<link>". base_url()."$school/$category/$item_slug</link>
 					</image>
                     <language>en-us</language>
-                    <pubDate>".$now."</pubDate> 
-                    <lastBuildDate>".$now."</lastBuildDate>
+                    <pubDate>".$now."</pubDate>
 					
+					";
+					/*
 					<item>
 						<title>Overall Rating</title>
 						<description>".$overall_num."</description>
-						<pubDate>".$now."</pubDate>
 					</item>
-					
-					";
+					*/
 					echo $output;
-					foreach($this->data['item_ratings'] as $item_rating){
+					/*foreach($this->data['item_ratings'] as $item_rating){
 						echo  "<item><title>";
 						echo $item_rating->attribute_name;
 						echo "</title><description>";
 						$score = number_format($item_rating->score, 1, '.', ','); 
 						echo $score; 
 						echo " </description></item>";
-					}
+					}*/
+
+$i = 0;
+
+		foreach($this->data['comments'] as $cc){
+//print_r($cc);
+		echo  "<item><title>Comment by ";
+		 if(isset($cc->account_type) && $cc->account_type == "Alumni"){
+      	    $who = "an alumnus";
+      	 } else{
+         	  $who = isset($cc->account_type) ? strtolower("a ".$cc->account_type) : "a user";
+         	  
+         	  }
+         	  echo $who;
+         	  
+						//echo $item_rating->attribute_name;
+						echo "</title><description>";
+						//echo $cc->rating_comments;
+						echo $cc->comment_text;
+						echo " </description></item>";
+						//echo "<pubDate>";
+						//echo date("m/d/Y",strtotime($cc->rating_date));
+						//echo "</pubDate>";
+			
+			}
+
 					echo "</channel>
 						</rss>";
 						
-						print_r($this->data['category']);
+						
 	}
 	
 	function comments(){
@@ -242,9 +326,9 @@ class Rss extends MY_Controller {
 		$output = "<?xml version=\"1.0\"?>
 				<rss version=\"2.0\">
 				<channel>
-                    <title>Comments on ". $this->data['campus']->university_name ." RSS Feed</title>
+                    <title>Comments on ". $this->data['campus']->university_name ." RateMyCampus RSS Feed</title>
                     <link>". base_url()."$school</link>
-                    <description>Comments on ".$this->data['campus']->university_name ."</description>
+                    <description>Comments on ".$this->data['campus']->university_name ." RateMyCampus RSS Feed</description>
 				<image>
 						<url>". base_url()."photos/campus/$school.jpg</url>
 						<title>". $this->data['campus']->university_name ."</title>
@@ -252,7 +336,6 @@ class Rss extends MY_Controller {
 					</image>
                     <language>en-us</language>
                     <pubDate>".$now."</pubDate> 
-                    <lastBuildDate>".$now."</lastBuildDate>
 					";
 		echo $output;
 		$i = 0;
@@ -270,11 +353,13 @@ class Rss extends MY_Controller {
 						echo "</title><description>";
 						echo $cc->rating_comments;
 						echo " </description></item>";
-						echo "<pubDate>";
-						echo date("m/d/Y",strtotime($cc->rating_date));
-						echo "</pubDate>";
+						//echo "<pubDate>";
+						//echo date("m/d/Y",strtotime($cc->rating_date));
+						//echo "</pubDate>";
 			
 			}
+
+
 	
 		echo "</channel>
 						</rss>";	
