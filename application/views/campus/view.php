@@ -4,7 +4,7 @@
 <h1 class="left"><?php echo $campus->university_name ?></h1>
 
 <div class="extra">
-  <img src="<?php echo base_url(); ?>images/rss.gif" border="0" height="25" width="25" alt="rss" align="right" />
+  <a href="<?php echo base_url(); ?>rss/<?php echo $campus->university_slug; ?>/comments"><img src="<?php echo base_url(); ?>images/rss.gif" border="0" height="25" width="25" alt="rss" align="right" /></a>
   <a href="/toggle_favorite/<?php echo $campus->university_id ?>" class="heart item <?php echo $is_favorite ? 'active' : '' ?>">Add favorite</a>
 </div>
 <div style="clear:both;"></div>
