@@ -59,7 +59,6 @@ class Rss extends MY_Controller {
 					<item>
 						<title>Overall Rating</title>
 						<description>".$overall_num."</description>
-						<pubDate>".$now."</pubDate>
 					</item>
 					
 					";
