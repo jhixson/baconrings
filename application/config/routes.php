@@ -45,7 +45,7 @@ $route['best-of/(:any)'] = 'campus/bestof/$1';
 $route['best-of'] = 'campus/bestof';
 $route['rss'] = 'rss/index';
 $route['rss/school/(:any)'] = 'rss/school/$1';
-$route['rss/dorm/(:any)/(:any)'] = 'rss/dorm/$1/$2';
+$route['rss/dorms/(:any)/(:any)'] = 'rss/dorm/$1/$2';
 $route['rss/(:any)/(:any)/(:any)'] = 'rss/category/$1/$2'; 
 $route['rss/(:any)/comments'] = 'rss/comments/$1';
 
