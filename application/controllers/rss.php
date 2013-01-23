@@ -8,6 +8,10 @@ class Rss extends MY_Controller {
 	
 		$this->load->model('campus_model');
 	}
+
+	function index(){
+		// main rss feed
+	}
 	
 	function school(){
 		// pull a schools rss feed
