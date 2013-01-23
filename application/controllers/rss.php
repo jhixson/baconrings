@@ -66,7 +66,7 @@ class Rss extends MY_Controller {
 					
 
 		echo $output;
-		foreach($this->data['campus_ratings'] as $ratings){
+		/*foreach($this->data['campus_ratings'] as $ratings){
 			//echo $ratings->attribute_name;
 			echo  "<item><title>";
 			echo $ratings->attribute_name;
@@ -75,16 +75,16 @@ class Rss extends MY_Controller {
 			echo $score; 
 			echo " </description></item>";
 
-		}
+		}*/
 		
-		foreach($this->data['category_ratings'] as $categories){
+		/*foreach($this->data['category_ratings'] as $categories){
 			echo  "<item><title>";
 			echo $categories->slug;
 			echo "</title><description>";
 			$score = number_format($categories->score, 1, '.', ','); 
 			echo $score; 
 			echo " </description></item>";
-		}
+		}*/
 		//print_r($this->data['category_ratings']);
 		
 		echo "</channel>
