@@ -43,6 +43,7 @@ $route['toggle_favorite/(:any)'] = 'ajax/toggle_favorite/$1';
 $route['pages/(:any)'] = 'pages/view/$1';
 $route['best-of/(:any)'] = 'campus/bestof/$1';
 $route['best-of'] = 'campus/bestof';
+$route['rss'] = 'rss/index';
 $route['rss/school/(:any)'] = 'rss/school/$1';
 $route['rss/dorm/(:any)/(:any)'] = 'rss/dorm/$1/$2';
 $route['rss/(:any)/(:any)/(:any)'] = 'rss/category/$1/$2'; 
