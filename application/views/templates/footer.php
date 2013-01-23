@@ -35,7 +35,7 @@
 		<div id="footertextright">
 			<a href=""><img src="<?php echo base_url(); ?>images/footer_facebook.gif" height="31" width="31" border="0" alt="facebook" /></a>
 			<a href=""><img src="<?php echo base_url(); ?>images/footer_twitter.gif" hspace="10" height="31" width="31" border="0" alt="twitter" /></a>
-			<a href=""><img src="<?php echo base_url(); ?>images/footer_rss.gif" height="31" width="31" border="0" alt="rss" /></a>
+			<a href="<?php echo base_url(); ?>pages/rss"><img src="<?php echo base_url(); ?>images/footer_rss.gif" height="31" width="31" border="0" alt="rss" /></a>
 
 			<p />&copy;<?php echo date("Y") ?> RateMyCampus, All Rights Reserved.
 
