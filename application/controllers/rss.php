@@ -44,10 +44,16 @@ class Rss extends MY_Controller {
 				if(!empty($item_name[0]['category_id'])){
 					$category = $this->campus_model->get_category_name($item_name[0]['category_id']);
 				}
+
+				
+				$timestamp = strtotime($c['rating_date']); 
+				$time2 = date('D, d M Y H:i:s T', $timestamp); 
 				
 
 				echo "<item><title>";
-				echo "Comment by ". $user[0]['username'];
+				//echo "Comment by ". $user[0]['username'];
+				echo $school[0]['university_name'];
+				if(!empty($item_name)){ echo " - ".$item_name[0]['item_name'];}
 				echo "</title><description>";
 				echo $c['rating_comments'];
 				echo "</description><link>";
@@ -58,7 +64,9 @@ class Rss extends MY_Controller {
 				if(!empty($category)){ echo "/". $category[0]['category_slug'];}
 				if(!empty($item_name)){ echo "/".$item_name[0]['item_slug'];}
 				
-				echo "</link></item>";
+				echo "</link><pubDate>";
+				echo $time2;
+				echo "</pubDate></item>";
 
 			}
 
@@ -196,14 +204,14 @@ class Rss extends MY_Controller {
   	//die();
   	
   	$this->data['comments'] = $comments;
-	
+		$link = base_url()."$school/dorms/$dorm";
 		$now = date("D, d M Y H:i:s T");
 		$output = "<?xml version=\"1.0\"?>
 				<rss version=\"2.0\">
 				<channel>
                     <title>". $this->data['item']->item_name ." at ". $this->data['campus']->university_name ." RateMyCampus RSS Feed</title>
                     <link>". base_url()."$school/dorms/$dorm</link>
-                    <description>".$this->data['item']->item_description ."</description>
+                    <description>".$this->data['item']->item_description ." </description>
 					<image>
 						<url>". base_url()."photos/$school/". $this->data['item']->item_photo ."</url>
 						<title>". $this->data['item']->item_name ."</title>
@@ -221,6 +229,8 @@ class Rss extends MY_Controller {
 
 					echo $output;
 					foreach($this->data['comments'] as $cc){
+						$timestamp = strtotime($cc->rating_date); 
+						$time2 = date('D, d M Y H:i:s T', $timestamp);
 //print_r($cc);
 		echo  "<item><title>Comment by ";
 		 if(isset($cc->account_type) && $cc->account_type == "Alumni"){
@@ -232,13 +242,16 @@ class Rss extends MY_Controller {
          	  echo $who;
          	  
 						//echo $item_rating->attribute_name;
-						echo "</title><description>";
+						echo "</title>";
+						echo "<pubDate>";
+						echo $time2;
+						echo "</pubDate>";
+						echo "<description>";
+						
 						//echo $cc->rating_comments;
 						echo $cc->comment_text;
-						echo " </description></item>";
-						//echo "<pubDate>";
-						//echo date("m/d/Y",strtotime($cc->rating_date));
-						//echo "</pubDate>";
+						echo "</description></item>";
+						
 			
 			}
 
@@ -401,9 +414,16 @@ $i = 0;
          	  
          	  }
          	  echo $who;
+
+
          	  
 						//echo $item_rating->attribute_name;
-						echo "</title><description>";
+						echo "</title>";
+						$timestamp = strtotime($cc->rating_date); 
+						$time2 = date('D, d M Y H:i:s T', $timestamp);
+						echo "<pubDate>";
+						echo $time2;
+						echo "</pubDate><description>";
 						echo $cc->rating_comments;
 						echo " </description></item>";
 						//echo "<pubDate>";
