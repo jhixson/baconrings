@@ -402,7 +402,7 @@ public function get_user_name($user_id){
 }
 
 public function get_school_name($uni_id){
-    $this->db->select('university_slug');
+    $this->db->select('university_slug, university_name');
     $this->db->where('university_id', $uni_id);
     $query = $this->db->get('university');
     return $query->result_array();
