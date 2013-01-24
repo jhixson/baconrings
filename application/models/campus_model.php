@@ -362,8 +362,51 @@ class Campus_model extends CI_Model {
   public function empty_best_of($categories) {
     return array_filter($categories, "empty_best_of_filter");
   }
-}
+//}
 
 function empty_best_of_filter($category) {
   return isset($category->best_of) && !empty($category->best_of);
+}
+
+public function get_all_comments(){
+
+    $this->db->select('rating_id, rating_comments, users_id, item_id, university_id, rating_date');
+    $this->db->order_by('rating_id', 'desc');
+    $this->db->limit(50);
+    $query = $this->db->get('rating');
+   return $query->result_array();
+}
+
+public function get_item_name($item_id){
+    $this->db->select('item_slug, university_id, category_id');
+    $this->db->where('item_id', $item_id);
+    $query = $this->db->get('item');
+    return $query->result_array();
+
+}
+
+public function get_category_name($cat_id){
+    $this->db->select('category_slug');
+    $this->db->where('category_id', $cat_id);
+    $query = $this->db->get('category');
+    return $query->result_array();
+
+}
+
+public function get_user_name($user_id){
+    $this->db->select('username');
+    $this->db->where('id', $user_id);
+    $query = $this->db->get('users');
+    return $query->result_array();
+
+}
+
+public function get_school_name($uni_id){
+    $this->db->select('university_slug');
+    $this->db->where('university_id', $uni_id);
+    $query = $this->db->get('university');
+    return $query->result_array();
+
+}
+
 }
