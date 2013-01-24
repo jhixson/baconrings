@@ -11,7 +11,60 @@ class Rss extends MY_Controller {
 
 	function index(){
 		// main rss feed
-		echo "test";
+		$comments = $this->campus_model->get_all_comments();
+
+		$now = date("D, d M Y H:i:s T");
+
+		$output = "<?xml version=\"1.0\"?>
+				<rss version=\"2.0\">
+				<channel>
+                    <title>RateMyCampus RSS Feed</title>
+                    <link>". base_url()."</link>
+                    <description>RateMyCampus RSS Feed</description>
+                    <language>en-us</language>
+                    <pubDate>".$now."</pubDate>	";
+
+
+        echo $output; 
+
+			foreach($comments as $c){
+				// get names
+				$user = $this->campus_model->get_user_name($c['users_id']);
+				if(empty($user[0]['username'])){ $user[0]['username'] = "user";}
+
+				$item_name = $this->campus_model->get_item_name($c['item_id']);
+				//if(empty($item_name[0]['item_slug'])){ $item_name[0]['item_slug'] = "item-slug";}
+				
+				$school = $this->campus_model->get_school_name($c['university_id']);
+				if(empty($school[0]['university_slug'])){
+						$school = $this->campus_model->get_school_name($item_name[0]['university_id']);
+				}
+				
+				// must check if it belongs somewhere
+				if(!empty($item_name[0]['category_id'])){
+					$category = $this->campus_model->get_category_name($item_name[0]['category_id']);
+				}
+				
+
+				echo "<item><title>";
+				echo "Comment by ". $user[0]['username'];
+				echo "</title><description>";
+				echo $c['rating_comments'];
+				echo "</description><link>";
+				echo base_url();
+				//echo $school[0]['university_slug'];
+				if(empty($school[0]['university_slug'])){ $school[0]['university_slug'] = "university-slug"; echo $school[0]['university_slug'];}else{ echo $school[0]['university_slug'];}
+				//if(empty($item_name[0]['item_slug'])){ $item_name[0]['item_slug'] = "item-slug"; echo "/" . $item_name[0]['item_slug'];}
+				if(!empty($category)){ echo "/". $category[0]['category_slug'];}
+				if(!empty($item_name)){ echo "/".$item_name[0]['item_slug'];}
+				
+				echo "</link></item>";
+
+			}
+
+			echo "</channel>
+			</rss>";
+		
 	}
 	
 	function school(){
