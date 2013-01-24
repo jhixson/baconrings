@@ -378,7 +378,7 @@ public function get_all_comments(){
 }
 
 public function get_item_name($item_id){
-    $this->db->select('item_slug, university_id, category_id');
+    $this->db->select('item_slug, item_name, university_id, category_id');
     $this->db->where('item_id', $item_id);
     $query = $this->db->get('item');
     return $query->result_array();
