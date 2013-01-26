@@ -41,7 +41,7 @@ class Rss extends MY_Controller {
 				}
 				
 				// must check if it belongs somewhere
-				if(!empty($item_name[0]['category_id'])){
+				if($item_name[0]['category_id'] !== "0"){
 					$category = $this->campus_model->get_category_name($item_name[0]['category_id']);
 				}
 
@@ -62,6 +62,7 @@ class Rss extends MY_Controller {
 				if(empty($school[0]['university_slug'])){ $school[0]['university_slug'] = "university-slug"; echo $school[0]['university_slug'];}else{ echo $school[0]['university_slug'];}
 				//if(empty($item_name[0]['item_slug'])){ $item_name[0]['item_slug'] = "item-slug"; echo "/" . $item_name[0]['item_slug'];}
 				if(!empty($category)){ echo "/". $category[0]['category_slug'];}
+
 				if(!empty($item_name)){ echo "/".$item_name[0]['item_slug'];}
 				
 				echo "</link><pubDate>";
