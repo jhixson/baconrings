@@ -396,9 +396,10 @@ $i = 0;
          	  echo $who;
 
 
-         	  
-						//echo $item_rating->attribute_name;
-						echo "</title>";
+         	  $link = base_url() . $school;
+						
+         	  echo " on ". $this->data['campus']->university_name. "</title>";
+						echo "<link>". base_url()."$school</link>";
 						$timestamp = strtotime($cc->rating_date); 
 						$time2 = date('D, d M Y H:i:s T', $timestamp);
 						echo "<pubDate>";
