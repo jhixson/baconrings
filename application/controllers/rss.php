@@ -41,9 +41,11 @@ class Rss extends MY_Controller {
 				}
 				
 				// must check if it belongs somewhere
+				if(!empty($item_name)){
 				if($item_name[0]['category_id'] !== "0"){
 					$category = $this->campus_model->get_category_name($item_name[0]['category_id']);
 				}
+			}
 
 				
 				$timestamp = strtotime($c['rating_date']); 
