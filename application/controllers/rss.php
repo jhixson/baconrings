@@ -221,33 +221,20 @@ class Rss extends MY_Controller {
                     <pubDate>".$now."</pubDate>
 					";
 
-					/*<item>
-						<title>Overall Rating</title>
-						<description>".$overall_num."</description>
-					</item>
-					*/
-
 					echo $output;
 					foreach($this->data['comments'] as $cc){
 						$timestamp = strtotime($cc->rating_date); 
 						$time2 = date('D, d M Y H:i:s T', $timestamp);
-//print_r($cc);
-		echo  "<item><title>Comment by ";
-		 if(isset($cc->account_type) && $cc->account_type == "Alumni"){
-      	    $who = "an alumnus";
-      	 } else{
-         	  $who = isset($cc->account_type) ? strtolower("a ".$cc->account_type) : "a user";
-         	  
-         	  }
-         	  echo $who;
-         	  
-						//echo $item_rating->attribute_name;
+						echo "<item><title>";
+						echo  $this->data['campus']->university_name ;
+         	  			echo " - ";
+         	  			echo $this->data['item']->item_name;
 						echo "</title>";
+						echo "<link>". base_url()."$school/dorms/$dorm</link>";
 						echo "<pubDate>";
 						echo $time2;
 						echo "</pubDate>";
 						echo "<description>";
-						
 						//echo $cc->rating_comments;
 						echo $cc->comment_text;
 						echo "</description></item>";
@@ -255,14 +242,7 @@ class Rss extends MY_Controller {
 			
 			}
 
-					/*foreach($this->data['item_ratings'] as $item_rating){
-						echo  "<item><title>";
-						echo $item_rating->attribute_name;
-						echo "</title><description>";
-						$score = number_format($item_rating->score, 1, '.', ','); 
-						echo $score; 
-						echo " </description></item>";
-					}*/
+			
 					echo "</channel>
 						</rss>";
 	}
