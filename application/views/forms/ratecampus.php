@@ -11,14 +11,13 @@
 			<div id="rateform" class="rateform">
 
       <form action="/<?php echo $campus->university_slug ?>/rate-thanks" method="post">
-
         <?php foreach($attributes as $attribute): ?>
           <p>
             <label class="labelpadding"><?php echo $attribute->attribute_name ?></label>
             <?php $span_visible = ($attribute == $attributes[0]) ? '' : ' style="visibility: hidden"' ?>
             <span class="awful"<?php echo $span_visible ?>>AWFUL</span>
               <?php for($i = 1; $i <=5; $i++): ?>
-                <input type="radio" name="att[<?php echo $attribute->attribute_id ?>]" id="att_<?php echo $attribute->attribute_id ?>" value="<?php echo $i ?>" class="radiorating" /> <?php echo $i ?>
+                <input type="radio" name="att[<?php echo $attribute->attribute_id ?>]" id="att_<?php echo $attribute->attribute_id ?>_<?php echo $i ?>" value="<?php echo $i ?>" class="radiorating" <?php echo isset($att) && $att[$attribute->attribute_id] == $i ? 'checked="checked"' : "" ?> /> <?php echo $i ?>
               <?php endfor ?>
               &nbsp;&nbsp;&nbsp;&nbsp;<span class="amazing"<?php echo $span_visible ?>>AMAZING</span>
           </p>
@@ -27,7 +26,7 @@
 				<br /><p class="spacing">Please keep comments clean. Comments that are inconsistent with <a href="/pages/site-guidelines" class="ratelink">Site Guidelines</a> will be removed.</p>
 
 				<p><label class="labelpadding">Comments:</label>
-				<textarea name="comments" id="comments" class="textareainput <?php if (!empty($comments)) echo 'textinputerror' ?>"><?php if (!empty($comments)) echo $comments['value'];?></textarea>
+				<textarea name="comments" id="comments" class="textareainput <?php if (!empty($comments)) echo 'textinputerror' ?>"><?php if (!empty($comments)) echo $comments['value'] ?></textarea>
 				<span id="char_count">0/150</span>
 				</p>
 

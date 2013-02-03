@@ -75,8 +75,10 @@ class Campus extends MY_Controller {
   	
   //	die(print_r($this->data['campus_ratings'],true));
 
-  	if($this->data['campus'])
+  	if($this->data['campus']) {
   	  $this->data['title'] = $this->data['campus']->university_name;
+  	  $this->data['campus_ratings'] = $this->campus_model->get_attribute_ratings_for_campus($this->data['campus']->university_id);
+  	}
   	else
     	show_404();
   	

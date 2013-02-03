@@ -553,6 +553,8 @@ class Forms extends MY_Controller {
         //$from = $email;
         //$headers = "From:" . $email;
         //mail($to,$subject,$emailmessage,$headers);
+        
+        $forgotten = $this->ion_auth->forgotten_password($email);
 
         $this->load->view('templates/header', $this->data);
         $this->load->view('forms/forgotpasswordthanks', $this->data);
@@ -648,6 +650,8 @@ class Forms extends MY_Controller {
       'type' => 'text',
       'value' => $this->form_validation->set_value('comments'),
     );
+    
+    //$this->data['att'] = $this->input->post('att');
 
      $this->load->view('templates/header', $this->data);
      $this->load->view('forms/rate', $this->data);
@@ -676,7 +680,7 @@ class Forms extends MY_Controller {
       $this->data['comments'] = array('name' => 'comments',
         'id' => 'comments',
         'type' => 'text',
-        'value' => $this->form_validation->set_value('comments'),
+        'value' => $this->input->post('comments')
       );
 
        $this->load->view('templates/header', $this->data);
@@ -752,8 +756,10 @@ class Forms extends MY_Controller {
 		$this->data['comments'] = array('name' => 'comments',
 			'id' => 'comments',
 			'type' => 'text',
-			'value' => $this->form_validation->set_value('comments'),
+			'value' => $this->input->post('comments')
 		);
+		
+		$this->data['att'] = $this->input->post('att');
     
 		$this->load->view('templates/header', $this->data);
 		$this->load->view('forms/ratecampus', $this->data);

@@ -466,10 +466,14 @@ class Auth extends MY_Controller {
 		{ //check to see if we are creating the user
 			//redirect them back to the admin page
 			
+			$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->input->post('school')));
+			
 			 // email functionality here
-	        $to = $email;
-   		    $subject = "Welcome to the RateMyCampus Community";
-        	$emailmessage = '<html>
+	        $this->load->library('email');
+      	  $this->email->from('signup@ratemycampus.com', 'RateMyCampus');
+          $this->email->to($email);
+          $this->email->subject('Welcome to the RateMyCampus Community');
+          $emailmessage = '<html>
 
 <head>
 
@@ -509,7 +513,7 @@ class Auth extends MY_Controller {
 
 <div id="container">
 
-	<div id="header"><a href="http://wwww.ratemycampus.com"><img src="http://dev.baconrings.com/images/newsletter_header.gif" alt="ratemycampus.com" border="0" width="650" height="82"></a></div>
+	<div id="header"><a href="'.base_url().'"><img src="'.base_url().'images/newsletter_header.gif" alt="ratemycampus.com" border="0" width="650" height="82"></a></div>
 
 	<div id="main" style="font-family:arial;font-size:11pt;">
 
@@ -524,9 +528,9 @@ class Auth extends MY_Controller {
 		<br />
 
 		<p align="center">
-			<a href="http://dev.baconrings.com/ithaca-college"><img src="http://dev.baconrings.com/images/newsletter_startrating.gif" border="0" width="184" height="42" alt="start rating" hspace="21" /></a>
+			<a href="'.base_url().$this->data['campus']->university_slug.'"><img src="'.base_url().'images/newsletter_startrating.gif" border="0" width="184" height="42" alt="start rating" hspace="21" /></a>
 
-			<a href="http://dev.baconrings.com"><img src="http://dev.baconrings.com/images/newsletter_findschools.gif" border="0" width="184" height="42" alt="find schools" hspace="21" /></a>
+			<a href="'.base_url().'"><img src="'.base_url().'images/newsletter_findschools.gif" border="0" width="184" height="42" alt="find schools" hspace="21" /></a>
 		</p>
 
 
@@ -535,11 +539,11 @@ class Auth extends MY_Controller {
 	<div id="footer" style="font-family:arial;font-size:10pt;line-height:20px;">
 
 		<div id="social" style="float:right;width:52px;">
-			<a href=""><img src="http://dev.baconrings.com/images/newsletter_facebook.png" alt="find us on facebook" border="0" width="22" height="22" /></a>
-			<a href=""><img src="http://dev.baconrings.com/images/newsletter_twitter.png" alt="we are on twitter" border="0" width="22" height="22" /></a>
+			<a href=""><img src="'.base_url().'images/newsletter_facebook.png" alt="find us on facebook" border="0" width="22" height="22" /></a>
+			<a href=""><img src="'.base_url().'images/newsletter_twitter.png" alt="we are on twitter" border="0" width="22" height="22" /></a>
 		</div>
 
-		<strong><a style="color:#000000;text-decoration:none;" href="http://www.ratemycampus.com">find schools</a>  &nbsp;|&nbsp;  <a style="color:#000000;text-decoration:none;" href="http://www.ratemycampus.com/forms/contact">contact us</a></strong>
+		<strong><a style="color:#000000;text-decoration:none;" href="'.base_url().'">find schools</a>  &nbsp;|&nbsp;  <a style="color:#000000;text-decoration:none;" href="'.base_url().'forms/contact">contact us</a></strong>
 		<br />&copy; Copyright 2012. All Rights Reserved. RateMyCampus.com
 
 	</div>
@@ -550,15 +554,14 @@ class Auth extends MY_Controller {
 
 </html>';
         	
-        	$from = "signup@ratemycampus.com";
-        	$headers = "From:" . "signup@ratemycampus.com";
-        	mail($to,$subject,$emailmessage,$headers);
+      $this->email->message($emailmessage);
+      $this->email->send();
         	
 			$this->session->set_flashdata('message', "User Created");
 
 			if ($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
         //redirect(base_url(), 'refresh');
-        $this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->input->post('school')));
+        //$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->input->post('school')));
       	
         $this->load->view('templates/header', $this->data);
   			$this->load->view('auth/thank_you', $this->data);

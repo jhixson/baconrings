@@ -97,8 +97,8 @@
 
 	<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/rate" ?>"><img src="<?php echo base_url() ?>images/rate_it_large.gif" alt="rate this" border="0" height="42" width="150" /></a>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href="https://www.facebook.com/dialog/feed?app_id=<?php echo $this->facebook->getAppId() ?>&amp;link=<?php echo current_url() ?>&amp;caption=See how it stacks up against other <?php echo strtolower($category->category_name) ?> at <?php echo $campus->university_name ?>&amp;redirect_uri=<?php echo current_url() ?>"><img src="<?php echo base_url() ?>images/share_facebook_large.gif" height="31" width="31" border="0" alt="share it this on facebook" /></a>
-	<a href="https://twitter.com/intent/tweet?original_referer=http://twitter.com/about/resources/buttons&amp;source=tweetbutton&amp;text=Check out the ratings for <?php echo $item->item_name ?> at <?php echo $campus->university_name ?>&amp;url=<?php echo base_url().$campus->university_slug."/".$category->category_slug."/".$item->item_slug ?>"><img src="<?php echo base_url() ?>images/share_twitter_large.gif" hspace="5px" height="31" width="31" border="0" alt="share it this on twitter" /></a>
+	<a target="_blank" href="https://www.facebook.com/dialog/feed?app_id=<?php echo $this->facebook->getAppId() ?>&amp;link=<?php echo current_url() ?>&amp;caption=See how it stacks up against other <?php echo strtolower($category->category_name) ?> at <?php echo $campus->university_name ?>&amp;redirect_uri=<?php echo current_url() ?>"><img src="<?php echo base_url() ?>images/share_facebook_large.gif" height="31" width="31" border="0" alt="share it this on facebook" /></a>
+	<a target="_blank" href="https://twitter.com/intent/tweet?original_referer=http://twitter.com/about/resources/buttons&amp;source=tweetbutton&amp;text=Check out the ratings for <?php echo $item->item_name ?> at <?php echo $campus->university_name ?>&amp;url=<?php echo base_url().$campus->university_slug."/".$category->category_slug."/".$item->item_slug ?>"><img src="<?php echo base_url() ?>images/share_twitter_large.gif" hspace="5px" height="31" width="31" border="0" alt="share it this on twitter" /></a>
 	<a href=""><img src="<?php echo base_url() ?>images/share_email_large.gif" height="31" width="31" border="0" alt="share it this by email" /></a>
 
 	<p><strong>(<?php echo $num_ratings ?> ratings)</strong></p>
@@ -148,10 +148,9 @@
   					</td>
   					<td>&nbsp;</td>
   					<td>
-  						<a href=""><img src="<?php echo base_url() ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a><a
-  						href=""><img src="<?php echo base_url() ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a><a
-  						href=""><img src="<?php echo base_url() ?>images/share_email.gif" border="0" height="24" width="24" alt="share to email" /></a>
-
+  						<a target="_blank" href="https://www.facebook.com/dialog/feed?app_id=<?php echo $this->facebook->getAppId() ?>&amp;link=<?php echo current_url() ?>&amp;caption=See how it stacks up against other <?php echo strtolower($category->category_name) ?> at <?php echo $campus->university_name ?>&amp;redirect_uri=<?php echo current_url() ?>"><img src="<?php echo base_url() ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a>
+  						<a target="_blank" href="https://twitter.com/intent/tweet?original_referer=http://twitter.com/about/resources/buttons&amp;source=tweetbutton&amp;text=Check out the ratings for <?php echo $item->item_name ?> at <?php echo $campus->university_name ?>&amp;url=<?php echo base_url().$campus->university_slug."/".$category->category_slug."/".$item->item_slug ?>"><img src="<?php echo base_url() ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a>
+  						<a href=""><img src="<?php echo base_url() ?>images/share_email.gif" border="0" height="24" width="24" alt="share to email" /></a>
   						<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/".$k."/flag" ?>"><img src="<?php echo base_url() ?>images/flag_this.png" align="right" border="0" height="23" width="61" alt="flag this" /></a>
   					</td>
   				</tr>
