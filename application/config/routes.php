@@ -48,11 +48,14 @@ $route['rss/school/(:any)'] = 'rss/school/$1';
 $route['rss/dorms/(:any)/(:any)'] = 'rss/dorm/$1/$2';
 $route['rss/(:any)/(:any)/(:any)'] = 'rss/category/$1/$2'; 
 $route['rss/(:any)/comments'] = 'rss/comments/$1';
+$route['auth/reset_password/(:any)'] = 'auth/reset_password/$1';
 
 $route['(:any)/(:any)/(:any)/rate'] = 'forms/rate/$3';
 $route['(:any)/(:any)/(:any)/rate-thanks'] = 'forms/ratethanks/$3';
 $route['(:any)/rate'] = 'forms/ratecampus/$1';
 $route['(:any)/rate-thanks'] = 'forms/ratecampusthanks/$1';
+$route['(:any)/(:any)/(:any)/share'] = 'forms/share/$3';
+$route['(:any)/(:any)/(:any)/share-thanks'] = 'forms/sharethanks/$3';
 $route['(:any)/rating/(:num)'] = 'campus/view_rating/$2';
 $route['(:any)/(:any)/(:any)/submit-correction'] = 'forms/submitcorrection/$3';
 $route['(:any)/(:any)/(:any)/submit-correction-thanks'] = 'forms/submitcorrectionthanks/$3';
@@ -84,6 +87,7 @@ $route['signup'] = 'auth/create_user';
 $route['auth/create_user'] = 'auth/create_user';
 $route['auth/forgot_password'] = 'auth/forgot_password';
 $route['auth/fb'] = 'auth/fb';
+$route['admin'] = 'admin';
 
 
 $route['main'] = 'main/index';
