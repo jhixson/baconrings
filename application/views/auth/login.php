@@ -12,7 +12,7 @@
       <?php echo form_input($identity); ?>
 
       <label for="password">Password:
-      <span class="small"><a href="forgot_password" style="color:#000000;">Forgot password?</a></span>
+      <span class="small"><a href="/forgot_password" style="color:#000000;">Forgot password?</a></span>
       </label>
       <?php $password = array('name' => 'password', 'id' => 'password', 'class' => 'textinput', 'tabindex' => '2'); ?>
       <?php echo form_password($password);?>

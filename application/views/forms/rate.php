@@ -24,7 +24,7 @@
             <?php $span_visible = ($attribute == $attributes[0]) ? '' : ' style="visibility: hidden"' ?>
             <span class="awful"<?php echo $span_visible ?>>AWFUL</span>
               <?php for($i = 1; $i <=5; $i++): ?>
-                <input type="radio" name="att[<?php echo $attribute->attribute_id ?>]" id="att_<?php echo $attribute->attribute_id ?>" value="<?php echo $i ?>" class="radiorating" <?php echo isset($att) && $att[$attribute->attribute_id] == $i ? 'checked="checked"' : "" ?> /> <?php echo $i ?>
+                <input type="radio" name="att[<?php echo $attribute->attribute_id ?>]" id="att_<?php echo $attribute->attribute_id ?>" value="<?php echo $i ?>" class="radiorating" <?php echo isset($att) && isset($att[$attribute->attribute_id]) && $att[$attribute->attribute_id] == $i ? 'checked="checked"' : "" ?> /> <?php echo $i ?>
               <?php endfor ?>
               &nbsp;&nbsp;&nbsp;&nbsp;<span class="amazing"<?php echo $span_visible ?>>AMAZING</span>
           </p>

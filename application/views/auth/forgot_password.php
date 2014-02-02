@@ -1,14 +1,19 @@
 <h1>Forgot Password</h1>
-<p>Please enter your email address so we can send you an email to reset your password.</p>
+<p>No worries, it happens to the best of us. Give us your email and we'll send it to you:</p>
 
-<div id="infoMessage"><?php echo $message;?></div>
+<div id="infoMessage"><ul><?php echo $message;?></ul></div>
 
-<?php echo form_open(base_url()."auth/forgot_password");?>
+<div id="contact" class="contact">
 
-      <p>Email Address:<br />
-      <?php echo form_input($email);?>
-      </p>
-      
-      <p><?php echo form_submit('submit', 'Submit');?></p>
+<?php echo form_open(base_url()."forms/forgot-password-thanks");?>
+
+      <label class="labelpadding">Email:</label>
+			<input type="text" name="email" id="email" class="textinput <?php if (!empty($email)) echo 'textinputerror' ?>" />
+
+			<button type="submit" name="submit" class="bluebutton" style="margin-left:153px;">Send</button>
+
+			<input type="hidden" name="sender" value="yes" />
       
 <?php echo form_close();?>
+
+</div>

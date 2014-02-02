@@ -179,7 +179,7 @@ class Campus_model extends CI_Model {
     FROM `rating`
     INNER JOIN attributerating ON ( attributerating.rating_id = rating.rating_id ) 
     INNER JOIN attribute ON ( attributerating.attribute_id = attribute.attribute_id ) 
-    INNER JOIN users ON ( rating.users_id = users.id )
+    LEFT JOIN users ON ( rating.users_id = users.id )
     WHERE rating.item_id = ? AND rating.rating_id = ?";
     
     return $this->db->query($sql, array($item_id, $rating_id))->result();
@@ -364,10 +364,6 @@ class Campus_model extends CI_Model {
   }
 //}
 
-function empty_best_of_filter($category) {
-  return isset($category->best_of) && !empty($category->best_of);
-}
-
 public function get_all_comments(){
 
     $this->db->select('rating_id, rating_comments, users_id, item_id, university_id, rating_date');
@@ -409,4 +405,8 @@ public function get_school_name($uni_id){
 
 }
 
+}
+
+function empty_best_of_filter($category) {
+  return isset($category->best_of) && !empty($category->best_of);
 }

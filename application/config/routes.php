@@ -50,8 +50,8 @@ $route['rss/(:any)/(:any)/(:any)'] = 'rss/category/$1/$2';
 $route['rss/(:any)/comments'] = 'rss/comments/$1';
 $route['auth/reset_password/(:any)'] = 'auth/reset_password/$1';
 
-$route['(:any)/(:any)/(:any)/rate'] = 'forms/rate/$3';
-$route['(:any)/(:any)/(:any)/rate-thanks'] = 'forms/ratethanks/$3';
+$route['(:any)/(:any)/(:any)/rate'] = 'forms/rate/$1/$3';
+$route['(:any)/(:any)/(:any)/rate-thanks'] = 'forms/ratethanks/$1/$3';
 $route['(:any)/rate'] = 'forms/ratecampus/$1';
 $route['(:any)/rate-thanks'] = 'forms/ratecampusthanks/$1';
 $route['(:any)/(:any)/(:any)/share'] = 'forms/share/$3';

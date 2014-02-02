@@ -65,9 +65,8 @@ class Auth extends MY_Controller {
 			{ //if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				
 				$ref = $this->input->server('HTTP_REFERER');
-				if(!empty($ref))
+				if(!empty($ref) && strpos($ref, '/login') === FALSE)
 				  redirect($ref, 'location');
 				else if($this->ion_auth->user()->row()->university_id != 0) {
           $u = $this->campus_model->get_single('university', array('university_id' => $this->ion_auth->user()->row()->university_id));
@@ -160,7 +159,7 @@ class Auth extends MY_Controller {
             delete_cookie('redirect_url');
   				  redirect($ref, 'location');
 				  }
-          else if($query->row()->university_id != 0) {
+          else if(isset($query->row()->university_id)) {
             $u = $this->campus_model->get_single('university', array('university_id' => $query->row()->university_id));
   				  redirect('/'.$u->university_slug, 'location');
 				  }
@@ -256,6 +255,7 @@ class Auth extends MY_Controller {
 	//forgot password
 	function forgot_password()
 	{
+	  $this->data['title'] = 'Forgot Password';
 		$this->form_validation->set_rules('email', 'Email Address', 'required');
 		if ($this->form_validation->run() == false)
 		{
@@ -265,7 +265,9 @@ class Auth extends MY_Controller {
 			);
 			//set any errors and display the form
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+			$this->load->view('templates/header', $this->data);
 			$this->load->view('auth/forgot_password', $this->data);
+			$this->load->view('templates/footer', $this->data);
 		}
 		else
 		{
@@ -288,6 +290,7 @@ class Auth extends MY_Controller {
 	//reset password - final step for forgotten password
 	public function reset_password($code = NULL)
 	{
+	  $this->data['title'] = 'Reset Password';
 		if (!$code)
 		{
 			show_404();
@@ -311,12 +314,14 @@ class Auth extends MY_Controller {
 					'name' => 'new',
 					'id'   => 'new',
 				'type' => 'password',
+				'class' => 'textinput',
 					'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
 				);
 				$this->data['new_password_confirm'] = array(
 					'name' => 'new_confirm',
 					'id'   => 'new_confirm',
 					'type' => 'password',
+					'class' => 'textinput',
 					'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
 				);
 				$this->data['user_id'] = array(
@@ -329,12 +334,15 @@ class Auth extends MY_Controller {
 				$this->data['code'] = $code;
 
 				//render
+				$this->load->view('templates/header', $this->data);
 				$this->load->view('auth/reset_password', $this->data);
+				$this->load->view('templates/footer', $this->data);
 			}
 			else
 			{
 				// do we have a valid request?
-				if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
+				// $this->_valid_csrf_nonce() === FALSE ||
+				if ($user->id != $this->input->post('user_id')) {
 
 					//something fishy might be up
 					$this->ion_auth->clear_forgotten_password_code($code);
@@ -349,8 +357,15 @@ class Auth extends MY_Controller {
 
 					if ($change)
 					{ //if the password was successfully changed
-						$this->session->set_flashdata('message', $this->ion_auth->messages());
-						$this->logout();
+					  $this->session->set_flashdata('message', 'Your password has been changed');	
+					  $this->data['message'] = $this->session->flashdata('message');			  
+					  redirect(base_url().'login/', 'refresh');
+						
+						
+						//$this->logout();
+						//$this->load->view('templates/header', $this->data);
+    				///$this->load->view('auth/password_changed', $this->data);
+    				//$this->load->view('templates/footer', $this->data);
 					}
 					else
 					{
@@ -521,7 +536,10 @@ class Auth extends MY_Controller {
 
 		<span style="font-family:arial;font-size:17pt;letter-spacing:3px">WELCOME</span>
 
-		<p>Thank you for joining the RateMyCampus community! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras auctor ligula sed enim tincidunt placerat. Aenean felis lectus, feugiat et iaculis vel, sollicitudin rutrum magna. Quisque sed sapien id mauris tempor sagittis vitae non augue. Curabitur iaculis placerat mi eget sagittis.</p>
+		<p>Thank you for joining the RateMyCampus community!
+		Our goal is to be an honest resource for college students, prospective students, and parents.
+		We want to help you make more informed decisions about your higher education choices.
+		Follow the links below to starting rating your campus, or read ratings at other campuses.</p>
 
 		<p>The RateMyCampus Team</p>
 
@@ -539,8 +557,8 @@ class Auth extends MY_Controller {
 	<div id="footer" style="font-family:arial;font-size:10pt;line-height:20px;">
 
 		<div id="social" style="float:right;width:52px;">
-			<a href=""><img src="'.base_url().'images/newsletter_facebook.png" alt="find us on facebook" border="0" width="22" height="22" /></a>
-			<a href=""><img src="'.base_url().'images/newsletter_twitter.png" alt="we are on twitter" border="0" width="22" height="22" /></a>
+			<a href="http://www.facebook.com/Ratemycampus"><img src="'.base_url().'images/newsletter_facebook.png" alt="find us on facebook" border="0" width="22" height="22" /></a>
+			<a href="http://twitter.com/RateMyCampusCom"><img src="'.base_url().'images/newsletter_twitter.png" alt="we are on twitter" border="0" width="22" height="22" /></a>
 		</div>
 
 		<strong><a style="color:#000000;text-decoration:none;" href="'.base_url().'">find schools</a>  &nbsp;|&nbsp;  <a style="color:#000000;text-decoration:none;" href="'.base_url().'forms/contact">contact us</a></strong>

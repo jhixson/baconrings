@@ -30,7 +30,11 @@
 
 	</div>
 	
-	<div id="ranking" style="text-align:right;margin-bottom:10px;"><strong>#<?php echo $ranking ?> rated <?php echo substr(strtolower($category->category_name), 0, -1) ?> at <?php echo $campus->university_name ?></strong></div>
+	<div id="ranking" style="text-align:right;margin-bottom:10px;">
+	  <?php if($overall_rating->score > 0): ?>
+	  <strong>#<?php echo $ranking ?> rated <?php echo ($singular_category) ?> at <?php echo $campus->university_name ?></strong>
+	  <?php endif ?>
+	</div>
   
 
 	<div id="iteminfocontainer">
@@ -99,7 +103,7 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<a target="_blank" href="https://www.facebook.com/dialog/feed?app_id=<?php echo $this->facebook->getAppId() ?>&amp;link=<?php echo current_url() ?>&amp;caption=See how it stacks up against other <?php echo strtolower($category->category_name) ?> at <?php echo $campus->university_name ?>&amp;redirect_uri=<?php echo current_url() ?>"><img src="<?php echo base_url() ?>images/share_facebook_large.gif" height="31" width="31" border="0" alt="share it this on facebook" /></a>
 	<a target="_blank" href="https://twitter.com/intent/tweet?original_referer=http://twitter.com/about/resources/buttons&amp;source=tweetbutton&amp;text=Check out the ratings for <?php echo $item->item_name ?> at <?php echo $campus->university_name ?>&amp;url=<?php echo base_url().$campus->university_slug."/".$category->category_slug."/".$item->item_slug ?>"><img src="<?php echo base_url() ?>images/share_twitter_large.gif" hspace="5px" height="31" width="31" border="0" alt="share it this on twitter" /></a>
-	<a href=""><img src="<?php echo base_url() ?>images/share_email_large.gif" height="31" width="31" border="0" alt="share it this by email" /></a>
+	<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/share" ?>"><img src="<?php echo base_url() ?>images/share_email_large.gif" height="31" width="31" border="0" alt="share it this by email" /></a>
 
 	<p><strong>(<?php echo $num_ratings ?> ratings)</strong></p>
 
@@ -147,10 +151,10 @@
   					<?php echo nl2br($comment->comment_text) ?>
   					</td>
   					<td>&nbsp;</td>
-  					<td>
+  					<td width="200">
   						<a target="_blank" href="https://www.facebook.com/dialog/feed?app_id=<?php echo $this->facebook->getAppId() ?>&amp;link=<?php echo current_url() ?>&amp;caption=See how it stacks up against other <?php echo strtolower($category->category_name) ?> at <?php echo $campus->university_name ?>&amp;redirect_uri=<?php echo current_url() ?>"><img src="<?php echo base_url() ?>images/share_facebook.gif" border="0" height="24" width="24" alt="share to facebook" /></a>
   						<a target="_blank" href="https://twitter.com/intent/tweet?original_referer=http://twitter.com/about/resources/buttons&amp;source=tweetbutton&amp;text=Check out the ratings for <?php echo $item->item_name ?> at <?php echo $campus->university_name ?>&amp;url=<?php echo base_url().$campus->university_slug."/".$category->category_slug."/".$item->item_slug ?>"><img src="<?php echo base_url() ?>images/share_twitter.gif" border="0" height="24" width="24" alt="share to twitter" hspace="5" /></a>
-  						<a href=""><img src="<?php echo base_url() ?>images/share_email.gif" border="0" height="24" width="24" alt="share to email" /></a>
+  						<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/share" ?>"><img src="<?php echo base_url() ?>images/share_email.gif" border="0" height="24" width="24" alt="share to email" /></a>
   						<a href="/<?php echo $campus->university_slug."/".$category->category_slug."/".$item->item_slug."/".$k."/flag" ?>"><img src="<?php echo base_url() ?>images/flag_this.png" align="right" border="0" height="23" width="61" alt="flag this" /></a>
   					</td>
   				</tr>

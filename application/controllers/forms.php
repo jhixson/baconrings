@@ -581,16 +581,16 @@ class Forms extends MY_Controller {
 
 
 // rate form
-  public function rate($slug='')
+  public function rate($campus_slug='',$item_slug='')
   {
-    if($this->ion_auth->logged_in()) {
-  	  $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
-    	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+    //if($this->ion_auth->logged_in()) {
+      $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
+  	  $this->data['item'] = $this->campus_model->get_single('item', array('university_id' => $this->data['campus']->university_id, 'item_slug' => $item_slug));
     	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
     	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
 
 
-    	if($this->data['item'])
+    	if($this->data['campus'] && $this->data['item'])
     	  $this->data['title'] = 'Rate '.$this->data['item']->item_name;
   	
       else
@@ -602,6 +602,7 @@ class Forms extends MY_Controller {
       $this->load->view('templates/header', $this->data);
       $this->load->view('forms/rate', $this->data);
       $this->load->view('templates/footer', $this->data);
+    /*
     }
     else{
         $this->load->helper('cookie');
@@ -618,14 +619,15 @@ class Forms extends MY_Controller {
     		$this->load->view('auth/login', $this->data);
     		$this->load->view('templates/footer', $this->data);
     	}
+    */
   }
 
 
-  public function ratethanks($slug='')
+  public function ratethanks($campus_slug='',$item_slug='')
   {
     $this->data['title'] = 'Rating Submitted';
-  	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
-  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
+	  $this->data['item'] = $this->campus_model->get_single('item', array('university_id' => $this->data['campus']->university_id, 'item_slug' => $item_slug));
     $this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
     $this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
 
@@ -648,10 +650,10 @@ class Forms extends MY_Controller {
 	  $this->data['comments'] = array('name' => 'comments',
       'id' => 'comments',
       'type' => 'text',
-      'value' => $this->form_validation->set_value('comments'),
+      'value' => $this->input->post('comments')
     );
     
-    //$this->data['att'] = $this->input->post('att');
+    $this->data['att'] = $this->input->post('att');
 
      $this->load->view('templates/header', $this->data);
      $this->load->view('forms/rate', $this->data);
@@ -682,6 +684,8 @@ class Forms extends MY_Controller {
         'type' => 'text',
         'value' => $this->input->post('comments')
       );
+      
+      $this->data['att'] = $this->input->post('att');
 
        $this->load->view('templates/header', $this->data);
        $this->load->view('forms/rate', $this->data);
@@ -692,7 +696,7 @@ class Forms extends MY_Controller {
   
   public function ratecampus($slug='')
   {
-    if($this->ion_auth->logged_in()) {
+    //if($this->ion_auth->logged_in()) {
   	  $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
     	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => 0));
 
@@ -707,6 +711,7 @@ class Forms extends MY_Controller {
       $this->load->view('templates/header', $this->data);
       $this->load->view('forms/ratecampus', $this->data);
       $this->load->view('templates/footer', $this->data);
+    /*
     }
     else {
       //$_SESSION['alert'] = 'You need to be logged in to add ratings. <a href="/login">Click here</a> to log in.';
@@ -725,6 +730,7 @@ class Forms extends MY_Controller {
   		$this->load->view('auth/login', $this->data);
   		$this->load->view('templates/footer', $this->data);
     }
+    */
   }
   
   public function ratecampusthanks($slug='')
@@ -790,6 +796,173 @@ class Forms extends MY_Controller {
 		$this->load->view('forms/ratecampus', $this->data);
 		$this->load->view('templates/footer', $this->data);
 		} 
+  }
+}
+
+  public function share($slug='')
+  {
+    if($this->ion_auth->logged_in()) {
+  	  $this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
+    	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+    	$this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+    	$this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
+
+
+    	if($this->data['item'])
+    	  $this->data['title'] = 'Share '.$this->data['item']->item_name.' Ratings';
+      else
+      	show_404();
+  
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+      $this->load->view('templates/header', $this->data);
+      $this->load->view('forms/share', $this->data);
+      $this->load->view('templates/footer', $this->data);
+    }
+    else{
+        $this->load->helper('cookie');
+        $cookie = array(
+          'name'   => 'redirect_url',
+          'value'  => current_url(),
+          'expire' => '3600'
+        );
+        set_cookie($cookie);
+    		$this->data['title'] = "Login";
+  		  $this->data['location'] = $this->uri->uri_string();
+    		$this->data['message'] = "<li>You must be logged in to rate stuff. Don't worry, we never show your username with any ratings.</li><br /><br />";
+    		$this->load->view('templates/header', $this->data);
+    		$this->load->view('auth/login', $this->data);
+    		$this->load->view('templates/footer', $this->data);
+    	}
+  }
+  
+  public function sharethanks($slug='')
+  {
+    $this->data['title'] = 'Rating Submitted';
+  	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $slug));
+  	$this->data['campus'] = $this->campus_model->get_single('university', array('university_id' => $this->data['item']->university_id));
+    $this->data['category'] = $this->campus_model->get_single('category', array('category_id' => $this->data['item']->category_id));
+    $this->data['attributes'] = $this->campus_model->get_list('attribute', array('category_id' => $this->data['item']->category_id));
+
+    //validate form input
+    $this->form_validation->set_rules('name', 'your name', 'required');
+    $this->form_validation->set_rules('email', 'email address', 'required|valid_email');
+    $this->form_validation->set_rules('name2', "friend's name", 'required');
+    $this->form_validation->set_rules('email2', 'email address', 'required|valid_email');
+	
+	// captcha
+	//require_once('/Applications/MAMP/htdocs/baconrings/application/views/forms/recaptchalib.php');
+	require_once('/home/peruta/dev.baconrings.com/application/views/forms/recaptchalib.php');
+	$privatekey = "6Lc27NgSAAAAAH1q-aJOpzUAESS30J-E5I_WV1Q_";
+	$resp = recaptcha_check_answer ($privatekey,
+                                $_SERVER["REMOTE_ADDR"],
+                                $_POST["recaptcha_challenge_field"],
+                                $_POST["recaptcha_response_field"]);
+	$this->data['resp'] = $resp;
+	if (!$resp->is_valid) {
+	  $this->data['message'] = "<li>Captcha was incorrect.</li>";
+	  
+	  $this->data['name'] = array('name' => 'name',
+      'id' => 'name',
+      'type' => 'text',
+      'value' => $this->input->post('name')
+    );
+    
+    $this->data['email'] = array('name' => 'email',
+      'id' => 'email',
+      'type' => 'text',
+      'value' => $this->input->post('email')
+    );
+    
+    $this->data['name2'] = array('name' => 'name2',
+      'id' => 'name2',
+      'type' => 'text',
+      'value' => $this->input->post('name2')
+    );
+    
+    $this->data['email2'] = array('name' => 'email2',
+      'id' => 'email2',
+      'type' => 'text',
+      'value' => $this->input->post('email2')
+    );
+    
+    $this->data['comments'] = array('name' => 'comments',
+      'id' => 'comments',
+      'type' => 'text',
+      'value' => $this->input->post('comments')
+    );
+    
+    //$this->data['att'] = $this->input->post('att');
+
+     $this->load->view('templates/header', $this->data);
+     $this->load->view('forms/share', $this->data);
+     $this->load->view('templates/footer', $this->data);
+   }
+   else {
+
+    $this->form_validation->set_error_delimiters('<li>','</li>');
+
+    if ($this->form_validation->run() == true && $this->data['item'])
+    {
+        $name1 = $this->input->post('name');
+        $name2 = $this->input->post('name');
+        $to = $this->input->post('email2');
+        $from = $this->input->post('email');
+        $comments = $this->input->post('comments');
+        
+        $subject = "RateMyCampus share form";
+        $emailmessage = $name1. " wants to share ratings with you on RateMyCampus.\n\n";
+        $emailmessage .= "\"".$comments."\"\n\n";
+        $emailmessage .= "Check out ".$this->data['item']->item_name." at ".$this->data['campus']->university_name.":\n";
+        $emailmessage .= base_url().$this->data['campus']->university_slug."/".$this->data['category']->category_slug."/".$this->data['item']->item_slug;
+
+        $headers = "From:" . $from;
+        mail($to,$subject,$emailmessage,$headers);
+      
+        $this->load->view('templates/header', $this->data);
+        $this->load->view('forms/sharethanks', $this->data);
+        $this->load->view('templates/footer', $this->data);
+    }
+    else
+    {
+      //set the flash data error message if there is one
+      $this->data['message'] = (validation_errors() ? validation_errors() : $this->session->flashdata('message'));
+
+      $this->data['name'] = array('name' => 'name',
+        'id' => 'name',
+        'type' => 'text',
+        'value' => $this->input->post('name')
+      );
+
+      $this->data['email'] = array('name' => 'email',
+        'id' => 'email',
+        'type' => 'text',
+        'value' => $this->input->post('email')
+      );
+
+      $this->data['name2'] = array('name' => 'name2',
+        'id' => 'name2',
+        'type' => 'text',
+        'value' => $this->input->post('name2')
+      );
+
+      $this->data['email2'] = array('name' => 'email2',
+        'id' => 'email2',
+        'type' => 'text',
+        'value' => $this->input->post('email2')
+      );
+      
+      $this->data['comments'] = array('name' => 'comments',
+        'id' => 'comments',
+        'type' => 'text',
+        'value' => $this->input->post('comments')
+      );
+
+       $this->load->view('templates/header', $this->data);
+       $this->load->view('forms/share', $this->data);
+       $this->load->view('templates/footer', $this->data);
+    }  
   }
 }
 }

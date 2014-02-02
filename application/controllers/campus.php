@@ -8,13 +8,14 @@ class Campus extends MY_Controller {
     $this->load->library('session');
     $this->load->library('form_validation');
     $this->load->library('ion_auth');
+    $this->load->helper('inflector');
 		
 		$this->load->model('campus_model');
 	}
 
 	public function find()
 	{
-  	$this->data['title'] = 'Find Your Campus';
+  	$this->data['title'] = 'Campus & University Ratings for College Schools';
   	
   	//die($this->ion_auth->user()->row()->id);
   	  	
@@ -71,7 +72,6 @@ class Campus extends MY_Controller {
   	  redirect(base_url().$this->input->post('school'), 'location');
   	  
   	$this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $slug));
-  	$this->data['campus_ratings'] = $this->campus_model->get_attribute_ratings_for_campus($this->data['campus']->university_id);
   	
   //	die(print_r($this->data['campus_ratings'],true));
 
@@ -156,7 +156,16 @@ class Campus extends MY_Controller {
   	  $items[$item->item_name]->slug = $item->item_slug;
   	}
   	
-  	//print_r($items);
+  	$scores = array();
+  	foreach($items as $key => $item) {
+  	  $scores[$key] = $item->score;
+  	}
+  	
+  	array_multisort($scores, SORT_DESC, $items);
+  	
+  	echo "<!--\n";
+  	print_r($items);
+  	echo "--!>\n";
   	//die();
   	
   	$this->data['item_ratings'] = $items;
@@ -171,9 +180,10 @@ class Campus extends MY_Controller {
   	$this->load->view('templates/footer', $this->data);
 	}
 	
-	public function item($campus_slug, $category_slug, $item_slug) {
+	public function item($campus_slug, $category_slug, $item_slug) {	  
 	  $this->data['campus'] = $this->campus_model->get_single('university', array('university_slug' => $campus_slug));
   	$this->data['category'] = $this->campus_model->get_single('category', array('category_slug' => $category_slug));
+  	$this->data['singular_category'] = strtolower(singular($this->data['category']->category_name));
   	$this->data['item'] = $this->campus_model->get_single('item', array('item_slug' => $item_slug, 'category_id' => $this->data['category']->category_id, 'university_id' => $this->data['campus']->university_id));
   	
   	if($this->data['item'])

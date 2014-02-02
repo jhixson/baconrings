@@ -14,11 +14,14 @@ class Forms_model extends CI_Model {
 
   public function save_rating($item_id, $attribute_ratings, $comments) {
     if(!empty($item_id) && !empty($attribute_ratings) && !empty($comments)) {
-      $user = $this->ion_auth->user()->row();
+      if($this->ion_auth->logged_in())
+        $user_id = $this->ion_auth->user()->row()->user_id;
+      else
+        $user_id = 0;
       $rating_data = array(
         'rating_comments' => $comments,
         'rating_ip' => $_SERVER['REMOTE_ADDR'],
-        'users_id' => $user->user_id,
+        'users_id' => $user_id,
         'item_id' => $item_id,
         'rating_date' => date("Y-m-d H:i:s")
       );
@@ -39,11 +42,14 @@ class Forms_model extends CI_Model {
 	
 	public function save_campus_rating($university_id, $attribute_ratings, $comments) {
     if(!empty($university_id) && !empty($attribute_ratings) && !empty($comments)) {
-      $user = $this->ion_auth->user()->row();
+      if($this->ion_auth->logged_in())
+        $user_id = $this->ion_auth->user()->row()->user_id;
+      else
+        $user_id = 0;
       $rating_data = array(
         'rating_comments' => $comments,
         'rating_ip' => $_SERVER['REMOTE_ADDR'],
-        'users_id' => $user->user_id,
+        'users_id' => $user_id,
         'university_id' => $university_id,
         'rating_date' => date("Y-m-d H:i:s")
       );
